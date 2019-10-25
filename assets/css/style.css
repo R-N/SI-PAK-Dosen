@@ -6,3 +6,21 @@
   flex-grow: 1;
 }
 
+.btn {
+  margin-left: 4px;
+  margin-right: 4px;
+  margin-top: 4px;
+  margin-bottom: 4px;
+}
+
+td .btn {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.align-middle {
+  margin-top: auto;
+  margin-bottom: auto;
+  flex-grow: 1;
+}
+

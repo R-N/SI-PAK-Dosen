@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* DBMS name:      MySQL 5.0                                    */
-/* Created on:     10/22/2019 9:50:08 PM                        */
+/* Created on:     10/25/2019 8:33:24 AM                        */
 /*==============================================================*/
 
 
@@ -16,38 +16,42 @@ alter table ITEMPENILAIAN
 alter table ITEMPENILAIAN 
    drop foreign key FK_ITEMPENI_MEMILIKI__UNSURPEN;
 
-alter table PAK 
-   drop foreign key FK_PAK_DINILAI_PENILAI;
+alter table LOGININFO 
+   drop foreign key FK_LOGININF_RELATIONS_USER;
 
 alter table PAK 
-   drop foreign key FK_PAK_DINILAI_O_PENILAI;
+   drop foreign key FK_PAK_MENILAI_1_USER;
+
+alter table PAK 
+   drop foreign key FK_PAK_MENILAI_2_USER;
 
 alter table PAK 
    drop foreign key FK_PAK_PAK_UNTUK_JABATAN;
 
-alter table PENILAI 
-   drop foreign key FK_PENILAI_ADALAH_PENILAIL;
+alter table PAK 
+   drop foreign key FK_PAK_RELATIONS_USER;
+
+alter table PAK 
+   drop foreign key FK_PAK_RELATIONS_JABATAN;
+
+alter table PENILAILUAR 
+   drop foreign key FK_PENILAIL_ADALAH_USER;
 
 alter table PENILAILUAR 
    drop foreign key FK_PENILAIL_MEMILIKI__JABATAN;
 
 alter table PENILAILUAR 
-   drop foreign key FK_PENILAIL_MEMPUNYAI_AKUN;
-
-alter table PENILAILUAR 
-   drop foreign key FK_PENILAIL_RELATIONS_SUBRUMPU;
+   drop foreign key FK_PENILAIL_MEMILIKI__SUBRUMPU;
 
 alter table UNSURPENILAIAN 
    drop foreign key FK_UNSURPEN_MEMILIKI__KATEGORI;
 
-drop table if exists AKUN;
-
-
-alter table BATASKATEGORI 
-   drop foreign key FK_BATASKAT_BATAS_UNT_JABATAN;
 
 alter table BATASKATEGORI 
    drop foreign key FK_BATASKAT_MEMILIKI_KATEGORI;
+
+alter table BATASKATEGORI 
+   drop foreign key FK_BATASKAT_BATAS_UNT_JABATAN;
 
 drop table if exists BATASKATEGORI;
 
@@ -65,32 +69,38 @@ drop table if exists JABATAN;
 drop table if exists KATEGORIPENILAIAN;
 
 
-alter table PAK 
-   drop foreign key FK_PAK_DINILAI_O_PENILAI;
+alter table LOGININFO 
+   drop foreign key FK_LOGININF_RELATIONS_USER;
+
+drop table if exists LOGININFO;
+
 
 alter table PAK 
-   drop foreign key FK_PAK_DINILAI_PENILAI;
+   drop foreign key FK_PAK_MENILAI_1_USER;
+
+alter table PAK 
+   drop foreign key FK_PAK_MENILAI_2_USER;
 
 alter table PAK 
    drop foreign key FK_PAK_PAK_UNTUK_JABATAN;
 
+alter table PAK 
+   drop foreign key FK_PAK_RELATIONS_USER;
+
+alter table PAK 
+   drop foreign key FK_PAK_RELATIONS_JABATAN;
+
 drop table if exists PAK;
 
 
-alter table PENILAI 
-   drop foreign key FK_PENILAI_ADALAH_PENILAIL;
-
-drop table if exists PENILAI;
-
-
-alter table PENILAILUAR 
-   drop foreign key FK_PENILAIL_RELATIONS_SUBRUMPU;
-
-alter table PENILAILUAR 
-   drop foreign key FK_PENILAIL_MEMPUNYAI_AKUN;
-
 alter table PENILAILUAR 
    drop foreign key FK_PENILAIL_MEMILIKI__JABATAN;
+
+alter table PENILAILUAR 
+   drop foreign key FK_PENILAIL_MEMILIKI__SUBRUMPU;
+
+alter table PENILAILUAR 
+   drop foreign key FK_PENILAIL_ADALAH_USER;
 
 drop table if exists PENILAILUAR;
 
@@ -102,28 +112,18 @@ alter table UNSURPENILAIAN
 
 drop table if exists UNSURPENILAIAN;
 
-/*==============================================================*/
-/* Table: AKUN                                                  */
-/*==============================================================*/
-create table AKUN
-(
-   IDAKUN               int(11) not null auto_increment  comment '',
-   ROLE                 int not null  comment '',
-   USERNAME             varchar(25) not null  comment '',
-   PASSWORD             varchar(25) not null  comment '',
-   primary key (IDAKUN)
-);
+drop table if exists USER;
 
 /*==============================================================*/
 /* Table: BATASKATEGORI                                         */
 /*==============================================================*/
 create table BATASKATEGORI
 (
-   IDJABATAN            int not null  comment '',
-   IDKATEGORI           int not null  comment '',
+   ID_JABATAN           int not null  comment '',
+   ID_KATEGORI          int not null  comment '',
    MINIMAL              int not null  comment '',
    MAKSIMAL             int not null  comment '',
-   primary key (IDJABATAN, IDKATEGORI)
+   primary key (ID_JABATAN, ID_KATEGORI)
 );
 
 /*==============================================================*/
@@ -131,14 +131,16 @@ create table BATASKATEGORI
 /*==============================================================*/
 create table ITEMPENILAIAN
 (
-   IDITEM               int(11) not null auto_increment  comment '',
-   IDPAK                int not null  comment '',
-   IDUNSUR              int not null  comment '',
-   NILAIAWAL            int  comment '',
-   NILAI1               int  comment '',
-   NILAI2               int  comment '',
-   URLDOKUMEN           varchar(100)  comment '',
-   primary key (IDITEM)
+   ID_ITEM              int(11) not null auto_increment  comment '',
+   ID_PAK               int not null  comment '',
+   ID_UNSUR             int not null  comment '',
+   NILAI_AWAL           int  comment '',
+   NILAI_1              int  comment '',
+   NILAI_2              int  comment '',
+   URL_DOKUMEN          varchar(100)  comment '',
+   TAHUN                int  comment '',
+   SEMESTER             tinyint  comment '',
+   primary key (ID_ITEM)
 );
 
 /*==============================================================*/
@@ -146,11 +148,11 @@ create table ITEMPENILAIAN
 /*==============================================================*/
 create table JABATAN
 (
-   IDJABATAN            int(11) not null auto_increment  comment '',
+   ID_JABATAN           int(11) not null auto_increment  comment '',
    KREDIT               int not null  comment '',
    JABATAN              varchar(15) not null  comment '',
    GOLONGAN             varchar(5) not null  comment '',
-   primary key (IDJABATAN)
+   primary key (ID_JABATAN)
 );
 
 /*==============================================================*/
@@ -158,9 +160,20 @@ create table JABATAN
 /*==============================================================*/
 create table KATEGORIPENILAIAN
 (
-   IDKATEGORI           int(11) not null auto_increment  comment '',
+   ID_KATEGORI          int(11) not null auto_increment  comment '',
    NAMA                 varchar(50)  comment '',
-   primary key (IDKATEGORI)
+   primary key (ID_KATEGORI)
+);
+
+/*==============================================================*/
+/* Table: LOGININFO                                             */
+/*==============================================================*/
+create table LOGININFO
+(
+   ID_USER              int not null  comment '',
+   USERNAME             varchar(25) not null  comment '',
+   PASSWORD             varchar(25) not null  comment '',
+   primary key (ID_USER)
 );
 
 /*==============================================================*/
@@ -168,28 +181,17 @@ create table KATEGORIPENILAIAN
 /*==============================================================*/
 create table PAK
 (
-   IDPAK                int(11) not null auto_increment  comment '',
-   IDPENILAI1           int  comment '',
-   IDPENILAI2           int  comment '',
-   IDJABATAN            int  comment '',
-   IDDOSEN              int not null  comment '',
-   STATUS               int not null  comment '',
-   TANGGALSTATUS        date not null  comment '',
-   TANGGALDIAJUKAN      date  comment '',
-   URLSK                varchar(100)  comment '',
-   primary key (IDPAK)
-);
-
-/*==============================================================*/
-/* Table: PENILAI                                               */
-/*==============================================================*/
-create table PENILAI
-(
-   IDPENILAI            int(11) not null auto_increment  comment '',
-   IDAKUN               int  comment '',
-   JENISPENILAI         tinyint not null  comment '',
-   IDDOSEN              int  comment '',
-   primary key (IDPENILAI)
+   ID_PAK               int(11) not null auto_increment  comment '',
+   ID_PENILAI_1         int  comment '',
+   ID_PENILAI_2         int  comment '',
+   ID_JABATAN_TUJUAN    int not null  comment '',
+   ID_PEMOHON           int not null  comment '',
+   ID_JABATAN_AWAL      int not null  comment '',
+   STATUS_PAK           int not null  comment '',
+   TANGGAL_STATUS       date not null  comment '',
+   TANGGAL_DIAJUKAN     date  comment '',
+   URL_SK               varchar(100)  comment '',
+   primary key (ID_PAK)
 );
 
 /*==============================================================*/
@@ -197,15 +199,14 @@ create table PENILAI
 /*==============================================================*/
 create table PENILAILUAR
 (
-   IDAKUN               int not null  comment '',
-   IDJABATAN            int not null  comment '',
-   IDSUBRUMPUN          int not null  comment '',
+   ID_USER              int not null  comment '',
+   ID_JABATAN           int not null  comment '',
+   ID_SUB_RUMPUN        int not null  comment '',
    NIP                  varchar(50) not null  comment '',
-   NAMA                 varchar(50) not null  comment '',
    EMAIL                varchar(50) not null  comment '',
    TELEPON              varchar(15) not null  comment '',
-   ASALINSTANSI         varchar(100) not null  comment '',
-   primary key (IDAKUN)
+   ASAL_INSTANSI        varchar(100) not null  comment '',
+   primary key (ID_USER)
 );
 
 /*==============================================================*/
@@ -213,10 +214,10 @@ create table PENILAILUAR
 /*==============================================================*/
 create table SUBRUMPUNILMU
 (
-   IDSUBRUMPUN          int(11) not null auto_increment  comment '',
+   ID_SUB_RUMPUN        int(11) not null auto_increment  comment '',
    RUMPUN               varchar(25) not null  comment '',
-   SUBRUMPUN            varchar(25) not null  comment '',
-   primary key (IDSUBRUMPUN)
+   SUB_RUMPUN           varchar(25) not null  comment '',
+   primary key (ID_SUB_RUMPUN)
 );
 
 /*==============================================================*/
@@ -224,49 +225,71 @@ create table SUBRUMPUNILMU
 /*==============================================================*/
 create table UNSURPENILAIAN
 (
-   IDUNSUR              int(11) not null auto_increment  comment '',
-   IDKATEGORI           int not null  comment '',
+   ID_UNSUR             int(11) not null auto_increment  comment '',
+   ID_KATEGORI          int not null  comment '',
    NAMA                 varchar(50)  comment '',
    BATAS                int  comment '',
-   JENISBATASUNSUR      int  comment '',
-   MAXKREDIT            int  comment '',
+   JENIS_BATAS_UNSUR    int  comment '',
+   MAX_KREDIT           int  comment '',
    BUKTI                varchar(50)  comment '',
-   primary key (IDUNSUR)
+   primary key (ID_UNSUR)
 );
 
-alter table BATASKATEGORI add constraint FK_BATASKAT_BATAS_UNT_JABATAN foreign key (IDJABATAN)
-      references JABATAN (IDJABATAN) on delete restrict on update restrict;
+/*==============================================================*/
+/* Table: USER                                                  */
+/*==============================================================*/
+create table USER
+(
+   ID_USER              int(11) not null auto_increment  comment '',
+   ROLE                 int not null  comment '',
+   STATUS_USER          int not null  comment '',
+   NAMA                 varchar(50)  comment '',
+   ID_PEGAWAI           int  comment '',
+   ANGKA_KREDIT         int  comment '',
+   KETERANGAN           varchar(100)  comment '',
+   primary key (ID_USER),
+   unique key AK_IDENTIFIER_2 (ID_PEGAWAI)
+);
 
-alter table BATASKATEGORI add constraint FK_BATASKAT_MEMILIKI_KATEGORI foreign key (IDKATEGORI)
-      references KATEGORIPENILAIAN (IDKATEGORI) on delete restrict on update restrict;
+alter table BATASKATEGORI add constraint FK_BATASKAT_BATAS_UNT_JABATAN foreign key (ID_JABATAN)
+      references JABATAN (ID_JABATAN) on delete restrict on update restrict;
 
-alter table ITEMPENILAIAN add constraint FK_ITEMPENI_MEMILIKI1_PAK foreign key (IDPAK)
-      references PAK (IDPAK) on delete restrict on update restrict;
+alter table BATASKATEGORI add constraint FK_BATASKAT_MEMILIKI_KATEGORI foreign key (ID_KATEGORI)
+      references KATEGORIPENILAIAN (ID_KATEGORI) on delete restrict on update restrict;
 
-alter table ITEMPENILAIAN add constraint FK_ITEMPENI_MEMILIKI__UNSURPEN foreign key (IDUNSUR)
-      references UNSURPENILAIAN (IDUNSUR) on delete restrict on update restrict;
+alter table ITEMPENILAIAN add constraint FK_ITEMPENI_MEMILIKI1_PAK foreign key (ID_PAK)
+      references PAK (ID_PAK) on delete restrict on update restrict;
 
-alter table PAK add constraint FK_PAK_DINILAI_PENILAI foreign key (IDPENILAI2)
-      references PENILAI (IDPENILAI) on delete restrict on update restrict;
+alter table ITEMPENILAIAN add constraint FK_ITEMPENI_MEMILIKI__UNSURPEN foreign key (ID_UNSUR)
+      references UNSURPENILAIAN (ID_UNSUR) on delete restrict on update restrict;
 
-alter table PAK add constraint FK_PAK_DINILAI_O_PENILAI foreign key (IDPENILAI1)
-      references PENILAI (IDPENILAI) on delete restrict on update restrict;
+alter table LOGININFO add constraint FK_LOGININF_RELATIONS_USER foreign key (ID_USER)
+      references USER (ID_USER) on delete restrict on update restrict;
 
-alter table PAK add constraint FK_PAK_PAK_UNTUK_JABATAN foreign key (IDJABATAN)
-      references JABATAN (IDJABATAN) on delete restrict on update restrict;
+alter table PAK add constraint FK_PAK_MENILAI_1_USER foreign key (ID_PENILAI_1)
+      references USER (ID_USER) on delete restrict on update restrict;
 
-alter table PENILAI add constraint FK_PENILAI_ADALAH_PENILAIL foreign key (IDAKUN)
-      references PENILAILUAR (IDAKUN) on delete restrict on update restrict;
+alter table PAK add constraint FK_PAK_MENILAI_2_USER foreign key (ID_PENILAI_2)
+      references USER (ID_USER) on delete restrict on update restrict;
 
-alter table PENILAILUAR add constraint FK_PENILAIL_MEMILIKI__JABATAN foreign key (IDJABATAN)
-      references JABATAN (IDJABATAN) on delete restrict on update restrict;
+alter table PAK add constraint FK_PAK_PAK_UNTUK_JABATAN foreign key (ID_JABATAN_TUJUAN)
+      references JABATAN (ID_JABATAN) on delete restrict on update restrict;
 
-alter table PENILAILUAR add constraint FK_PENILAIL_MEMPUNYAI_AKUN foreign key (IDAKUN)
-      references AKUN (IDAKUN) on delete restrict on update restrict;
+alter table PAK add constraint FK_PAK_RELATIONS_USER foreign key (ID_PEMOHON)
+      references USER (ID_USER) on delete restrict on update restrict;
 
-alter table PENILAILUAR add constraint FK_PENILAIL_RELATIONS_SUBRUMPU foreign key (IDSUBRUMPUN)
-      references SUBRUMPUNILMU (IDSUBRUMPUN) on delete restrict on update restrict;
+alter table PAK add constraint FK_PAK_RELATIONS_JABATAN foreign key (ID_JABATAN_AWAL)
+      references JABATAN (ID_JABATAN) on delete restrict on update restrict;
 
-alter table UNSURPENILAIAN add constraint FK_UNSURPEN_MEMILIKI__KATEGORI foreign key (IDKATEGORI)
-      references KATEGORIPENILAIAN (IDKATEGORI) on delete restrict on update restrict;
+alter table PENILAILUAR add constraint FK_PENILAIL_ADALAH_USER foreign key (ID_USER)
+      references USER (ID_USER) on delete restrict on update restrict;
+
+alter table PENILAILUAR add constraint FK_PENILAIL_MEMILIKI__JABATAN foreign key (ID_JABATAN)
+      references JABATAN (ID_JABATAN) on delete restrict on update restrict;
+
+alter table PENILAILUAR add constraint FK_PENILAIL_MEMILIKI__SUBRUMPU foreign key (ID_SUB_RUMPUN)
+      references SUBRUMPUNILMU (ID_SUB_RUMPUN) on delete restrict on update restrict;
+
+alter table UNSURPENILAIAN add constraint FK_UNSURPEN_MEMILIKI__KATEGORI foreign key (ID_KATEGORI)
+      references KATEGORIPENILAIAN (ID_KATEGORI) on delete restrict on update restrict;
 
