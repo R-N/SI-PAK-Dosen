@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Dashboard - Brand</title>
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css?h=a386f1178839eba72affce22d3fe17d5">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
+    <link rel="stylesheet" href="assets/fonts/fontawesome-all.min.css?h=03ab36d1dde930b7d44a712f19075641">
+    <link rel="stylesheet" href="assets/fonts/font-awesome.min.css?h=03ab36d1dde930b7d44a712f19075641">
+    <link rel="stylesheet" href="assets/fonts/fontawesome5-overrides.min.css?h=03ab36d1dde930b7d44a712f19075641">
+    <link rel="stylesheet" href="assets/css/style.css?h=e65eeae9296fb6410c927d5a8af1e142">
+</head>
+
+<body id="page-top">
+    <div id="wrapper">
+        <nav class="navbar navbar-dark align-items-start sidebar sidebar-dark accordion bg-gradient-primary p-0">
+            <div class="container-fluid d-flex flex-column p-0">
+                <a class="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0" href="#">
+                    <div><img src="assets/img/uinsa-1.png?h=e5d0a9bdcc8b31841c76f567bf5104d1" style="width: 34px;height: 34px;"></div>
+                    <div class="sidebar-brand-text mx-3"><span>SI PAK Dosen</span></div>
+                </a>
+                <hr class="sidebar-divider my-0">
+                <ul class="nav navbar-nav text-light" id="accordionSidebar">
+                    <li class="nav-item" role="presentation"><a class="nav-link" href="PengajuanPAK.html"><i class="fas fa-file-medical"></i><span>Pengajuan PAK</span></a></li>
+                    <li class="nav-item bg-white" role="presentation"><a class="nav-link text-dark" href="PenilaianPAK.html"><i class="fas fa-file-invoice bg-primary border-dark shadow-sm"></i><span>PenilaianPAK</span></a></li>
+                </ul>
+                <div class="text-center d-none d-md-inline"><button class="btn rounded-circle border-0" id="sidebarToggle" type="button"></button></div>
+            </div>
+        </nav>
+        <div class="d-flex flex-column" id="content-wrapper">
+            <div id="content">
+                <nav class="navbar navbar-light navbar-expand bg-white shadow mb-4 topbar static-top">
+                    <div class="container-fluid"><button class="btn btn-link d-md-none rounded-circle mr-3" id="sidebarToggleTop" type="button"><i class="fas fa-bars"></i></button>
+                        <ul class="nav navbar-nav flex-nowrap ml-auto">
+                            <li class="nav-item dropdown d-sm-none no-arrow"><a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false" href="#"><i class="fas fa-search"></i></a>
+                                <div class="dropdown-menu dropdown-menu-right p-3 animated--grow-in" role="menu" aria-labelledby="searchDropdown">
+                                    <form class="form-inline mr-auto navbar-search w-100">
+                                        <div class="input-group"><input class="bg-light form-control border-0 small" type="text" placeholder="Search for ...">
+                                            <div class="input-group-append"><button class="btn btn-primary py-0" type="button"><i class="fas fa-search"></i></button></div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </li>
+                            <li class="nav-item dropdown no-arrow mx-1" role="presentation">
+                                <li class="nav-item dropdown no-arrow"><a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false" href="#"><span class="badge badge-danger badge-counter">3+</span><i class="fas fa-bell fa-fw"></i></a>
+                                    <div class="dropdown-menu dropdown-menu-right dropdown-list dropdown-menu-right animated--grow-in"
+                                        role="menu">
+                                        <h6 class="dropdown-header">alerts center</h6>
+                                        <a class="d-flex align-items-center dropdown-item" href="#">
+                                            <div class="mr-3">
+                                                <div class="bg-primary icon-circle"><i class="fas fa-file-alt text-white"></i></div>
+                                            </div>
+                                            <div><span class="small text-gray-500">December 12, 2019</span>
+                                                <p>A new monthly report is ready to download!</p>
+                                            </div>
+                                        </a>
+                                        <a class="d-flex align-items-center dropdown-item" href="#">
+                                            <div class="mr-3">
+                                                <div class="bg-success icon-circle"><i class="fas fa-donate text-white"></i></div>
+                                            </div>
+                                            <div><span class="small text-gray-500">December 7, 2019</span>
+                                                <p>$290.29 has been deposited into your account!</p>
+                                            </div>
+                                        </a>
+                                        <a class="d-flex align-items-center dropdown-item" href="#">
+                                            <div class="mr-3">
+                                                <div class="bg-warning icon-circle"><i class="fas fa-exclamation-triangle text-white"></i></div>
+                                            </div>
+                                            <div><span class="small text-gray-500">December 2, 2019</span>
+                                                <p>Spending Alert: We've noticed unusually high spending for your account.</p>
+                                            </div>
+                                        </a><a class="text-center dropdown-item small text-gray-500" href="#">Show All Alerts</a></div>
+                                </li>
+                            </li>
+                            <div class="d-none d-sm-block topbar-divider"></div>
+                            <li class="nav-item dropdown no-arrow" role="presentation">
+                                <li class="nav-item dropdown no-arrow"><a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false" href="#"><span class="d-none d-lg-inline mr-2 text-gray-600 small nama-user" type="submit">Dosen</span><img class="border rounded-circle img-profile" src="assets/img/avatars/avatar1.jpeg?h=0ecc82101fb9a10ca459432faa8c0656"></a>
+                                    <div
+                                        class="dropdown-menu shadow dropdown-menu-right animated--grow-in" role="menu"><a class="dropdown-item" role="presentation" href="#"><i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>&nbsp;Profile</a><a class="dropdown-item" role="presentation" href="#"><i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>&nbsp;Settings</a>
+                                        <a
+                                            class="dropdown-item" role="presentation" href="#"><i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>&nbsp;Activity log</a>
+                                            <div class="dropdown-divider"></div><a class="dropdown-item" role="presentation" href="#"><i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>&nbsp;Logout</a></div>
+                    </li>
+                    </li>
+                    </ul>
+            </div>
+            </nav>
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col">
+                        <!-- Start: Form -->
+                        <div class="card">
+                            <div class="card-header bg-white">
+                                <h4 class="d-inline-block">Pengajuan PAK</h4>
+                                <form class="d-none float-right d-sm-inline-block mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+                                    <div class="input-group">
+                                        <div class="input-group-append"></div>
+                                    </div>
+                                </form><button class="btn btn-success float-right btn-submit-pak" type="submit">Submit</button><button class="btn btn-primary float-right btn-simpan-pak" type="submit">Simpan</button></div>
+                            <div class="card-body d-xl-flex flex-column justify-content-around justify-content-xl-start align-items-xl-start"
+                                style="width: 919px;">
+                                <div class="input-group">
+                                    <div class="input-group-prepend"><span class="input-group-text" style="margin-top: 11px;width: 235px;">Pemohon</span></div><input class="form-control nama-pemohon" type="text" style="margin-top: 11px;" readonly="" value="Andi Revian">
+                                    <div class="input-group-append"></div>
+                                </div>
+                                <div class="input-group">
+                                    <div class="input-group-prepend"><span class="input-group-text" style="margin-top: 11px;width: 235px;">Sub Rumpun Ilmu</span></div><input class="form-control sub-rumpun" type="text" style="margin-top: 11px;" readonly="" value="Sistem Informasi">
+                                    <div
+                                        class="input-group-append"></div>
+                            </div>
+                            <div class="input-group">
+                                <div class="input-group-prepend"><span class="input-group-text" style="margin-top: 11px;width: 235px;">Jabatan Awal</span></div><input class="form-control jabatan-awal" type="text" style="margin-top: 11px;" readonly="" value="AsistenAhli">
+                                <div class="input-group-append"></div>
+                            </div>
+                            <div class="input-group">
+                                <div class="input-group-prepend"></div>
+                                <div class="input-group-append"></div>
+                            </div><div class="input-group d-flex border rounded border-secondary" style="margin-top: 10px;">
+    <div class="input-group-prepend"><span class="input-group-text" style="min-width: 235px;">Jabatan Tujuan</span></div>
+    <div class="dropdown d-flex fill-width">
+        <button class="btn btn-default dropdown-toggle fill-width text-left" data-toggle="dropdown" aria-expanded="false" type="button" disabled>Lektor III/C</button>
+        <div role="menu" class="dropdown-menu">
+            <a role="presentation" class="dropdown-item" href="#">First Item</a>
+            <a role="presentation" class="dropdown-item" href="#">Second Item</a>
+            <a role="presentation" class="dropdown-item" href="#">Third Item</a>
+        </div>
+    </div>
+    <div class="input-group-append"></div>
+</div>
+                            <div class="input-group">
+                                <div class="input-group-prepend"><span class="input-group-text" style="margin: 0px;margin-top: 11px;width: 235px;">Angka kredit diperlukan</span></div><input class="form-control kredit-diperlukan" type="text" style="height: 38px;margin-top: 11px;" readonly=""
+                                    value="200">
+                                <div class="input-group-append"></div>
+                            </div>
+                            <div class="input-group">
+                                <div class="input-group-prepend" style="width: 235px;"><span class="input-group-text" style="margin-right: 0px;width: 235px;margin-top: 11px;">Angka kredit dimiliki</span></div><input class="form-control kredit-dimiliki" type="text" style="margin-top: 11px;" readonly="" value="100">
+                                <div
+                                    class="input-group-append"></div>
+                        </div>
+                    </div>
+                </div>
+                <!-- End: Form -->
+            </div>
+        </div>
+        <div class="row" style="margin-top: 20px;">
+            <div class="col">
+                <div class="card">
+                    <div class="card-header bg-white">
+                        <h4 class="d-inline-block">Kredit per Kategori</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive table-hover">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Kategori</th>
+                                        <th>Subtotal</th>
+                                        <th>Minimal</th>
+                                        <th>Maksimal</th>
+                                        <th>Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="nilai-kategori">Pendidikan</td>
+                                        <td class="nilai-kategori-subtotal">100</td>
+                                        <td class="nilai-kategori-minimal">80</td>
+                                        <td class="nilai-kategori-maksimal">80</td>
+                                        <td class="nilai-kategori-total">80</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Pengajaran</td>
+                                        <td>100</td>
+                                        <td>100</td>
+                                        <td>100</td>
+                                        <td>80</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Penelitian</td>
+                                        <td>100</td>
+                                        <td>100</td>
+                                        <td>100</td>
+                                        <td>80</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Pengabdian</td>
+                                        <td>100</td>
+                                        <td>100</td>
+                                        <td>100</td>
+                                        <td>80</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Pendukung</td>
+                                        <td>100</td>
+                                        <td>-</td>
+                                        <td>100</td>
+                                        <td>80</td>
+                                    </tr>
+                                    <tr class="text-light bg-success">
+                                        <td>Total</td>
+                                        <td class="total-subtotal">400</td>
+                                        <td class="minimal-jabatan">200</td>
+                                        <td>-</td>
+                                        <td class="total-akhir">320</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row" style="margin-top: 20px;">
+            <div class="col">
+                <div class="card">
+                    <div class="card-header bg-white">
+                        <h4 class="d-inline-block">Kegiatan</h4>
+                        <form class="d-none float-right d-sm-inline-block mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+                            <div class="input-group"><input class="bg-light form-control border-0 small field-search-item field-search-item-edit" type="text" placeholder="Cari Kegiatan">
+                                <div class="input-group-append"><button class="btn btn-primary py-0 btn-search-item btn-search-item-edit" type="button"><i class="fas fa-search"></i></button></div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="card-body">
+                        <div class="card">
+                            <div class="card-header bg-warning clearfix">
+                                <div class="row">
+                                    <div class="col">
+                                        <h4 class="text-white d-inline-block unsur-item">1. Lulus S3 lorem ipsum sir dolor amet the quick brown fox jumps over the lazy dog <i class="fa fa-caret-down"></i><i class="fa fa-caret-up"></i>&nbsp;</h4>
+                                    </div>
+                                    <div class="col-auto"><button class="btn btn-primary btn-sm d-inline-block btn-ganti-item" type="button">Ganti</button><button class="btn btn-danger btn-sm d-inline-block btn-hapus-item">Hapus</button></div>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div>
+                                    <div class="row">
+                                        <div class="col">
+                                            <div class="table-responsive">
+                                                <table class="table">
+                                                    <thead>
+                                                        <tr></tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>Kategori</td>
+                                                            <td>Pendidikan</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Tahun</td>
+                                                            <td><input type="number" class="field-tahun"></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Semester:</td>
+                                                            <td>
+                                                                <div class="dropdown d-inline-block"><button class="btn btn-primary btn-sm dropdown-toggle btn-pilih-semester" data-toggle="dropdown" aria-expanded="false" type="button">Pilih</button>
+                                                                    <div class="dropdown-menu" role="menu"><a class="dropdown-item" role="presentation" href="#">Ganjil</a><a class="dropdown-item" role="presentation" href="#">Genap</a></div>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Bukti</td>
+                                                            <td><button class="btn btn-primary btn-sm btn-draft-dokumen" type="button">Draft</button><button class="btn btn-primary btn-sm btn-input-dokumen" type="button">Input</button><button class="btn btn-primary btn-sm btn-lihat-dokumen"
+                                                                    type="button">Lihat</button></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="table-responsive">
+                                                <table class="table">
+                                                    <thead>
+                                                        <tr></tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>Batas</td>
+                                                            <td>1/periode</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Jumlah</td>
+                                                            <td><input type="number" class="field-jumlah"></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Angka Kredit</td>
+                                                            <td>100</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer bg-white">
+                        <div class="float-right"><button class="btn btn-light border-dark btn-prev-item btn-prev-item-edit" type="button">&lt;</button>
+                            <div class="d-inline-block"><button class="btn btn-light btn-halaman-item btn-halaman-item-edit" id="btn-next-item" type="button">1</button></div><button class="btn btn-light border-dark" type="button">&gt;</button></div><button class="btn btn-primary"
+                            id="btn-tambah-item" type="submit">Tambah</button><button class="btn btn-primary btn-submit-pak" type="submit">Simpan</button><button class="btn btn-success btn-submit-pak btn-submit" type="submit">Submit</button></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    <footer class="bg-white sticky-footer">
+        <div class="container my-auto">
+            <div class="text-center my-auto copyright"><span>Copyright © UINSA2019</span></div>
+        </div><a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a></footer>
+    </div>
+    </div>
+    <div class="modal fade" role="dialog" tabindex="-1" id="modal-dokumen">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Dokumen Bukti</h4><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button></div>
+                <div class="modal-body">
+                    <p>Upload dokumen ke Google Drive Anda, get shareable link, lalu paste ke field di bawah ini.</p>
+                    <div><input type="url" id="field-url-dokumen" style="width: 100%;" placeholder="URL dokumen"></div>
+                </div>
+                <div class="modal-footer"><button class="btn btn-primary" id="btn-simpan-dokumen" type="button">Simpan</button></div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" role="dialog" tabindex="-1" id="modal-unsur">
+        <div class="modal-dialog modal-xl" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title d-inline-block float-left">Pilih Unsur</h4>
+                    <form class="text-left d-inline-block float-right d-sm-inline-block mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+                        <div class="input-group"><input class="bg-light form-control border-0 small field-search-unsur" type="text" placeholder="Cari unsur">
+                            <div class="input-group-append"><button class="btn btn-primary py-0 btn-search-unsur" type="button"><i class="fas fa-search"></i></button></div>
+                        </div>
+                    </form><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button></div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col">
+                            <div class="table-responsive table-hover">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Kategori</th>
+                                            <th>Kegiatan</th>
+                                            <th>Batas</th>
+                                            <th>Max Kredit</th>
+                                            <th>Bukti</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr class="clickable-row row-unsur">
+                                            <td>Pendidikan</td>
+                                            <td>Mengikuti pendidikan formal</td>
+                                            <td>1/periode</td>
+                                            <td>250</td>
+                                            <td>Ijazah</td>
+                                        </tr>
+                                        <tr class="clickable-row row-unsur">
+                                            <td>Pendidikan</td>
+                                            <td>Mengikuti pendidikan formal</td>
+                                            <td>1/periode</td>
+                                            <td>250</td>
+                                            <td>Ijazah</td>
+                                        </tr>
+                                        <tr class="clickable-row row-unsur">
+                                            <td>Pendidikan</td>
+                                            <td>Mengikuti pendidikan formal</td>
+                                            <td>1/periode</td>
+                                            <td>250</td>
+                                            <td>Ijazah</td>
+                                        </tr>
+                                        <tr class="clickable-row row-unsur">
+                                            <td>Pendidikan</td>
+                                            <td>Mengikuti pendidikan formal</td>
+                                            <td>1/periode</td>
+                                            <td>250</td>
+                                            <td>Ijazah</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="float-right"><button class="btn btn-light border-dark btn-prev-unsur" type="button">&lt;</button>
+                        <div class="d-inline-block"><button class="btn btn-light btn-halaman-unsur" type="button">1</button></div><button class="btn btn-light border-dark" type="button">&gt;</button></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" role="dialog" tabindex="-1" id="modal-error">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header text-white bg-danger">
+                    <h4 class="modal-title">Error</h4><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button></div>
+                <div class="modal-body">
+                    <p>Error description.</p>
+                </div>
+                <div class="modal-footer"><button class="btn btn-light" type="button" data-dismiss="modal">Tutup</button></div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade modal-confirm modal-confirm-submit" role="dialog" tabindex="-1" id="modal-confirm">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Submit</h4><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button></div>
+                <div class="modal-body">
+                    <p>Apa Anda yakin ingin submit?<br>Proses ini tidak dapat di-undo.</p>
+                </div>
+                <div class="modal-footer"><button class="btn btn-light" type="button" data-dismiss="modal">Batal</button><button class="btn btn-primary btn-confirm-submit btn-confirm-submit-penilaian">Ya</button></div>
+            </div>
+        </div>
+    </div>
+    <script src="assets/js/jquery.min.js?h=83e266cb1712b47c265f77a8f9e18451"></script>
+    <script src="assets/bootstrap/js/bootstrap.min.js?h=63715b63ee49d5fe4844c2ecae071373"></script>
+    <script src="assets/js/functions.js?h=ed0814f72ba0162dcf661d39f55c89a1"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.js"></script>
+    <script src="assets/js/theme.js?h=6d33b44a6dcb451ae1ea7efc7b5c5e30"></script>
+</body>
+
+</html>

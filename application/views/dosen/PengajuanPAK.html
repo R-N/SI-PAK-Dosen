@@ -23,9 +23,9 @@
                 </a>
                 <hr class="sidebar-divider my-0">
                 <ul class="nav navbar-nav text-light" id="accordionSidebar">
-                    <li class="nav-item" role="presentation"><a class="nav-link stretched-link" href="PAKBaru.html"><i class="fas fa-file-medical"></i><span>PAK Baru</span></a></li>
-                    <li class="nav-item" role="presentation"><a class="nav-link text-dark" href="PAKSidang.html"><i class="fas fa-file-invoice"></i><span class="text-light">PAK Sidang</span></a></li>
-                    <li class="nav-item bg-light" role="presentation"><a class="nav-link" href="KelolaPenilai.html"><i class="fas fa-user"></i><span class="text-dark">Kelola Penilai</span></a></li>
+                    <li class="nav-item" role="presentation"></li>
+                    <li class="nav-item bg-light" role="presentation"><a class="nav-link text-dark active" href="PengajuanPAK.html"><i class="fas fa-file-invoice"></i><span>Pengajuan PAK</span></a></li>
+                    <li class="nav-item" role="presentation"><a class="nav-link" href="PenilaianPAK.html"><i class="fas fa-user"></i><span>Penilaian PAK</span></a></li>
                 </ul>
                 <div class="text-center d-none d-md-inline"><button class="btn rounded-circle border-0" id="sidebarToggle" type="button"></button></div>
             </div>
@@ -77,7 +77,7 @@
                             </li>
                             <div class="d-none d-sm-block topbar-divider"></div>
                             <li class="nav-item dropdown no-arrow" role="presentation">
-                                <li class="nav-item dropdown no-arrow"><a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false" href="#"><span class="d-none d-lg-inline mr-2 text-gray-600 small">Admin</span><img class="border rounded-circle img-profile" src="assets/img/avatars/avatar1.jpeg?h=0ecc82101fb9a10ca459432faa8c0656"></a>
+                                <li class="nav-item dropdown no-arrow"><a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false" href="#"><span class="d-none d-lg-inline mr-2 text-gray-600 small nama-user" type="button">Dosen</span><img class="border rounded-circle img-profile" src="assets/img/avatars/avatar1.jpeg?h=0ecc82101fb9a10ca459432faa8c0656"></a>
                                     <div
                                         class="dropdown-menu shadow dropdown-menu-right animated--grow-in" role="menu"><a class="dropdown-item" role="presentation" href="#"><i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>&nbsp;Profile</a><a class="dropdown-item" role="presentation" href="#"><i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>&nbsp;Settings</a>
                                         <a
@@ -93,58 +93,59 @@
                     <div class="col">
                         <div class="card">
                             <div class="card-header bg-white">
-                                <h4 class="d-inline-block">Pendaftaran Penilai Luar</h4>
+                                <h4 class="d-inline-block">Pengajuan PAK</h4>
+                                <form class="d-none float-right d-sm-inline-block mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+                                    <div class="input-group"><input class="bg-light form-control border-0 small field-search-pak field-search-pengajuan-pak" type="text" placeholder="Cari PAK">
+                                        <div class="input-group-append"><button class="btn btn-primary py-0 btn-search-pak btn-search-pengajuan-pak" type="button"><i class="fas fa-search"></i></button></div>
+                                    </div>
+                                </form>
                             </div>
                             <div class="card-body">
-                                <form>
-                                    <div class="input-group border rounded">
-                                        <div class="input-group-prepend"><span class="input-group-text" style="min-width: 120px;">NIP</span></div><input class="form-control" type="text" inputmode="numeric">
-                                        <div class="input-group-append"></div>
-                                    </div>
-                                    <div class="input-group border rounded" style="margin-top: 10px;">
-                                        <div class="input-group-prepend"><span class="input-group-text" style="min-width: 120px;">Nama</span></div><input class="form-control" type="text">
-                                        <div class="input-group-append"></div>
-                                    </div>
-                                    <div class="input-group border rounded" style="margin-top: 10px;">
-                                        <div class="input-group-prepend"><span class="input-group-text" style="min-width: 120px;">Email</span></div><input class="form-control" type="email">
-                                        <div class="input-group-append"></div>
-                                    </div>
-                                    <div class="input-group border rounded" style="margin-top: 10px;">
-                                        <div class="input-group-prepend"><span class="input-group-text" style="min-width: 120px;">Asal instansi</span></div><input class="form-control" type="text">
-                                        <div class="input-group-append"></div>
-                                    </div><div class="input-group d-flex border rounded border-secondary" style="margin-top: 10px;">
-    <div class="input-group-prepend"><span class="input-group-text" style="min-width: 120px;">Sub Rumpun</span></div>
-    <div class="dropdown d-flex fill-width">
-        <button class="btn btn-default dropdown-toggle fill-width text-left" data-toggle="dropdown" aria-expanded="false" type="button">Dropdown </button>
-        <div role="menu" class="dropdown-menu">
-            <a role="presentation" class="dropdown-item" href="#">First Item</a>
-            <a role="presentation" class="dropdown-item" href="#">Second Item</a>
-            <a role="presentation" class="dropdown-item" href="#">Third Item</a>
-        </div>
-    </div>
-    <div class="input-group-append"></div>
-</div>
-                                    <div class="input-group border rounded" style="margin-top: 10px;">
-                                        <div class="input-group-prepend"><span class="input-group-text" style="min-width: 120px;">Password</span></div><input class="form-control" type="password">
-                                        <div class="input-group-append"></div>
-                                    </div>
-                                    <div class="input-group border rounded" style="margin-top: 10px;">
-                                        <div class="input-group-prepend"><span class="input-group-text" style="min-width: 120px;">Telepon</span></div><input class="form-control" type="text" inputmode="tel">
-                                        <div class="input-group-append"></div>
-                                    </div><div class="input-group d-flex border rounded border-secondary" style="margin-top: 10px;">
-    <div class="input-group-prepend"><span class="input-group-text" style="min-width: 120px;">Jabatan</span></div>
-    <div class="dropdown d-flex fill-width">
-        <button class="btn btn-default dropdown-toggle fill-width text-left" data-toggle="dropdown" aria-expanded="false" type="button">Dropdown </button>
-        <div role="menu" class="dropdown-menu">
-            <a role="presentation" class="dropdown-item" href="#">First Item</a>
-            <a role="presentation" class="dropdown-item" href="#">Second Item</a>
-            <a role="presentation" class="dropdown-item" href="#">Third Item</a>
-        </div>
-    </div>
-    <div class="input-group-append"></div>
-</div></form>
+                                <div class="table-responsive table-hover">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>No.</th>
+                                                <th>Jabatan Awal</th>
+                                                <th>Jabatan Tujuan</th>
+                                                <th>Tanggal</th>
+                                                <th>Status</th>
+                                                <th>Aksi</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td class="align-middle">1</td>
+                                                <td class="align-middle">Asisten</td>
+                                                <td class="align-middle">Lektor</td>
+                                                <td class="align-middle">2 Oct 2019</td>
+                                                <td class="align-middle">Belum disubmit</td>
+                                                <td><a class="btn btn-primary btn-sm btn-edit-pak" role="button" href="EditPAK.html">Edit</a></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="align-middle">1</td>
+                                                <td class="align-middle">Asisten<br></td>
+                                                <td class="align-middle">Lektor<br></td>
+                                                <td class="align-middle">2 Oct 2019</td>
+                                                <td class="align-middle">Menunggu penilaian</td>
+                                                <td><a class="btn btn-primary btn-sm btn-detail-pak" role="button" href="DetailPAK.html">View</a></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="align-middle">1</td>
+                                                <td class="align-middle">Asisten<br></td>
+                                                <td class="align-middle">Lektor<br></td>
+                                                <td class="align-middle">2 Oct 2019</td>
+                                                <td class="align-middle">Menunggu penilaian<br></td>
+                                                <td><a class="btn btn-primary btn-sm btn-detail-pak" role="button" href="DetailPAK.html">View</a></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
-                            <div class="card-footer bg-white"><button class="btn btn-primary float-right" id="btn-submit-pendaftaran-penilai" type="submit">Submit</button></div>
+                            <div class="card-footer bg-white" id="btn-tambah-pak"><a class="btn btn-primary" role="button" href="EditPAK.html">Tambah</a>
+                                <div class="float-right"><button class="btn btn-light border-dark btn-prev-pak btn-prev-pengajuan-pak" type="button">&lt;</button>
+                                    <div class="d-inline-block"><button class="btn btn-light btn-halaman-pak btn-halaman-pengajuan-pak" type="button">1</button></div><button class="btn btn-light border-dark btn-next-pak btn-next-pengajuan-pak" type="button">&gt;</button></div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -156,6 +157,19 @@
             </div><a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a></footer>
     </div>
     </div>
+    <div class="modal fade" role="dialog" tabindex="-1" id="modal-sidang">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Hasil Sidang</h4><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button></div>
+                <div class="modal-body">
+                    <p>Upload dokumen ke Google Drive Anda, get shareable link, lalu paste ke field di bawah ini.</p>
+                    <div><input type="url" style="width: 100%;" placeholder="URL dokumen"></div>
+                </div>
+                <div class="modal-footer"><button class="btn btn-danger" id="btn-sidang-tolak" type="button" data-dismiss="modal">Tolak</button><button class="btn btn-success" id="btn-sidang-setuju" type="button">Terima</button></div>
+            </div>
+        </div>
+    </div>
     <div class="modal fade" role="dialog" tabindex="-1" id="modal-error">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -165,18 +179,6 @@
                     <p>Error description.</p>
                 </div>
                 <div class="modal-footer"><button class="btn btn-light" type="button" data-dismiss="modal">Tutup</button></div>
-            </div>
-        </div>
-    </div>
-    <div class="modal fade modal-confirm modal-confirm-submit" role="dialog" tabindex="-1" id="modal-confirm">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">Submit</h4><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button></div>
-                <div class="modal-body">
-                    <p>Apa Anda yakin ingin submit?<br>Proses ini tidak dapat di-undo.</p>
-                </div>
-                <div class="modal-footer"><button class="btn btn-light" type="button" data-dismiss="modal">Batal</button><button class="btn btn-primary btn-confirm-submit btn-confirm-submit-penilaian" id="btn-confirm">Ya</button></div>
             </div>
         </div>
     </div>
