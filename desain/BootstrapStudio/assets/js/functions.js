@@ -1,7 +1,3 @@
-
-var getUrl = window.location;
-var baseUrl = getUrl .protocol + "//" + getUrl.host + "/" + getUrl.pathname.split('/')[1] + "/";
-
 function pilihPenilai(idPAK, nomor){
     $(".row-penilai").off("click");
     $(".row-penilai").click(function(){
@@ -28,7 +24,7 @@ function inputHasilSidang(idPAK){
 
 function onInputHasilSidang(idPAK, setuju){
     $("#modal-sidang").modal("hide");
-    window.location.href=baseUrl + "admin/sidang";
+    window.location.href="/PAKSidang.html";
 }
 
 function pilihUnsur(index=null){
@@ -68,7 +64,7 @@ function submitPenilaian(){
 
 function onSubmitPenilaian(){
     $(".modal-confirm").modal("hide");
-    window.location.href=baseUrl+"penilai/pak";
+    window.location.href="/PenilaianPAK.html";
 }
 
 function submitPAK(){
@@ -81,7 +77,7 @@ function submitPAK(){
 
 function onSubmitPAK(){
     $(".modal-confirm").modal("hide");
-    window.location.href=baseUrl+"dosen/pak";
+    window.location.href="/PengajuanPAK.html";
 }
 
 function suspendPenilai(index){
@@ -132,29 +128,7 @@ function submitPenilai(){
 }
 function onSubmitPenilai(){
     $("#modal-confirm").modal("hide");
-    window.location.href = baseUrl+"admin/penilai";
-}
-
-function login(form){
-	let loginData = {
-		url: baseUrl + "Login/login",
-		method: 'post',
-		data: form.serialize(),
-		dataType: 'json',
-		success: function(response){
-			if(response.result == "OK"){
-				window.location.reload(true);
-			}else{
-				showError(response.errorMessage, "Login Gagal");
-			}
-			
-		},
-		error: function (xhr, ajaxOptions, thrownError) {
-			alert(xhr.status);
-			alert(xhr.responseText);
-		}
-	};
-    $.ajax(loginData);
+    window.location.href = "/KelolaPenilai.html";
 }
 
 $(document).ready(function(){
@@ -181,18 +155,14 @@ $(document).ready(function(){
     });
     $(".btn-suspend-penilai").click(function(){
         suspendPenilai(0);
-    });
+    })
     $(".btn-aktifkan-penilai").click(function(){
         aktifkanPenilai(0);
-    });
+    })
     $(".btn-submit-penilai").click(function(){
         submitPenilaiPAK(0);
-    });
+    })
     $("#btn-submit-pendaftaran-penilai").click(function(){
         submitPenilai();
-    });
-	$("#form-login").submit(function(e){
-		e.preventDefault();
-		login($(this));
-	});
+    })
 })

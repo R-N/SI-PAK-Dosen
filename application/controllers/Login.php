@@ -3,26 +3,21 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Login extends CI_Controller {
 
-	/**
-	 * Index Page for this controller.
-	 *
-	 * Maps to the following URL
-	 * 		http://example.com/index.php/welcome
-	 *	- or -
-	 * 		http://example.com/index.php/welcome/index
-	 *	- or -
-	 * Since this controller is set as the default controller in
-	 * config/routes.php, it's displayed at http://example.com/
-	 *
-	 * So any other public methods not prefixed with an underscore will
-	 * map to /index.php/welcome/<method_name>
-	 * @see https://codeigniter.com/user_guide/general/urls.html
-	 */
 	 
     public function __construct() {
         parent::__construct();
     }
 	public function halamanLogin(){
+		if(isset($_SESSION['role'])){
+			$role = $_SESSION['role'];
+			if($role == 1){
+				redirect(base_url() . "penilai");
+			}else if($role == 3){
+				redirect(base_url() . "dosen");
+			}else if($role == 4){
+				redirect(base_url() . "admin");
+			}
+		}
 		$this->load->view('umum/Login.html');
 	}
 	 
@@ -37,8 +32,27 @@ class Login extends CI_Controller {
 		
 		$this->load->model('ModelAkun');
 		
-		$response = $this->ModelAkun->login($username, $password);
+		$result = $this->ModelAkun->login($username, $password);
+		$response = array();
+		if($result['result'] == "OK"){
+			$_SESSION['idUser'] = $result['id_user'];
+			$_SESSION['nama'] = $result['nama'];
+			$_SESSION['role'] = $result['role'];
+			$response['result'] = "OK";
+		}else{
+			$response['result'] = "FAIL";
+			$response['errorMessage'] = $result['errorMessage'];
+		}
 		
 		echo json_encode($response);
+	}
+	
+	public function logout(){
+		unset(
+			$_SESSION['idUser'],
+			$_SESSION['nama'],
+			$_SESSION['role']
+		);
+		redirect(base_url());
 	}
 }

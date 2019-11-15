@@ -49,7 +49,20 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | Examples:	my-controller/index	-> my_controller/index
 |		my-controller/my-method	-> my_controller/my_method
 */
-$route['Login/login'] = 'Login/login';
+$route['logout'] = 'login/logout';
+$route['admin/baru'] = 'admin/halamanPAKBaru';
+$route['admin/sidang'] = 'admin/halamanPAKMenungguSidang';
+$route['admin/penilai'] = 'admin/halamanDaftarPenilai';
+$route['admin/penilai/baru'] = 'admin/halamanFormPenilaiLuar';
+$route['admin/draftSK/(:num)'] = 'admin/halamanPreviewDraftSK/$1';
+$route['admin/pak/(:num)'] = 'umum/halamanPAK/$1';
+$route['dosen/pak'] = 'dosen/halamanBerandaDosen';
+$route['dosen/pak/(:num)/edit'] = 'dosen/halamanEditPAK/$1';
+$route['dosen/pak/baru'] = 'dosen/halamanEditPAK';
+$route['dosen/pak/(:num)'] = 'umum/halamanPAK/$1';
+$route['admin/draftDokumen/(:num)'] = 'admin/halamanPreviewDraftDokumen/$1';
+$route['penilai/pak'] = 'penilai/halamanBerandaPenilai';
+$route['penilai/pak/(:num)'] = 'penilai/halamanPenilaianPAK/$1';
 $route['default_controller'] = 'login';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;

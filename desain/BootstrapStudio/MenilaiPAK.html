@@ -5,12 +5,12 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>Dashboard - Brand</title>
-    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/bootstrap/css/bootstrap.min.css?h=a386f1178839eba72affce22d3fe17d5">
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css?h=a309ad80aa80040d14f8bbfbe03d74ab">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
-    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/fonts/fontawesome-all.min.css?h=03ab36d1dde930b7d44a712f19075641">
-    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/fonts/font-awesome.min.css?h=03ab36d1dde930b7d44a712f19075641">
-    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/fonts/fontawesome5-overrides.min.css?h=03ab36d1dde930b7d44a712f19075641">
-    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/style.css?h=e65eeae9296fb6410c927d5a8af1e142">
+    <link rel="stylesheet" href="assets/fonts/fontawesome-all.min.css?h=03ab36d1dde930b7d44a712f19075641">
+    <link rel="stylesheet" href="assets/fonts/font-awesome.min.css?h=03ab36d1dde930b7d44a712f19075641">
+    <link rel="stylesheet" href="assets/fonts/fontawesome5-overrides.min.css?h=03ab36d1dde930b7d44a712f19075641">
+    <link rel="stylesheet" href="assets/css/style.css?h=e65eeae9296fb6410c927d5a8af1e142">
 </head>
 
 <body id="page-top">
@@ -18,14 +18,13 @@
         <nav class="navbar navbar-dark align-items-start sidebar sidebar-dark accordion bg-gradient-primary p-0">
             <div class="container-fluid d-flex flex-column p-0">
                 <a class="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0" href="#">
-                    <div><img src="<?php echo base_url(); ?>assets/img/uinsa-1.png?h=e5d0a9bdcc8b31841c76f567bf5104d1" style="width: 34px;height: 34px;"></div>
+                    <div><img src="assets/img/uinsa-1.png?h=e5d0a9bdcc8b31841c76f567bf5104d1" style="width: 34px;height: 34px;"></div>
                     <div class="sidebar-brand-text mx-3"><span>SI PAK Dosen</span></div>
                 </a>
                 <hr class="sidebar-divider my-0">
                 <ul class="nav navbar-nav text-light" id="accordionSidebar">
-                    <li class="nav-item bg-white" role="presentation"><a class="nav-link stretched-link text-dark" href="<?php echo base_url(); ?>admin/baru"><i class="fas fa-file-medical"></i><span>PAK Baru</span></a></li>
-                    <li class="nav-item" role="presentation"><a class="nav-link" href="<?php echo base_url(); ?>admin/sidang"><i class="fas fa-file-invoice"></i><span>PAK Sidang</span></a></li>
-                    <li class="nav-item" role="presentation"><a class="nav-link" href="<?php echo base_url(); ?>admin/penilai"><i class="fas fa-user"></i><span>Kelola Penilai</span></a></li>
+                    <li class="nav-item" role="presentation"><a class="nav-link" href="PengajuanPAK.html"><i class="fas fa-file-medical"></i><span>Pengajuan PAK</span></a></li>
+                    <li class="nav-item bg-white" role="presentation"><a class="nav-link text-dark" href="PenilaianPAK.html"><i class="fas fa-file-invoice bg-primary border-dark shadow-sm"></i><span>PenilaianPAK</span></a></li>
                 </ul>
                 <div class="text-center d-none d-md-inline"><button class="btn rounded-circle border-0" id="sidebarToggle" type="button"></button></div>
             </div>
@@ -77,12 +76,12 @@
                             </li>
                             <div class="d-none d-sm-block topbar-divider"></div>
                             <li class="nav-item dropdown no-arrow" role="presentation">
-                                <li class="nav-item dropdown no-arrow"><a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false" href="#"><span class="d-none d-lg-inline mr-2 text-gray-600 small nama-user"><?=$_SESSION['nama'];?></span><img class="border rounded-circle img-profile" src="<?php echo base_url(); ?>assets/img/avatars/avatar1.jpeg?h=0ecc82101fb9a10ca459432faa8c0656"></a>
+                                <li class="nav-item dropdown no-arrow"><a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false" href="#"><span class="d-none d-lg-inline mr-2 text-gray-600 small">Dosen</span><img class="border rounded-circle img-profile" src="assets/img/avatars/avatar1.jpeg?h=0ecc82101fb9a10ca459432faa8c0656"></a>
                                     <div
                                         class="dropdown-menu shadow dropdown-menu-right animated--grow-in" role="menu"><a class="dropdown-item" role="presentation" href="#"><i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>&nbsp;Profile</a><a class="dropdown-item" role="presentation" href="#"><i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>&nbsp;Settings</a>
                                         <a
                                             class="dropdown-item" role="presentation" href="#"><i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>&nbsp;Activity log</a>
-                                            <div class="dropdown-divider"></div><a class="dropdown-item" role="presentation" href="<?php echo base_url(); ?>logout"><i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>&nbsp;Logout</a></div>
+                                            <div class="dropdown-divider"></div><a class="dropdown-item" role="presentation" href="#"><i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>&nbsp;Logout</a></div>
                     </li>
                     </li>
                     </ul>
@@ -93,22 +92,17 @@
                     <div class="col">
                         <div class="card">
                             <div class="card-header bg-white">
-                                <h4 class="d-inline-block">Detail PAK</h4>
-                                <div class="float-right"><button class="btn btn-primary btn-submit-penilai" type="button">Submit</button><button class="btn btn-primary btn-draft-sk" type="button">Draft SK</button><button class="btn btn-primary btn-sidang" type="button">Sidang</button>
-                                    <button
-                                        class="btn btn-primary btn-lihat-sk" type="button">Lihat SK</button><button class="btn btn-primary btn-lihat-dokumen-pak" id="btn-draft-sk" type="button">Dokumen PAK</button></div>
+                                <h4 class="d-inline-block">Penilaian PAK</h4>
                             </div>
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col">
                                         <div>
                                             <div class="clearfix align-middle"><span>Pemohon:&nbsp;</span><span class="nama-pemohon">Andi Akbar</span></div>
-                                            <div><span>Jabatan:&nbsp;</span><span class="jabatan-awal">Asisten Ahli</span></div>
+                                            <div><span>Jabatan:&nbsp;</span><span class="jabatan-awal">Asisten Ahli III/B</span></div>
                                             <div><span>Sub Rumpun Ilmu:&nbsp;</span><span class="sub-rumpun">Sistem Informasi</span></div>
-                                        </div>
-                                        <div>
-                                            <div class="clearfix"><span>Penilai 1:&nbsp;</span><span class="nama-penilai-1">Andi Revian, M.Kom&nbsp;</span><button class="btn btn-primary btn-sm float-right btn-penilai" type="button">Pilih</button></div>
-                                            <div class="clearfix"><span>Penilai 2:&nbsp;</span><span></span><button class="btn btn-primary btn-sm float-right btn-penilai" type="button">Pilih</button></div>
+                                            <div><span>Jabatan Tujuan:&nbsp;</span><span class="jabatan-tujuan">Lektor III/C</span></div>
+                                            <div></div>
                                         </div>
                                     </div>
                                     <div class="col">
@@ -116,7 +110,7 @@
                                             <div><span>Tanggal Diajukan:&nbsp;</span><span class="tanggal-diajukan">31 Desember 2019</span></div>
                                             <div><span>Status:&nbsp;</span><span class="status-pak">Menunggu Sidang</span></div>
                                             <div><span>Tanggal Status:&nbsp;</span><span class="tanggal-status">31 Desember 2019</span></div>
-                                            <div><span>Jabatan Tujuan:&nbsp;</span><span class="jabatan-tujuan">Lektor III/C</span></div>
+                                            <div></div>
                                             <div><span>Kredit Diperlukan:&nbsp;</span><span class="kredit-diperlukan">200</span></div>
                                             <div><span>Kredit Dimiliki:&nbsp;</span><span class="kredit-dimiliki">320</span></div>
                                         </div>
@@ -200,8 +194,8 @@
                             <div class="card-header bg-white">
                                 <h4 class="d-inline-block">Kegiatan</h4>
                                 <form class="d-none float-right d-sm-inline-block mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-                                    <div class="input-group"><input class="bg-light form-control border-0 small field-search-item field-search-item-detail" type="text" placeholder="Cari Kegiatan">
-                                        <div class="input-group-append"><button class="btn btn-primary py-0 btn-search-item btn-search-item-detail" type="button"><i class="fas fa-search"></i></button></div>
+                                    <div class="input-group"><input class="bg-light form-control border-0 small field-search-item field-search-item-nilai" type="text" placeholder="Cari Kegiatan">
+                                        <div class="input-group-append"><button class="btn btn-primary py-0 btn-search-item btn-search-item-nilai" type="button"><i class="fas fa-search"></i></button></div>
                                     </div>
                                 </form>
                             </div>
@@ -213,7 +207,9 @@
                                                 <th>No.</th>
                                                 <th>Kategori</th>
                                                 <th>Kegiatan</th>
-                                                <th>Angka Kredit</th>
+                                                <th>Nilai Max</th>
+                                                <th>Nilai Awal</th>
+                                                <th>Nilai Akhir</th>
                                                 <th>Lampiran</th>
                                             </tr>
                                         </thead>
@@ -222,7 +218,9 @@
                                                 <td>1</td>
                                                 <td>Pengajaran</td>
                                                 <td>Mengajar kuliah</td>
-                                                <td>100</td>
+                                                <td class="nilai-max">100</td>
+                                                <td class="nilai-awal">100</td>
+                                                <td><input type="text" style="width: 60px;height: 38px;" inputmode="numeric"></td>
                                                 <td><button class="btn btn-primary btn-lihat-dokumen">Lihat</button></td>
                                             </tr>
                                             <tr>
@@ -230,22 +228,37 @@
                                                 <td>Pengajaran</td>
                                                 <td>Mengajar kuliah</td>
                                                 <td>100</td>
-                                                <td><button class="btn btn-primary btn-lihat-dokumen">Lihat</button></td>
+                                                <td>100</td>
+                                                <td><input type="text" style="width: 60px;height: 38px;" inputmode="numeric"></td>
+                                                <td><button class="btn btn-primary" type="button">Lihat</button></td>
                                             </tr>
                                             <tr>
                                                 <td>1</td>
                                                 <td>Pengajaran</td>
                                                 <td>Mengajar kuliah</td>
                                                 <td>100</td>
-                                                <td><button class="btn btn-primary btn-lihat-dokumen">Lihat</button></td>
+                                                <td>100</td>
+                                                <td><input type="text" style="width: 60px;height: 38px;" inputmode="numeric"></td>
+                                                <td><button class="btn btn-primary" type="button">Lihat</button></td>
+                                            </tr>
+                                            <tr>
+                                                <td>1</td>
+                                                <td>Pengajaran</td>
+                                                <td>Mengajar kuliah</td>
+                                                <td>100</td>
+                                                <td>100</td>
+                                                <td><input type="text" style="width: 60px;height: 38px;" inputmode="numeric"></td>
+                                                <td><button class="btn btn-primary" type="button">Lihat</button></td>
                                             </tr>
                                         </tbody>
                                     </table>
                                 </div>
                             </div>
                             <div class="card-footer bg-white">
-                                <div class="float-right"><button class="btn btn-light border-dark btn-prev-item btn-prev-item-detail" type="button">&lt;</button>
-                                    <div class="d-inline-block"><button class="btn btn-light btn-halaman-item btn-halaman-item-detail" type="button">1</button></div><button class="btn btn-light border-dark btn-next-item btn-next-item-detail" type="button">&gt;</button></div>
+                                <div class="float-right"><button class="btn btn-light border-dark btn-prev-item btn-prev-item-nilai" type="button">&lt;</button>
+                                    <div class="d-inline-block"><button class="btn btn-light btn-halaman-item" type="button">1</button></div><button class="btn btn-light border-dark" type="button">&gt;</button></div><button class="btn btn-primary btn-simpan-penilaian btn-simpan">Simpan</button>
+                                <button
+                                    class="btn btn-success btn-submit-penilaian btn-submit">Submit</button>
                             </div>
                         </div>
                     </div>
@@ -258,65 +271,15 @@
             </div><a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a></footer>
     </div>
     </div>
-    <div class="modal fade" role="dialog" tabindex="-1" id="modal-penilai">
-        <div class="modal-dialog modal-xl" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title d-inline-block float-left">Pilih Penilai</h4>
-                    <form class="text-left d-inline-block float-right d-sm-inline-block mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-                        <div class="input-group"><input class="bg-light form-control border-0 small" type="text" placeholder="Search for ...">
-                            <div class="input-group-append"><button class="btn btn-primary py-0" type="button"><i class="fas fa-search"></i></button></div>
-                        </div>
-                    </form><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button></div>
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col">
-                            <div class="table-responsive table-hover">
-                                <table class="table">
-                                    <thead>
-                                        <tr>
-                                            <th>Nama</th>
-                                            <th>Sub Rumpun</th>
-                                            <th>Jabatan</th>
-                                            <th>Asal</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr class="clickable-row row-penilai">
-                                            <td>Andi Revian, M.Kom</td>
-                                            <td>Matematika</td>
-                                            <td>Asisten</td>
-                                            <td>UINSA</td>
-                                        </tr>
-                                        <tr class="clickable-row row-penilai">
-                                            <td>Cell 3</td>
-                                            <td>Cell 4</td>
-                                            <td>Cell 4</td>
-                                            <td>Cell 4</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <div class="float-right"><button class="btn btn-light border-dark" type="button">&lt;</button>
-                        <div class="d-inline-block"><button class="btn btn-light" type="button">1</button></div><button class="btn btn-light border-dark" type="button">&gt;</button></div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="modal fade" role="dialog" tabindex="-1" id="modal-sidang">
+    <div class="modal fade modal-confirm modal-confirm-submit" role="dialog" tabindex="-1" id="modal-confirm">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title">Hasil Sidang</h4><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button></div>
+                    <h4 class="modal-title">Submit</h4><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button></div>
                 <div class="modal-body">
-                    <p>Upload dokumen ke Google Drive Anda, get shareable link, lalu paste ke field di bawah ini.</p>
-                    <div><input type="url" style="width: 100%;" placeholder="URL dokumen"></div>
+                    <p>Apa Anda yakin ingin submit?<br>Proses ini tidak dapat di-undo.</p>
                 </div>
-                <div class="modal-footer"><button class="btn btn-danger" id="btn-sidang-tolak" type="button" data-dismiss="modal">Tolak</button><button class="btn btn-success" id="btn-sidang-setuju" type="button">Terima</button></div>
+                <div class="modal-footer"><button class="btn btn-light" type="button" data-dismiss="modal">Batal</button><button class="btn btn-primary btn-confirm-submit btn-confirm-submit-penilaian">Ya</button></div>
             </div>
         </div>
     </div>
@@ -332,23 +295,11 @@
             </div>
         </div>
     </div>
-    <div class="modal fade modal-confirm modal-confirm-penilai" role="dialog" tabindex="-1" id="modal-confirm">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">Submit</h4><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button></div>
-                <div class="modal-body">
-                    <p>Apa Anda yakin ingin submit?<br>Proses ini tidak dapat di-undo.</p>
-                </div>
-                <div class="modal-footer"><button class="btn btn-light" type="button" data-dismiss="modal">Batal</button><button class="btn btn-primary btn-confirm btn-confirm-penilai" id="btn-confirm">Ya</button></div>
-            </div>
-        </div>
-    </div>
-    <script src="<?php echo base_url(); ?>assets/js/jquery.min.js?h=83e266cb1712b47c265f77a8f9e18451"></script>
-    <script src="<?php echo base_url(); ?>assets/bootstrap/js/bootstrap.min.js?h=63715b63ee49d5fe4844c2ecae071373"></script>
-    <script src="<?php echo base_url(); ?>assets/js/functions.js?h=ed0814f72ba0162dcf661d39f55c89a1"></script>
+    <script src="assets/js/jquery.min.js?h=83e266cb1712b47c265f77a8f9e18451"></script>
+    <script src="assets/bootstrap/js/bootstrap.min.js?h=63715b63ee49d5fe4844c2ecae071373"></script>
+    <script src="assets/js/functions.js?h=ed0814f72ba0162dcf661d39f55c89a1"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.js"></script>
-    <script src="<?php echo base_url(); ?>assets/js/theme.js?h=6d33b44a6dcb451ae1ea7efc7b5c5e30"></script>
+    <script src="assets/js/theme.js?h=6d33b44a6dcb451ae1ea7efc7b5c5e30"></script>
 </body>
 
 </html>
