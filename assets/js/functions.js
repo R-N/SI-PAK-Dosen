@@ -124,15 +124,39 @@ function onSubmitPenilaiPAK(index){
 
 
 function submitPenilai(){
-    $("#btn-confirm").off("click");
-    $("#btn-confirm").click(function(){
-        onSubmitPenilai();
-    });
-    $("#modal-confirm").modal("show");
+	$myForm = $("#form-penilai");
+	$myForm.removeClass("was-validated");
+	if(! $myForm[0].checkValidity()) {
+		$myForm.find(':submit').trigger("click", [false]);
+	}else if (validatePenilai()){
+		askConfirmation("Submit Penilai", "Apa Anda yakin ingin submit?<br>Proses ini tidak dapat di-undo.", onSubmitPenilai);
+	}
+}
+function validatePenilai(){
+	$myForm.addClass("was-validated");
+	return true;
 }
 function onSubmitPenilai(){
-    $("#modal-confirm").modal("hide");
-    window.location.href = baseUrl+"admin/penilai";
+	$myForm = $("#form-penilai");
+	let daftarkanPenilaiData = {
+		url: baseUrl + "admin/daftarkanPenilaiLuar",
+		method: 'post',
+		data: $myForm.serialize(),
+		dataType: 'json',
+		success: function(response){
+			if(response.result == "OK"){
+				window.location.href = response.redirect;
+			}else{
+				console.log(response.errorMessage);
+				showError("Pendaftaran Gagal", response.errorMessage);
+			}
+		},
+		error: function (xhr, ajaxOptions, thrownError) {
+			alert(xhr.status);
+			console.log(xhr.responseText);
+		}
+	};
+    $.ajax(daftarkanPenilaiData);
 }
 
 function login(form){
@@ -147,7 +171,6 @@ function login(form){
 			}else{
 				showError(response.errorMessage, "Login Gagal");
 			}
-			
 		},
 		error: function (xhr, ajaxOptions, thrownError) {
 			alert(xhr.status);
@@ -155,6 +178,25 @@ function login(form){
 		}
 	};
     $.ajax(loginData);
+}
+
+function askConfirmation(title, content, onConfirm){
+	$modal = $("#modal-confirm");
+	$modal.find(".modal-title").text(title);
+	$modal.find(".modal-body").html(content);
+	$modal.find(".btn-confirm").click(function(){
+		onConfirm();
+		$(this).unbind("click");
+		$modal.modal("hide");
+	});
+	$modal.modal("show");
+}
+
+function showError(title, content){
+	$modal = $("#modal-error");
+	$modal.find(".modal-title").text(title);
+	$modal.find(".modal-body").html(content);
+	$modal.modal("show");
 }
 
 $(document).ready(function(){
@@ -188,11 +230,25 @@ $(document).ready(function(){
     $(".btn-submit-penilai").click(function(){
         submitPenilaiPAK(0);
     });
-    $("#btn-submit-pendaftaran-penilai").click(function(){
+    $("#btn-submit-pendaftaran-penilai").click(function(e){
+		e.preventDefault();
         submitPenilai();
     });
 	$("#form-login").submit(function(e){
 		e.preventDefault();
 		login($(this));
+	});
+	$("#form-penilai").submit(function(e){
+		e.preventDefault();
+	});
+	$(".dropdown-item").click(function(e){
+		if($(this).attr("href")=="#"){
+			e.preventDefault();
+		}
+	});
+	$(".dropdown-select .dropdown-item").click(function(){
+		$(this).parent().parent().find(".dropdown-item.selected").removeClass("selected");
+		$(this).addClass("selected");
+		$(this).parent().parent().find(".dropdown-toggle").text($(this).text());
 	});
 })

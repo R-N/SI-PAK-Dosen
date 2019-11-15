@@ -96,53 +96,60 @@
                                 <h4 class="d-inline-block">Pendaftaran Penilai Luar</h4>
                             </div>
                             <div class="card-body">
-                                <form>
+                                <form id="form-penilai" class="needs-validation ">
                                     <div class="input-group border rounded">
-                                        <div class="input-group-prepend"><span class="input-group-text" style="min-width: 120px;">NIP</span></div><input class="form-control" type="text" inputmode="numeric">
+                                        <div class="input-group-prepend"><span class="input-group-text" style="min-width: 120px;">NIP</span></div><input class="form-control" type="text" inputmode="numeric" name="nip" required="true">
                                         <div class="input-group-append"></div>
+										<div class="invalid-feedback">NIP harus diisi</div>
                                     </div>
                                     <div class="input-group border rounded" style="margin-top: 10px;">
-                                        <div class="input-group-prepend"><span class="input-group-text" style="min-width: 120px;">Nama</span></div><input class="form-control" type="text">
+                                        <div class="input-group-prepend"><span class="input-group-text" style="min-width: 120px;">Nama</span></div><input class="form-control" type="text" required="true" name="nama">
                                         <div class="input-group-append"></div>
+										<div class="invalid-feedback">Nama harus diisi</div>
                                     </div>
                                     <div class="input-group border rounded" style="margin-top: 10px;">
-                                        <div class="input-group-prepend"><span class="input-group-text" style="min-width: 120px;">Email</span></div><input class="form-control" type="email">
+                                        <div class="input-group-prepend"><span class="input-group-text" style="min-width: 120px;">Email</span></div><input class="form-control" name="email" type="email" required="true">
                                         <div class="input-group-append"></div>
+										<div class="invalid-feedback">Email harus diisi</div>
                                     </div>
                                     <div class="input-group border rounded" style="margin-top: 10px;">
-                                        <div class="input-group-prepend"><span class="input-group-text" style="min-width: 120px;">Asal instansi</span></div><input class="form-control" type="text">
+                                        <div class="input-group-prepend"><span class="input-group-text" style="min-width: 120px;">Asal instansi</span></div><input class="form-control" type="text" required="true" name="asalInstansi">
                                         <div class="input-group-append"></div>
-                                    </div><div class="input-group d-flex border rounded border-secondary" style="margin-top: 10px;">
-    <div class="input-group-prepend"><span class="input-group-text" style="min-width: 120px;">Sub Rumpun</span></div>
-    <div class="dropdown d-flex fill-width">
-        <button class="btn btn-default dropdown-toggle fill-width text-left" data-toggle="dropdown" aria-expanded="false" type="button">Dropdown </button>
-        <div role="menu" class="dropdown-menu">
-            <a role="presentation" class="dropdown-item" href="#">First Item</a>
-            <a role="presentation" class="dropdown-item" href="#">Second Item</a>
-            <a role="presentation" class="dropdown-item" href="#">Third Item</a>
-        </div>
-    </div>
-    <div class="input-group-append"></div>
-</div>
-                                    <div class="input-group border rounded" style="margin-top: 10px;">
-                                        <div class="input-group-prepend"><span class="input-group-text" style="min-width: 120px;">Password</span></div><input class="form-control" type="password">
-                                        <div class="input-group-append"></div>
+										<div class="invalid-feedback">Asal instansi harus diisi</div>
                                     </div>
                                     <div class="input-group border rounded" style="margin-top: 10px;">
-                                        <div class="input-group-prepend"><span class="input-group-text" style="min-width: 120px;">Telepon</span></div><input class="form-control" type="text" inputmode="tel">
+                                        <div class="input-group-prepend"><span class="input-group-text" style="min-width: 120px;">Sub Rumpun</span></div>
+										<select class="form-control" name="idSubrumpun" required="true">
+											<?php foreach($pilihanSubrumpun as $subrumpun){ ?>
+												<option value="<?=$subrumpun->id_subrumpun;?>"><?=$subrumpun->subrumpun;?></option>
+											<?php } ?>
+										</select>
                                         <div class="input-group-append"></div>
-                                    </div><div class="input-group d-flex border rounded border-secondary" style="margin-top: 10px;">
-    <div class="input-group-prepend"><span class="input-group-text" style="min-width: 120px;">Jabatan</span></div>
-    <div class="dropdown d-flex fill-width">
-        <button class="btn btn-default dropdown-toggle fill-width text-left" data-toggle="dropdown" aria-expanded="false" type="button">Dropdown </button>
-        <div role="menu" class="dropdown-menu">
-            <a role="presentation" class="dropdown-item" href="#">First Item</a>
-            <a role="presentation" class="dropdown-item" href="#">Second Item</a>
-            <a role="presentation" class="dropdown-item" href="#">Third Item</a>
-        </div>
-    </div>
-    <div class="input-group-append"></div>
-</div></form>
+										<div class="invalid-feedback">Subrumpun harus dipilih</div>
+                                    </div>
+                                    <div class="input-group border rounded" style="margin-top: 10px;">
+                                        <div class="input-group-prepend"><span class="input-group-text" style="min-width: 120px;">Password</span></div><input class="form-control" type="password" required="true" name="password">
+                                        <div class="input-group-append"></div>
+										<div class="invalid-feedback">Password harus diisi</div>
+                                    </div>
+                                    <div class="input-group border rounded" style="margin-top: 10px;">
+                                        <div class="input-group-prepend"><span class="input-group-text" style="min-width: 120px;">Telepon</span></div><input class="form-control" type="text" inputmode="tel" required="true" name="telepon">
+                                        <div class="input-group-append"></div>
+										<div class="invalid-feedback">Telepon harus diisi</div>
+                                    </div>
+                                    <div class="input-group border rounded" style="margin-top: 10px;">
+                                        <div class="input-group-prepend"><span class="input-group-text" style="min-width: 120px;">Jabatan</span></div>
+										<select class="form-control" name="idJabatan" required="true">
+											<?php foreach($pilihanJabatan as $jabatan){ ?>
+												<option value="<?=$jabatan->id_jabatan;?>"><?=$jabatan->jabatan;?></option>
+											<?php } ?>
+										</select>
+                                        <div class="input-group-append"></div>
+										<div class="invalid-feedback">Jabatan harus dipilih</div>
+                                    </div>
+									<button class="d-none" type="submit"></button>
+								</form>
+								
                             </div>
                             <div class="card-footer bg-white"><button class="btn btn-primary float-right" id="btn-submit-pendaftaran-penilai" type="submit">Submit</button></div>
                         </div>
@@ -156,30 +163,8 @@
             </div><a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a></footer>
     </div>
     </div>
-    <div class="modal fade" role="dialog" tabindex="-1" id="modal-error">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header text-white bg-danger">
-                    <h4 class="modal-title">Error</h4><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button></div>
-                <div class="modal-body">
-                    <p>Error description.</p>
-                </div>
-                <div class="modal-footer"><button class="btn btn-light" type="button" data-dismiss="modal">Tutup</button></div>
-            </div>
-        </div>
-    </div>
-    <div class="modal fade modal-confirm modal-confirm-submit" role="dialog" tabindex="-1" id="modal-confirm">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">Submit</h4><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button></div>
-                <div class="modal-body">
-                    <p>Apa Anda yakin ingin submit?<br>Proses ini tidak dapat di-undo.</p>
-                </div>
-                <div class="modal-footer"><button class="btn btn-light" type="button" data-dismiss="modal">Batal</button><button class="btn btn-primary btn-confirm-submit btn-confirm-submit-penilaian" id="btn-confirm">Ya</button></div>
-            </div>
-        </div>
-    </div>
+	<?php $this->view("modal/Konfirmasi.html"); ?>
+	<?php $this->view("modal/Error.html"); ?>
     <script src="<?php echo base_url(); ?>assets/js/jquery.min.js?h=83e266cb1712b47c265f77a8f9e18451"></script>
     <script src="<?php echo base_url(); ?>assets/bootstrap/js/bootstrap.min.js?h=63715b63ee49d5fe4844c2ecae071373"></script>
     <script src="<?php echo base_url(); ?>assets/js/functions.js?h=ed0814f72ba0162dcf661d39f55c89a1"></script>

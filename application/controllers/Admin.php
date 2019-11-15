@@ -23,7 +23,23 @@ class Admin extends CI_Controller {
 	}
 	
 	public function halamanFormPenilaiLuar(){
-		$this->load->view("admin/DaftarkanPenilai.html");
+		$this->load->model("ModelAkun");
+		$pilihanSubrumpun = $this->ModelAkun->getPilihanSubrumpun();
+		$pilihanJabatan = $this->ModelAkun->getPilihanJabatan();
+		$this->load->view("admin/DaftarkanPenilai.html", array(
+			"pilihanJabatan" => $pilihanJabatan,
+			"pilihanSubrumpun" => $pilihanSubrumpun
+		));
+	}
+	
+	public function daftarkanPenilaiLuar(){
+		$this->load->model("ModelAkun");
+		$data = $this->input->post();
+		$result = $this->ModelAkun->daftarkanPenilaiLuar($data);
+		if($result["result"] == "OK"){
+			$result["redirect"] = base_url() . "admin/penilai";
+		}
+		echo json_encode($result);
 	}
 	 
 	public function index()
