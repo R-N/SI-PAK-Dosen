@@ -19,7 +19,15 @@ class Admin extends CI_Controller {
 	}
 	
 	public function halamanDaftarPenilai(){
-		$this->load->view("admin/KelolaPenilai.html");
+		$this->load->model("ModelPenilai");
+		$args = array(
+			"search" => $this->input->get("search")?: '',
+			"page" => $this->input->get("page")?: 1,
+			"limit" => $this->input->get("limit")?: 10
+		);
+		$entries = $this->ModelPenilai->fetchPenilai($args["search"], $args["page"], $args["limit"]);
+		$data = array("entries"=>$entries);
+		$this->load->view("admin/KelolaPenilai.html", $data);
 	}
 	
 	public function halamanFormPenilaiLuar(){

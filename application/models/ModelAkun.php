@@ -27,7 +27,7 @@ class ModelAkun extends CI_Model {
 	}
 	
 	function getPilihanJabatan(){
-		$sql = "SELECT id_jabatan, CONCAT(jabatan, \" \", golongan) AS jabatan FROM jabatan;";
+		$sql = "SELECT id_jabatan, jabatan FROM jabatan;";
 		$query = $this->db->query($sql);
 		$result = $query->result();
 		return $result;

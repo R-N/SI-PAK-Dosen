@@ -115,24 +115,24 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td class="align-middle">1</td>
-                                                <td class="align-middle">Andi Akbar, M.Kom</td>
-                                                <td class="align-middle">Sistem Informasi</td>
-                                                <td class="align-middle">Asisten Ahli</td>
-                                                <td class="align-middle status-user">Aktif</td>
-                                                <td class="align-middle">UNESA</td>
-                                                <td><button class="btn btn-danger btn-sm btn-suspend-penilai" type="button">Suspend</button><button class="btn btn-primary btn-sm btn-detail-penilai" type="button">Detail</button></td>
-                                            </tr>
-                                            <tr>
-                                                <td class="align-middle">2</td>
-                                                <td class="align-middle">Andi Akbar, M.Kom</td>
-                                                <td class="align-middle">Sistem Informasi</td>
-                                                <td class="align-middle">Asisten Ahli</td>
-                                                <td class="align-middle status-user">Suspend</td>
-                                                <td class="align-middle">UNESA</td>
-                                                <td><button class="btn btn-success btn-sm btn-aktifkan-penilai" type="button">Aktifkan</button><button class="btn btn-primary btn-sm" type="button">Detail</button></td>
-                                            </tr>
+											<?php foreach ($entries as $entry){ ?>
+												<tr>
+													<td class="align-middle"><?=$entry["no"];?></td>
+													<td class="align-middle"><?=$entry["nama"];?></td>
+													<td class="align-middle"><?=$entry["subrumpun"];?></td>
+													<td class="align-middle"><?=$entry["jabatan"];?></td>
+													<td class="align-middle status-user"><?=$entry["status_user"]==1?"Aktif":"Suspend";?></td>
+													<td class="align-middle"><?=$entry["asal_instansi"];?></td>
+													<td>
+														<?php if($entry["status_user"]==1) { ?>
+															<button class="btn btn-danger btn-sm btn-suspend-penilai" type="button">Suspend</button>
+														<?php } else { ?>
+															<button class="btn btn-success btn-sm btn-aktifkan-penilai" type="button">Aktifkan</button>
+														<?php } ?>
+														<button class="btn btn-primary btn-sm btn-detail-penilai" type="button">Detail</button>
+													</td>
+												</tr>
+											<?php } ?>
                                         </tbody>
                                     </table>
                                 </div>
