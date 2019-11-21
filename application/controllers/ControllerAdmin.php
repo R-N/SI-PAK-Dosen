@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Admin extends CI_Controller {
+class ControllerAdmin extends CI_Controller {
 
 	 
     public function __construct() {
@@ -49,7 +49,19 @@ class Admin extends CI_Controller {
 		}
 		echo json_encode($result);
 	}
-	 
+	
+	public function suspendPenilai($idPenilai, $alasan){
+	}
+	public function activatePenilai($idPenilai){
+	}
+	public function fetchPenilaiPAK($idPAK){
+	}
+	public function inputHasilSidang($idPAK, $setuju, $urlSK){
+	}
+	public function pilihPenilai($idPAK, $nomor, $idPenilai){
+	}
+	public function submitPenilai($idPAK){
+	}
 	public function index()
 	{
 		redirect(base_url() . "admin/baru");

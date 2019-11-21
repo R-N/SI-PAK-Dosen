@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Umum extends CI_Controller {
+class ControllerUmum extends CI_Controller {
 
 	 
     public function __construct() {
@@ -19,4 +19,6 @@ class Umum extends CI_Controller {
 	public function halamanProfil($idUser){
 	}
 	 
+	 public function fetchItemPenilaian($idPAK){
+	 }
 }

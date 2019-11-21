@@ -2,16 +2,12 @@
 
 namespace SIPAK\Entities;
 
-class KategoriPenilaian{
+class Subrumpun{
 	public $id;
-	public $nama;
-	public $batas;
-	public $jenisBatas;
-	
-	
+	public $rumpun;
+	public $subrumpun;
     public function __construct() {
 		
     }
 }
-
 ?>

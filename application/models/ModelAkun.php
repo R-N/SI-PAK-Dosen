@@ -78,4 +78,7 @@ class ModelAkun extends CI_Model {
 			return array("result"=>"OK");
 		}
 	}
+	
+	public function getPenilai($idUser){
+	}
 }

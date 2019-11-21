@@ -2,6 +2,11 @@
 
 namespace SIPAK\Entities;
 
-class Dosen{
+class Dosen extends Penilai{
+	public $kreditKumulatif;
+	
+    public function __construct() {
+		
+    }
 }
 ?>

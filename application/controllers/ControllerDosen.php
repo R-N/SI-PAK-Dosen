@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Dosen extends CI_Controller {
+class ControllerDosen extends CI_Controller {
 
 	 
     public function __construct() {
@@ -21,5 +21,10 @@ class Dosen extends CI_Controller {
 	public function index()
 	{
 		redirect(base_url() . "dosen/pak");
+	}
+	
+	public function simpanPAK($pak, $item){
+	}
+	public function submitPAK($idPAK){
 	}
 }

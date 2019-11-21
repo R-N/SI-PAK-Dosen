@@ -2,7 +2,7 @@
 
 class ModelPenilai extends CI_Model {
 
-	function fetchPenilai($search, $page, $limit){
+	function fetchPenilai($search, $page=1, $limit=20){
 		//TODO limit prone to injection
 		$offset = $limit * ($page-1);
 		$sql = "SELECT u.nama, sr.subrumpun, j.jabatan, u.status_user, pl.asal_instansi FROM user u, penilai_luar pl, jabatan j, subrumpun sr WHERE u.id_user=pl.id_user AND pl.id_jabatan=j.id_jabatan AND pl.id_subrumpun=sr.id_subrumpun LIMIT {$limit} OFFSET {$offset}";
@@ -15,4 +15,11 @@ class ModelPenilai extends CI_Model {
 		return $result;
 	}
 	
+	function fetchPenilaiPAK($idSubrumpun, $jabatan){
+	}
+	
+	function suspend($idPenilai, $keterangan){
+	}
+	function activate($idPenilai){
+	}
 }

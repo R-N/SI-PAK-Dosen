@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Penilai extends CI_Controller {
+class ControllerPenilai extends CI_Controller {
 
 	 
     public function __construct() {
@@ -13,6 +13,15 @@ class Penilai extends CI_Controller {
 	
 	public function halamanPenilaianPAK($idPAK){
 		$this->load->view("penilai/MenilaiPAK.html");
+	}
+	
+	public function simpanPenilaian($penilaian){
+	}
+	
+	public function submitPenilaian($idPAK){
+	}
+	
+	public function fetchItemPenilaian($idPAK){
 	}
 	 
 	public function index()

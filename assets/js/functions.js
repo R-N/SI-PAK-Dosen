@@ -161,7 +161,7 @@ function onSubmitPenilai(){
 
 function login(form){
 	let loginData = {
-		url: baseUrl + "Login/login",
+		url: baseUrl + "login/login",
 		method: 'post',
 		data: form.serialize(),
 		dataType: 'json',

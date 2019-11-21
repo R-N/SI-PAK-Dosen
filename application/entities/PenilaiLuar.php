@@ -2,7 +2,15 @@
 
 namespace SIPAK\Entities;
 
-class PenilaiLuar{
+class PenilaiLuar extends Penilai{
+	public $asalInstansi;
 	
+    public function __construct() {
+		
+    }
+	
+	public function getAsalInstansi(){
+		return $asalInstansi;
+	}
 }
 ?>
