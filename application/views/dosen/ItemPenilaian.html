@@ -1,0 +1,79 @@
+
+<div class="card">
+	<a class="card-header bg-warning clearfix d-block" data-toggle="collapse"  href="#collapse-body">
+		<div class="row">
+			<div class="col">
+				<h4 class="text-white d-inline-block unsur-item">1. Lulus S3 lorem ipsum sir dolor amet the quick brown fox jumps over the lazy dog <i class="fa fa-caret-down"></i><i class="fa fa-caret-up"></i>&nbsp;</h4>
+			</div>
+			<div class="col-auto"><button class="btn btn-primary btn-sm d-inline-block btn-ganti-item" type="button">Ganti</button><button class="btn btn-danger btn-sm d-inline-block btn-hapus-item">Hapus</button></div>
+		</div>
+	</a>
+	<div class="card-body collapse" id="collapse-body">
+		<div>
+			<div class="row">
+				<div class="col">
+					<div class="table-responsive">
+						<table class="table">
+							<thead>
+								<tr></tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>Kategori</td>
+									<td><?=$kategori;?></td>
+								</tr>
+								<tr>
+									<td>Tahun</td>
+									<td><input type="number" class="field-tahun" value="<?=$tahun;?>"></td>
+								</tr>
+								<tr>
+									<td>Semester:</td>
+									<td>
+										<select class="form-control" name="idSubrumpun" required="true">
+											<option value="1">Ganjil</option>
+											<option value="2">Genap</option>
+										</select>
+									</td>
+								</tr>
+								<tr>
+									<td>Bukti</td>
+									<td><button class="btn btn-primary btn-sm btn-draft-dokumen" type="button">Draft</button><button class="btn btn-primary btn-sm btn-input-dokumen" type="button">Input</button><button class="btn btn-primary btn-sm btn-lihat-dokumen"
+											type="button">Lihat</button></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+				<div class="col">
+					<div class="table-responsive">
+						<table class="table">
+							<thead>
+								<tr></tr>
+							</thead>
+							<tbody>
+								<?php if($batas || !$idUnsur) { ?>
+								<tr>
+									<td>Batas</td>
+									<td><?php echo $batas . " " . $unit . "/" . $jenisBatas;?></td>
+								</tr>
+								<?php } ?>
+								<tr>
+									<td>Jumlah<?=$unit?"(".$unit.")":"";?></td>
+									<td><input type="number" class="field-jumlah" value="<?=$jumlah;?>"></td>
+								</tr>
+								<tr>
+									<td>Angka Kredit</td>
+									<td><?=$nilaiAwal;?></td>
+								</tr>
+								<tr>
+									<td>Keterangan</td>
+									<td><?=$keterangan;?></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

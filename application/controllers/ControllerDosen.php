@@ -1,6 +1,7 @@
 <?php
 
 require_once(ENTITIES_DIR  . "User.php");
+require_once(ENTITIES_DIR  . "EntriItemEditPAK.php");
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
@@ -39,7 +40,30 @@ class ControllerDosen extends CI_Controller {
 			redirect(base_url());
 			return;
 		}
-		$this->load->view("dosen/EditPAK.html");
+		$this->load->model("ModelAkun");
+		$this->load->model("ModelPAK");
+		$this->load->model("ModelItemPenilaian");
+		$dosen = $this->ModelAkun->getDosen($_SESSION["idUser"]);
+		$pilihanJabatan = $this->ModelAkun->getPilihanJabatan();
+		$emptyItem = new EntriItemEditPAK();
+		if($idPAK == ""){
+			$pak = null;
+			$items = array();
+			$jabatanTujuan = $this->ModelAkun->getJabatan($dosen->idJabatan+1);
+		}else{
+			$pak = $this->ModelPAK->getPAK($idPAK);
+			$items = array();
+			$jabatanTujuan = $this->ModelAkun->getJabatan($pak->idJabatanTujuan);
+		}
+		$data = array(
+			"dosen" => $dosen,
+			"jabatanTujuan" => $jabatanTujuan,
+			"pilihanJabatan" => $pilihanJabatan,
+			"pak" => $pak,
+			"items" => $items,
+			"emptyItem" => $emptyItem
+		);
+		$this->load->view("dosen/EditPAK.html", $data);
 	}
 	 
 	public function index()
