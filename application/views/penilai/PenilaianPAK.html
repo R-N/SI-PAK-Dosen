@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>Dashboard - Brand</title>
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/bootstrap/css/bootstrap.min.css?h=a386f1178839eba72affce22d3fe17d5">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
+    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/nunito.css">
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/fonts/fontawesome-all.min.css?h=03ab36d1dde930b7d44a712f19075641">
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/fonts/font-awesome.min.css?h=03ab36d1dde930b7d44a712f19075641">
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/fonts/fontawesome5-overrides.min.css?h=03ab36d1dde930b7d44a712f19075641">
@@ -102,6 +102,7 @@
                                 </form>
                             </div>
                             <div class="card-body">
+								<?php if(count($entries) > 0){ ?>
                                 <div class="table-responsive table-hover">
                                     <table class="table">
                                         <thead>
@@ -115,38 +116,29 @@
                                             </tr>
                                         </thead>
                                         <tbody>
+											<?php foreach($entries as $entry){ ?>
                                             <tr>
-                                                <td class="align-middle">1</td>
-                                                <td class="align-middle">Andi Akbar, M.Kom</td>
-                                                <td class="align-middle">Sistem Informasi</td>
-                                                <td class="align-middle">Asisten Ahli</td>
-                                                <td class="align-middle">2 Oct 2019</td>
-                                                <td><a class="btn btn-primary btn-sm btn-nilai-pak" role="button" href="<?php echo base_url(); ?>penilai/pak/0">Nilai</a></td>
+                                                <td class="align-middle"><?=$entry->no;?></td>
+                                                <td class="align-middle"><?=$entry->namaPemohon;?></td>
+                                                <td class="align-middle"><?=$entry->subrumpun;?></td>
+                                                <td class="align-middle"><?=$entry->jabatanAwal;?></td>
+                                                <td class="align-middle"><?=$entry->tanggalStatus;?></td>
+                                                <td><a class="btn btn-primary btn-sm btn-nilai-pak" role="button" href="<?=base_url();?>penilai/pak/<?=$entry->idPAK;?>">Nilai</a></td>
                                             </tr>
-                                            <tr>
-                                                <td class="align-middle">1</td>
-                                                <td class="align-middle">Andi Akbar, M.Kom</td>
-                                                <td class="align-middle">Sistem Informasi</td>
-                                                <td class="align-middle">Asisten Ahli</td>
-                                                <td class="align-middle">2 Oct 2019</td>
-                                                <td><a class="btn btn-primary btn-sm" role="button" href="<?php echo base_url(); ?>penilai/pak/0">Nilai</a></td>
-                                            </tr>
-                                            <tr>
-                                                <td class="align-middle">1</td>
-                                                <td class="align-middle">Andi Akbar, M.Kom</td>
-                                                <td class="align-middle">Sistem Informasi</td>
-                                                <td class="align-middle">Asisten Ahli</td>
-                                                <td class="align-middle">2 Oct 2019</td>
-                                                <td><a class="btn btn-primary btn-sm" role="button" href="<?php echo base_url(); ?>penilai/pak/0">Nilai</a></td>
-                                            </tr>
+											<?php } ?>
                                         </tbody>
                                     </table>
                                 </div>
+								<?php } else { ?>
+								<h5>Tidak ada penilaian yang ditugaskan kepada Anda saat ini.</h5>
+								<?php } ?>
                             </div>
-                            <div class="card-footer bg-white">
+							<?php if(count($entries) > 0){ ?>
+                            <div class="card-footer bg-white" id="btn-tambah-pak">
                                 <div class="float-right"><button class="btn btn-light border-dark" type="button">&lt;</button>
                                     <div class="d-inline-block"><button class="btn btn-light btn-halaman-pak btn-halaman-penilaian-pak" type="button">1</button></div><button class="btn btn-light border-dark btn-next-pak btn-next-penilaian-pak" type="button">&gt;</button></div>
                             </div>
+							<?php } ?>
                         </div>
                     </div>
                 </div>
@@ -185,9 +177,10 @@
     </div>
     <script src="<?php echo base_url(); ?>assets/js/jquery.min.js?h=83e266cb1712b47c265f77a8f9e18451"></script>
     <script src="<?php echo base_url(); ?>assets/bootstrap/js/bootstrap.min.js?h=63715b63ee49d5fe4844c2ecae071373"></script>
-    <script src="<?php echo base_url(); ?>assets/js/functions.js?h=ed0814f72ba0162dcf661d39f55c89a1"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.js"></script>
+    <script src="<?php echo base_url(); ?>assets/js/pagination.js"></script>
+    <script src="<?php echo base_url(); ?>assets/js/jquery.easing.js"></script>
     <script src="<?php echo base_url(); ?>assets/js/theme.js?h=6d33b44a6dcb451ae1ea7efc7b5c5e30"></script>
+    <script src="<?php echo base_url(); ?>assets/js/functions.js?h=ed0814f72ba0162dcf661d39f55c89a1"></script>
 </body>
 
 </html>

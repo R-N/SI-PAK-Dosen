@@ -8,17 +8,15 @@ class ControllerLogin extends CI_Controller {
         parent::__construct();
     }
 	public function halamanLogin(){
-		if(isset($_SESSION['role'])){
-			$role = $_SESSION['role'];
-			if($role == 1){
-				redirect(base_url() . "penilai");
-			}else if($role == 3){
-				redirect(base_url() . "dosen");
-			}else if($role == 4){
-				redirect(base_url() . "admin");
-			}
+		if(isAdmin()){
+			redirect(base_url() . "admin");
+		}else if (isDosen()){
+			redirect(base_url() . "dosen");
+		}else if (isPenilai()){
+			redirect(base_url() . "penilai");
+		}else{
+			$this->load->view('umum/Login.html');
 		}
-		$this->load->view('umum/Login.html');
 	}
 	 
 	public function index()
@@ -27,13 +25,18 @@ class ControllerLogin extends CI_Controller {
 	}
 	
 	public function login(){
+		$response = array();
+		if(isLoggedIn()){
+			$response['result'] = "FAIL";
+			$response['errorMessage'] = "Anda sudah terlogin";
+			return $response;
+		}
 		$username = $this->input->post("username");
 		$password = $this->input->post("password");
 		
 		$this->load->model('ModelAkun');
 		
 		$result = $this->ModelAkun->login($username, $password);
-		$response = array();
 		if($result['result'] == "OK"){
 			$_SESSION['idUser'] = $result['id_user'];
 			$_SESSION['nama'] = $result['nama'];

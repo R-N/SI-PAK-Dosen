@@ -119,13 +119,13 @@ insert  into `jabatan`(`ID_JABATAN`,`KREDIT`,`JABATAN`) values
 
 CREATE TABLE `kategori_penilaian` (
   `ID_KATEGORI` int(11) NOT NULL AUTO_INCREMENT,
-  `NAMA` varchar(50) DEFAULT NULL,
+  `KATEGORI` varchar(10) NOT NULL,
   PRIMARY KEY (`ID_KATEGORI`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 
 /*Data for the table `kategori_penilaian` */
 
-insert  into `kategori_penilaian`(`ID_KATEGORI`,`NAMA`) values 
+insert  into `kategori_penilaian`(`ID_KATEGORI`,`KATEGORI`) values 
 (1,'Pendidikan'),
 (2,'Pengajaran'),
 (3,'Penelitian'),
@@ -151,7 +151,8 @@ insert  into `login_info`(`ID_USER`,`USERNAME`,`PASSWORD`) values
 (3,'dosen','dosen'),
 (11,'asdfasdfasdf','asdfasdf'),
 (22,'123456','asdfasdf'),
-(23,'12341234','asdfasdf');
+(23,'12341234','asdfasdf'),
+(24,'123123123','123123123');
 
 /*Table structure for table `pak` */
 
@@ -162,27 +163,32 @@ CREATE TABLE `pak` (
   `ID_JABATAN_TUJUAN` int(11) NOT NULL,
   `ID_PEMOHON` int(11) NOT NULL,
   `ID_JABATAN_AWAL` int(11) NOT NULL,
-  `STATUS_PAK` int(11) NOT NULL,
+  `ID_STATUS_PAK` int(11) NOT NULL,
   `TANGGAL_STATUS` date NOT NULL,
   `TANGGAL_DIAJUKAN` date DEFAULT NULL,
   `URL_SK` varchar(100) DEFAULT NULL,
+  `ID_SUBRUMPUN` int(11) NOT NULL,
   PRIMARY KEY (`ID_PAK`),
   KEY `FK_PAK_MENILAI_1_USER` (`ID_PENILAI_1`),
   KEY `FK_PAK_MENILAI_2_USER` (`ID_PENILAI_2`),
   KEY `FK_PAK_PAK_UNTUK_JABATAN` (`ID_JABATAN_TUJUAN`),
   KEY `FK_PAK_RELATIONS_USER` (`ID_PEMOHON`),
   KEY `FK_PAK_RELATIONS_JABATAN` (`ID_JABATAN_AWAL`),
+  KEY `FK_PAK_SUBRUMPUN` (`ID_SUBRUMPUN`),
+  KEY `FK_STATUS_PAK` (`ID_STATUS_PAK`),
   CONSTRAINT `FK_PAK_MENILAI_1_USER` FOREIGN KEY (`ID_PENILAI_1`) REFERENCES `user` (`ID_USER`),
   CONSTRAINT `FK_PAK_MENILAI_2_USER` FOREIGN KEY (`ID_PENILAI_2`) REFERENCES `user` (`ID_USER`),
   CONSTRAINT `FK_PAK_PAK_UNTUK_JABATAN` FOREIGN KEY (`ID_JABATAN_TUJUAN`) REFERENCES `jabatan` (`ID_JABATAN`),
   CONSTRAINT `FK_PAK_RELATIONS_JABATAN` FOREIGN KEY (`ID_JABATAN_AWAL`) REFERENCES `jabatan` (`ID_JABATAN`),
-  CONSTRAINT `FK_PAK_RELATIONS_USER` FOREIGN KEY (`ID_PEMOHON`) REFERENCES `user` (`ID_USER`)
+  CONSTRAINT `FK_PAK_RELATIONS_USER` FOREIGN KEY (`ID_PEMOHON`) REFERENCES `user` (`ID_USER`),
+  CONSTRAINT `FK_PAK_SUBRUMPUN` FOREIGN KEY (`ID_SUBRUMPUN`) REFERENCES `subrumpun` (`ID_SUBRUMPUN`),
+  CONSTRAINT `FK_STATUS_PAK` FOREIGN KEY (`ID_STATUS_PAK`) REFERENCES `status_pak` (`id_status_pak`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 /*Data for the table `pak` */
 
-insert  into `pak`(`ID_PAK`,`ID_PENILAI_1`,`ID_PENILAI_2`,`ID_JABATAN_TUJUAN`,`ID_PEMOHON`,`ID_JABATAN_AWAL`,`STATUS_PAK`,`TANGGAL_STATUS`,`TANGGAL_DIAJUKAN`,`URL_SK`) values 
-(1,NULL,NULL,2,3,1,0,'2019-11-21',NULL,NULL);
+insert  into `pak`(`ID_PAK`,`ID_PENILAI_1`,`ID_PENILAI_2`,`ID_JABATAN_TUJUAN`,`ID_PEMOHON`,`ID_JABATAN_AWAL`,`ID_STATUS_PAK`,`TANGGAL_STATUS`,`TANGGAL_DIAJUKAN`,`URL_SK`,`ID_SUBRUMPUN`) values 
+(1,3,NULL,2,3,1,1,'2019-11-21',NULL,NULL,1);
 
 /*Table structure for table `penilai_luar` */
 
@@ -207,7 +213,27 @@ CREATE TABLE `penilai_luar` (
 insert  into `penilai_luar`(`ID_USER`,`ID_JABATAN`,`ID_SUBRUMPUN`,`NIP`,`EMAIL`,`TELEPON`,`ASAL_INSTANSI`) values 
 (11,1,1,'asdfasdfasdf','asdfasdfasdf@gmail.com','asdfasdf','aasdfasdfasdf'),
 (22,4,4,'123456','yoga@uinsby.ac.id','yoyo','aasdfasdfasdf'),
-(23,1,4,'12341234','penilai1234@gmail.com','1234567','Bukan UINSA');
+(23,1,4,'12341234','penilai1234@gmail.com','1234567','Bukan UINSA'),
+(24,1,1,'123123123','emailapaanya@gmail.com','555444333','hmmmmmmmmmm');
+
+/*Table structure for table `status_pak` */
+
+CREATE TABLE `status_pak` (
+  `ID_STATUS_PAK` int(11) NOT NULL,
+  `STATUS_PAK` varchar(16) NOT NULL,
+  PRIMARY KEY (`ID_STATUS_PAK`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+/*Data for the table `status_pak` */
+
+insert  into `status_pak`(`ID_STATUS_PAK`,`STATUS_PAK`) values 
+(1,'Belum disubmit'),
+(2,'Baru'),
+(3,'Menunggu penilai'),
+(4,'Menunggu sidang'),
+(11,'Diterima'),
+(21,'Ditolak (nilai k'),
+(22,'Ditolak (dalam s');
 
 /*Table structure for table `subrumpun` */
 
@@ -414,7 +440,7 @@ CREATE TABLE `user` (
   `KETERANGAN` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`ID_USER`),
   UNIQUE KEY `AK_IDENTIFIER_2` (`ID_PEGAWAI`)
-) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=latin1;
 
 /*Data for the table `user` */
 
@@ -424,7 +450,8 @@ insert  into `user`(`ID_USER`,`ROLE`,`STATUS_USER`,`NAMA`,`ID_PEGAWAI`,`ANGKA_KR
 (3,3,1,'Dosen',NULL,250,NULL),
 (11,1,1,'asdfasdfasdf',NULL,NULL,NULL),
 (22,1,1,'yogayoga',NULL,NULL,NULL),
-(23,1,1,'Penilai Luar 1234',NULL,NULL,NULL);
+(23,1,1,'Penilai Luar 1234',NULL,NULL,NULL),
+(24,1,1,'Penilai baru',NULL,NULL,NULL);
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

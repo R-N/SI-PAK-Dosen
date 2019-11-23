@@ -4,7 +4,7 @@ class ModelAkun extends CI_Model {
 
 	function login($username, $password){
  
- 
+		//TODO password is plain
 		$sql = "SELECT u.id_user, role, nama, status_user, keterangan FROM user u, login_info li WHERE username=? AND password=? AND li.id_user=u.id_user";
 		$query = $this->db->query($sql, array($username, $password));
 		$result = $query->row_array();

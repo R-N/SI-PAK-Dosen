@@ -1,5 +1,8 @@
 <?php
+
+
 defined('BASEPATH') OR exit('No direct script access allowed');
+
 
 class ControllerAdmin extends CI_Controller {
 
@@ -8,17 +11,49 @@ class ControllerAdmin extends CI_Controller {
         parent::__construct();
     }
 	public function halamanPAKBaru(){
-		$this->load->view('admin/PAKBaru.html');
+		if(!isAdmin()){
+			redirect(base_url());
+			return;
+		}
+		$this->load->model("ModelPAK");
+		$args = array(
+			"search" => $this->input->get("search")?: '',
+			"page" => $this->input->get("page")?: 1,
+			"limit" => $this->input->get("limit")?: 10
+		);
+		$entries = $this->ModelPAK->fetchPAKBaru($args["search"], $args["page"], $args["limit"]);
+		$data = array("entries"=>$entries);
+		$this->load->view('admin/PAKBaru.html', $data);
 	}
 	
 	public function halamanPreviewDraftSK(){
+		if(!isAdmin()){
+			redirect(base_url());
+			return;
+		}
 	}
 	
 	public function halamanPAKMenungguSidang(){
-		$this->load->view("admin/PAKSidang.html");
+		if(!isAdmin()){
+			redirect(base_url());
+			return;
+		}
+		$this->load->model("ModelPAK");
+		$args = array(
+			"search" => $this->input->get("search")?: '',
+			"page" => $this->input->get("page")?: 1,
+			"limit" => $this->input->get("limit")?: 10
+		);
+		$entries = $this->ModelPAK->fetchPAKSidang($args["search"], $args["page"], $args["limit"]);
+		$data = array("entries"=>$entries);
+		$this->load->view("admin/PAKSidang.html", $data);
 	}
 	
 	public function halamanDaftarPenilai(){
+		if(!isAdmin()){
+			redirect(base_url());
+			return;
+		}
 		$this->load->model("ModelPenilai");
 		$args = array(
 			"search" => $this->input->get("search")?: '',
@@ -31,6 +66,10 @@ class ControllerAdmin extends CI_Controller {
 	}
 	
 	public function halamanFormPenilaiLuar(){
+		if(!isAdmin()){
+			redirect(base_url());
+			return;
+		}
 		$this->load->model("ModelAkun");
 		$pilihanSubrumpun = $this->ModelAkun->getPilihanSubrumpun();
 		$pilihanJabatan = $this->ModelAkun->getPilihanJabatan();

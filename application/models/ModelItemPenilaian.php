@@ -11,5 +11,9 @@ class ModelItemPenilaian extends CI_Model {
 	}
 	function getItemPenilaian($idItem){
 	}
+	function simpanItemPenilaian($item){
+	}
+	function hapusItemPenilaian($idItem){
+	}
 }
 ?>
