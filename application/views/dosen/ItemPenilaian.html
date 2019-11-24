@@ -1,14 +1,14 @@
 
 <div class="card">
-	<a class="card-header bg-warning clearfix d-block" data-toggle="collapse"  href="#collapse-body">
+	<a class="card-header bg-warning clearfix d-block item-header" data-toggle="collapse"  href="#item-body-<?=$no;?>">
 		<div class="row">
 			<div class="col">
-				<h4 class="text-white d-inline-block unsur-item">1. Lulus S3 lorem ipsum sir dolor amet the quick brown fox jumps over the lazy dog <i class="fa fa-caret-down"></i><i class="fa fa-caret-up"></i>&nbsp;</h4>
+				<h5 class="text-white d-inline-block item-kegiatan"><?=$no;?>. <?=$kegiatan;?></h5>
 			</div>
 			<div class="col-auto"><button class="btn btn-primary btn-sm d-inline-block btn-ganti-item" type="button">Ganti</button><button class="btn btn-danger btn-sm d-inline-block btn-hapus-item">Hapus</button></div>
 		</div>
 	</a>
-	<div class="card-body collapse" id="collapse-body">
+	<div class="card-body collapse item-body" id="item-body-<?=$no;?>">
 		<div>
 			<div class="row">
 				<div class="col">
@@ -20,25 +20,31 @@
 							<tbody>
 								<tr>
 									<td>Kategori</td>
-									<td><?=$kategori;?></td>
+									<td class="item-kategori"><?=$kategori;?></td>
 								</tr>
-								<tr>
+								<tr class="row-tahun <?=$tahun?"":"d-none";?>">
 									<td>Tahun</td>
 									<td><input type="number" class="field-tahun" value="<?=$tahun;?>"></td>
 								</tr>
-								<tr>
+								<tr class="row-semester <?=$semester?"":"d-none";?>">
 									<td>Semester:</td>
 									<td>
-										<select class="form-control" name="idSubrumpun" required="true">
+										<select class="form-control field-semester" name="idSubrumpun" required="true">
 											<option value="1">Ganjil</option>
 											<option value="2">Genap</option>
 										</select>
 									</td>
 								</tr>
-								<tr>
+								<tr class="row-bukti">
 									<td>Bukti</td>
-									<td><button class="btn btn-primary btn-sm btn-draft-dokumen" type="button">Draft</button><button class="btn btn-primary btn-sm btn-input-dokumen" type="button">Input</button><button class="btn btn-primary btn-sm btn-lihat-dokumen"
-											type="button">Lihat</button></td>
+									<td>
+										<p class="item-bukti <?=$bukti?"":"d-none";?>"><?=$bukti;?></p>
+										<div>
+											<button class="btn btn-primary btn-sm btn-draft-dokumen <?=$bukti?"":"d-none";?>" type="button">Draft</button>
+											<button class="btn btn-primary btn-sm btn-input-dokumen" type="button">Input</button>
+											<button class="btn btn-primary btn-sm btn-lihat-dokumen" type="button">Lihat</button>
+										</div>
+									</td>
 								</tr>
 							</tbody>
 						</table>
@@ -51,23 +57,21 @@
 								<tr></tr>
 							</thead>
 							<tbody>
-								<?php if($batas || !$idUnsur) { ?>
-								<tr>
+								<tr class="row-batas <?=$batas?"":"d-none";?>">
 									<td>Batas</td>
-									<td><?php echo $batas . " " . $unit . "/" . $jenisBatas;?></td>
+									<td class="item-batas"><?php echo $batas . ($unit?(" " . $unit):"") . ($jenisBatas?("/" . $jenisBatas):"");?></td>
 								</tr>
-								<?php } ?>
-								<tr>
-									<td>Jumlah<?=$unit?"(".$unit.")":"";?></td>
+								<tr class="row-jumlah">
+									<td>Jumlah <span class="item-unit"><?=$unit?"(".$unit.")":"";?></span></td>
 									<td><input type="number" class="field-jumlah" value="<?=$jumlah;?>"></td>
 								</tr>
-								<tr>
+								<tr class="row-nilai">
 									<td>Angka Kredit</td>
-									<td><?=$nilaiAwal;?></td>
+									<td class="item-nilai"><?=$nilai;?></td>
 								</tr>
-								<tr>
+								<tr class="row-keterangan <?=$keterangan?"":"d-none";?>">
 									<td>Keterangan</td>
-									<td><?=$keterangan;?></td>
+									<td class="item-keterangan"><?=$keterangan;?></td>
 								</tr>
 							</tbody>
 						</table>

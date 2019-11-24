@@ -34,12 +34,17 @@ function onInputHasilSidang(idPAK, setuju){
 function pilihUnsur(index=null){
     $(".row-unsur").off("click");
     $(".row-unsur").click(function(){
-        onPilihUnsur(index, 0);
+		if(index==null){
+			addItemPenilaian($(this).data("id-unsur"));
+		}else{
+			onPilihUnsur(index, 0);
+		}
+		$("#modal-unsur").modal("hide");
     });
     $("#modal-unsur").modal("show");
 }
 function onPilihUnsur(idUnsur, index=null){
-    $("#modal-unsur").modal("hide");
+	
 }
 function inputDokumen(index){
     $("#btn-simpan-dokumen").off("click");
@@ -198,6 +203,39 @@ function showError(title, content){
 	$modal.find(".modal-body").html(content);
 	$modal.modal("show");
 }
+function addItemPenilaian(idUnsur){
+	let unsur = unsurs[idUnsur];
+	let $item0 = $.parseHTML(templateItem);
+	let no = $("#item-penilaian-holder .card").length+1;
+	let $item =  $('<div/>').html($item0).contents();
+	$item.find(".item-header").attr("href", "#item-body-" + no);
+	$item.find(".item-body").attr("id", "item-body-" + no);
+	$item.find(".item-kegiatan").html(no + ". " + unsur.kegiatan);
+	$item.find(".item-kategori").html(unsur.kategori);;
+	if(unsur.jenisBatas==1){
+		$item.find(".row-semester").removeClass("d-none");
+	}
+	if(unsur.jenisBatas ==1 || unsur.jenisBatas==2){
+		$item.find(".row-tahun").removeClass("d-none");
+	}
+	if(unsur.bukti){
+		$item.find(".item-bukti").removeClass("d-none").html(unsur.butki);
+		$item.find(".btn-draft-dokumen").removeClass("d-none");
+	}
+	if(unsur.batas){
+		$item.find(".row-batas").removeClass("d-none");
+		$item.find(".item-batas").html(unsur.batas + (unsur.unit?(" " + unsur.unit):"") + (unsur.jenisBatas?("/" + unsur.jenisBatas):""));
+	}
+	if(unsur.unit){
+		$item.find(".item-unit").html(unsur.unit);
+	}
+	$item.find(".item-nilai").html(0);
+	if(unsur.keterangan){
+		$item.find(".row-keterangan").removeClass("d-none");
+		$item.find(".item-keterangan").html(unsur.keterangan);
+	}
+	$("#item-penilaian-holder").append($item0);
+}
 
 $(document).ready(function(){
     $(".btn-penilai").click(function(){
@@ -251,4 +289,9 @@ $(document).ready(function(){
 		$(this).addClass("selected");
 		$(this).parent().parent().find(".dropdown-toggle").text($(this).text());
 	});
+	if (typeof error === 'string') {
+		showError("Error", error);
+	}else if (typeof error ===  'object'){
+		showError(error.title, error.message);
+	}
 })

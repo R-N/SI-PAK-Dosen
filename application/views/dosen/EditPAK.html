@@ -116,7 +116,7 @@
                                     <div class="input-group-append"></div>
                                 </div>
                                 <div class="input-group" style="margin-top: 11px;"  >
-                                    <div class="input-group-prepend"><span class="input-group-text" style="width: 235px;">Angka kredit dimiliki</span></div><div  class="form-control kredit-sebelumnya"><?=$dosen->kreditKumulatif;?></div>
+                                    <div class="input-group-prepend"><span class="input-group-text" style="width: 235px;">Angka kredit sebelumnya</span></div><div  class="form-control kredit-sebelumnya"><?=$dosen->kreditKumulatif;?></div>
                                     <div class="input-group-append"></div>
                                 </div>
                                 <div class="input-group" style="margin-top: 11px;"  >
@@ -124,7 +124,14 @@
                                     <div class="input-group-append"></div>
                                 </div>
                                 <div class="input-group" style="margin-top: 11px;"  >
-                                    <div class="input-group-prepend"><span class="input-group-text" style="width: 235px;">Angka kredit dimiliki</span></div><div  class="form-control kredit-diperlukan"><?=$dosen->kreditKumulatif;?></div>
+                                    <div class="input-group-prepend"><span class="input-group-text" style="width: 235px;">Angka kredit didapat</span></div><div  class="form-control kredit-diperlukan">
+									<?php
+										$nilai = $dosen->kreditKumulatif;
+										foreach($items as $item){
+											$nilai += $item->nilai;
+										}
+										echo $nilai;
+									?></div>
                                     <div class="input-group-append"></div>
                                 </div>
                     </div>
@@ -132,6 +139,7 @@
                 <!-- End: Form -->
             </div>
         </div>
+		<!-- kredit per kategori
         <div class="row" style="margin-top: 20px;">
             <div class="col">
                 <div class="card">
@@ -151,47 +159,21 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+									<?php foreach($batasKategori as $batas){ ?>
                                     <tr>
-                                        <td class="nilai-kategori">Pendidikan</td>
-                                        <td class="nilai-kategori-subtotal">100</td>
-                                        <td class="nilai-kategori-minimal">80</td>
-                                        <td class="nilai-kategori-maksimal">80</td>
-                                        <td class="nilai-kategori-total">80</td>
+                                        <td class="nilai-kategori"><?=$batas->kategori;?></td>
+                                        <td class="nilai-kategori-subtotal"></td>
+                                        <td class="nilai-kategori-minimal"><?=$batas->minimal;?></td>
+                                        <td class="nilai-kategori-maksimal"><?=$batas->maksimal;?></td>
+                                        <td class="nilai-kategori-total"></td>
                                     </tr>
-                                    <tr>
-                                        <td>Pengajaran</td>
-                                        <td>100</td>
-                                        <td>100</td>
-                                        <td>100</td>
-                                        <td>80</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Penelitian</td>
-                                        <td>100</td>
-                                        <td>100</td>
-                                        <td>100</td>
-                                        <td>80</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Pengabdian</td>
-                                        <td>100</td>
-                                        <td>100</td>
-                                        <td>100</td>
-                                        <td>80</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Pendukung</td>
-                                        <td>100</td>
-                                        <td>-</td>
-                                        <td>100</td>
-                                        <td>80</td>
-                                    </tr>
+									<?php } ?>
                                     <tr class="text-light bg-success">
                                         <td>Total</td>
-                                        <td class="total-subtotal">400</td>
-                                        <td class="minimal-jabatan">200</td>
+                                        <td class="total-subtotal"></td>
+                                        <td class="minimal-jabatan"><?=$jabatanTujuan->kreditMinimal;?></td>
                                         <td>-</td>
-                                        <td class="total-akhir">320</td>
+                                        <td class="total-akhir"></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -199,7 +181,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
         <div class="row" style="margin-top: 20px;">
             <div class="col">
                 <div class="card">
@@ -215,7 +197,7 @@
 						<?php 
 						foreach($items as $item){
 							$this->view("dosen/ItemPenilaian.html", $item); 
-							}
+						}
 						?>
                     </div>
                     <div class="card-footer bg-white">
@@ -266,39 +248,20 @@
                                             <th>Kategori</th>
                                             <th>Kegiatan</th>
                                             <th>Batas</th>
-                                            <th>Max Kredit</th>
+                                            <th>Kredit</th>
                                             <th>Bukti</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr class="clickable-row row-unsur">
-                                            <td>Pendidikan</td>
-                                            <td>Mengikuti pendidikan formal</td>
-                                            <td>1/periode</td>
-                                            <td>250</td>
-                                            <td>Ijazah</td>
+										<?php foreach($unsurs as $unsur){ ?>
+                                        <tr class="clickable-row row-unsur" data-id-unsur="<?=$unsur->id;?>">
+                                            <td><?=$unsur->kategori;?></td>
+                                            <td><?=$unsur->kegiatan;?></td>
+                                            <td><?php if($unsur->batas) echo $unsur->batas . ($unsur->unit?" " . $unsur->unit:"") . ($unsur->jenisBatas?("/" . $unsur->jenisBatas):"");?></td>
+                                            <td><?=$unsur->kreditPerItem;?></td>
+                                            <td><?=$unsur->bukti;?></td>
                                         </tr>
-                                        <tr class="clickable-row row-unsur">
-                                            <td>Pendidikan</td>
-                                            <td>Mengikuti pendidikan formal</td>
-                                            <td>1/periode</td>
-                                            <td>250</td>
-                                            <td>Ijazah</td>
-                                        </tr>
-                                        <tr class="clickable-row row-unsur">
-                                            <td>Pendidikan</td>
-                                            <td>Mengikuti pendidikan formal</td>
-                                            <td>1/periode</td>
-                                            <td>250</td>
-                                            <td>Ijazah</td>
-                                        </tr>
-                                        <tr class="clickable-row row-unsur">
-                                            <td>Pendidikan</td>
-                                            <td>Mengikuti pendidikan formal</td>
-                                            <td>1/periode</td>
-                                            <td>250</td>
-                                            <td>Ijazah</td>
-                                        </tr>
+										<?php } ?>
                                     </tbody>
                                 </table>
                             </div>
@@ -343,9 +306,26 @@
     <script src="<?php echo base_url(); ?>assets/js/theme.js?h=6d33b44a6dcb451ae1ea7efc7b5c5e30"></script>
     <script src="<?php echo base_url(); ?>assets/js/functions.js?h=ed0814f72ba0162dcf661d39f55c89a1"></script>
 	<script>
+		var dosen = <?=json_encode($dosen);?>;
+		var pak = <?=json_encode($pak);?>;
+		var jabatanTujuan = <?=json_encode($jabatanTujuan);?>;
+		var items = <?=json_encode($items);?>;
+		<?php 
+			$unsurDict = array();
+			foreach($unsurs as $unsur){
+				$unsurDict[$unsur->id] = $unsur;
+			}
+		?>
+		var unsurs = <?=json_encode($unsurDict);?>;
+		<?php 
+			$batasDict = array();
+			foreach($batasKategori as $batas){
+				$batasDict[$batas->idKategori] = $batas;
+			}
+		?>
+		var batasKategori = <?=json_encode($batasDict);?>;
 		var templateItem = "<?php echo escape($this->view("dosen/ItemPenilaian.html", $emptyItem, true)); ?>";
 		$(document).ready(function(){
-			$("#item-penilaian-holder").append(templateItem);
 		});
 	</script>
 </body>

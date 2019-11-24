@@ -115,6 +115,24 @@ insert  into `jabatan`(`ID_JABATAN`,`KREDIT`,`JABATAN`) values
 (7,850,'Profesor IV/d'),
 (8,1050,'Profesor IV/e');
 
+/*Table structure for table `jenis_batas` */
+
+CREATE TABLE `jenis_batas` (
+  `ID_JENIS_BATAS` int(11) NOT NULL AUTO_INCREMENT,
+  `JENIS_BATAS` varchar(192) NOT NULL,
+  PRIMARY KEY (`ID_JENIS_BATAS`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+
+/*Data for the table `jenis_batas` */
+
+insert  into `jenis_batas`(`ID_JENIS_BATAS`,`JENIS_BATAS`) values 
+(1,'per semester'),
+(2,'per tahun'),
+(3,'per periode penilaian'),
+(4,'total angka kredit unsur penelitian yang diperlukan untuk pengusulan ke Lektor Kepala dan Profesor '),
+(5,'total angka kredit unsur penelitian yang diperlukan untuk pengusulan ke Lektor Kepala dan Profesor  (untuk karya ilmiah butir; 2.a.4; 2.b.2; 2.c.2; dan 2.d.2)'),
+(6,'total angka kredit unsur penelitian untuk pengajuan ke semua jenjang (untuk karya ilmiah butir 2.e dan 3)');
+
 /*Table structure for table `kategori_penilaian` */
 
 CREATE TABLE `kategori_penilaian` (
@@ -260,21 +278,23 @@ insert  into `subrumpun`(`ID_SUBRUMPUN`,`RUMPUN`,`SUBRUMPUN`) values
 CREATE TABLE `unsur_penilaian` (
   `ID_UNSUR` int(11) NOT NULL AUTO_INCREMENT,
   `ID_KATEGORI` int(11) NOT NULL,
-  `NAMA` varchar(512) NOT NULL,
+  `KEGIATAN` varchar(512) NOT NULL,
   `BATAS` int(11) DEFAULT NULL,
   `UNIT` varchar(16) DEFAULT NULL,
-  `JENIS_BATAS` int(11) DEFAULT NULL,
+  `ID_JENIS_BATAS` int(11) DEFAULT NULL,
   `MAX_KREDIT` int(11) NOT NULL,
   `BUKTI` varchar(128) DEFAULT NULL,
   `KETERANGAN` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`ID_UNSUR`),
   KEY `FK_UNSURPEN_MEMILIKI__KATEGORI` (`ID_KATEGORI`),
+  KEY `FK_BATAS` (`ID_JENIS_BATAS`),
+  CONSTRAINT `FK_BATAS` FOREIGN KEY (`ID_JENIS_BATAS`) REFERENCES `jenis_batas` (`ID_JENIS_BATAS`),
   CONSTRAINT `FK_UNSURPEN_MEMILIKI__KATEGORI` FOREIGN KEY (`ID_KATEGORI`) REFERENCES `kategori_penilaian` (`ID_KATEGORI`)
 ) ENGINE=InnoDB AUTO_INCREMENT=153 DEFAULT CHARSET=latin1;
 
 /*Data for the table `unsur_penilaian` */
 
-insert  into `unsur_penilaian`(`ID_UNSUR`,`ID_KATEGORI`,`NAMA`,`BATAS`,`UNIT`,`JENIS_BATAS`,`MAX_KREDIT`,`BUKTI`,`KETERANGAN`) values 
+insert  into `unsur_penilaian`(`ID_UNSUR`,`ID_KATEGORI`,`KEGIATAN`,`BATAS`,`UNIT`,`ID_JENIS_BATAS`,`MAX_KREDIT`,`BUKTI`,`KETERANGAN`) values 
 (1,1,'Mengikuti pendidikan formal dan memperoleh gelar/sebutan/ijazah : Doktor / sederajat',1,NULL,3,200,'Bukti tugas/izin belajar dan pindai ijazah asli',NULL),
 (2,1,'Mengikuti pendidikan formal dan memperoleh gelar/sebutan/ijazah : Magister/sederajat',1,NULL,3,150,'Bukti tugas/izin belajar dan pindai ijazah asli',NULL),
 (3,1,'Mengikuti diklat prajabatan golongan III',1,NULL,3,3,'Bukti tugas/izin belajar dan pindai ijazah asli',NULL),
@@ -361,24 +381,24 @@ insert  into `unsur_penilaian`(`ID_UNSUR`,`ID_KATEGORI`,`NAMA`,`BATAS`,`UNIT`,`J
 (84,3,'Membuat rancangan dan karya teknologi yang tidak dipatenkan; rancangan dan karya seni monumental yang tidak terdaftar di HaKI tetapi telah dipresentasikan pada forum yang teragenda : Tingkat Internasional',NULL,NULL,NULL,20,'Pindai bukti kinerja, peer review internasional  sesuai bidang ilmu',NULL),
 (85,3,'Membuat rancangan dan karya teknologi yang tidak dipatenkan; rancangan dan karya seni monumental yang tidak terdaftar di HaKI tetapi telah dipresentasikan pada forum yang teragenda : Tingkat Nasional',NULL,NULL,NULL,15,'Pindai bukti kinerja, peer review sesuai bidang ilmu',NULL),
 (86,3,'Membuat rancangan dan karya teknologi yang tidak dipatenkan; rancangan dan karya seni monumental yang tidak terdaftar di HaKI tetapi telah dipresentasikan pada forum yang teragenda : Tingkat Lokal',NULL,NULL,NULL,10,'Pindai bukti kinerja, peer review sesuai bidang ilmu',NULL),
-(87,3,'Pelaksanaan penelitian karya seni sebagai komposer/penulis naskah/sutradara/perancang/pencipta/pengubah/kameramen/animator/kurator/editor audio visual internasional',NULL,NULL,0,20,NULL,NULL),
-(88,3,'Pelaksanaan penelitian karya seni sebagai komposer/penulis naskah/sutradara/perancang/pencipta/pengubah/kameramen/animator/kurator/editor audio visual nasional',NULL,NULL,0,15,NULL,NULL),
-(89,3,'Pelaksanaan penelitian karya seni sebagai komposer/penulis naskah/sutradara/perancang/pencipta/pengubah/kameramen/animator/kurator/editor audio visual lokal',NULL,NULL,0,10,NULL,NULL),
-(90,3,'Pelaksanaan penelitian kayra seni Sebagai Penata Arstistik/Penata Musik/Penata Rias/PenataBusana/Penata Tari/Penata Lampu/Penata Suara/Penata Panggung/Ilustrator Foto/Kunduktor Internasional',NULL,NULL,0,10,NULL,NULL),
-(91,3,'Pelaksanaan penelitian kayra seni Sebagai Penata Arstistik/Penata Musik/Penata Rias/Penata Busana/Penata Tari/Penata Lampu/Penata Suara/Penata Panggung/Ilustrator Foto/Kunduktor nasional',NULL,NULL,0,6,NULL,NULL),
-(92,3,'Pelaksanaan penelitian kayra seni Sebagai Penata Arstistik/Penata Musik/Penata Rias/PenataBusana/Penata Tari/Penata Lampu/Penata Suara/Penata Panggung/Ilustrator Foto/Kunduktor lokal',NULL,NULL,0,3,NULL,NULL),
-(93,3,'Pelaksanaan penelitian karya seni Sebagai Pemusik/Pengrawit/Penari/Dalang/Pemeran/Pengarah Acara Televisi/Pelaksana Perancangan/Pendisplay Pameran/Pembuat Foto Dokumentasi/Pewarta Foto/Pembawa Acara/Reporter/Redaktur Pelaksana Internasional',NULL,NULL,0,6,NULL,NULL),
-(94,3,'Pelaksanaan penelitian karya seni Sebagai Pemusik/Pengrawit/Penari/Dalang/Pemeran/Pengarah Acara Televisi/Pelaksana Perancangan/Pendisplay Pameran/Pembuat Foto Dokumentasi/Pewarta Foto/Pembawa Acara/Reporter/Redaktur Pelaksana nasional',NULL,NULL,0,4,NULL,NULL),
-(95,3,'Pelaksanaan penelitian karya seni Sebagai Pemusik/Pengrawit/Penari/Dalang/Pemeran/Pengarah Acara Televisi/Pelaksana Perancangan/ Pendisplay Pameran/Pembuat Foto Dokumentasi/Pewarta Foto/Pembawa Acara/Reporter/Redaktur Pelaksana lokal',NULL,NULL,0,2,NULL,NULL),
-(96,3,'Pelaksanaan penelitian karya seni Sebagai Penulis Naskah Drama/Novel Internasional',NULL,NULL,0,20,NULL,NULL),
-(97,3,'Pelaksanaan penelitian karya seni Sebagai Penulis Naskah Drama/Novel nasional',NULL,NULL,0,15,NULL,NULL),
-(98,3,'Pelaksanaan penelitian karya seni Sebagai Penulis Naskah Drama/Novel lokal',NULL,NULL,0,10,NULL,NULL),
-(99,3,'Pelaksanaan penelitian karya satra Sebagai Penulis Buku Kumpulan Cerpen Internasional',NULL,NULL,0,20,NULL,NULL),
-(100,3,'Pelaksanaan penelitian karya satra Sebagai Penulis Buku Kumpulan Cerpen Nasional',NULL,NULL,0,15,NULL,NULL),
-(101,3,'Pelaksanaan penelitian karya satra Sebagai Penulis Buku Kumpulan Cerpen Internasional',NULL,NULL,0,10,NULL,NULL),
-(102,3,'Pelaksanaan penelitian karya satra Sebagai Penulis Buku Kumpulan Puisi Internasional',NULL,NULL,0,20,NULL,NULL),
-(103,3,'Pelaksanaan penelitian karya satra Sebagai Penulis Buku Kumpulan Cerpen Nasional',NULL,NULL,0,15,NULL,NULL),
-(104,3,'Pelaksanaan penelitian karya satra Sebagai Penulis Buku Kumpulan Cerpen Lokal',NULL,NULL,0,10,NULL,NULL),
+(87,3,'Pelaksanaan penelitian karya seni sebagai komposer/penulis naskah/sutradara/perancang/pencipta/pengubah/kameramen/animator/kurator/editor audio visual internasional',NULL,NULL,NULL,20,NULL,NULL),
+(88,3,'Pelaksanaan penelitian karya seni sebagai komposer/penulis naskah/sutradara/perancang/pencipta/pengubah/kameramen/animator/kurator/editor audio visual nasional',NULL,NULL,NULL,15,NULL,NULL),
+(89,3,'Pelaksanaan penelitian karya seni sebagai komposer/penulis naskah/sutradara/perancang/pencipta/pengubah/kameramen/animator/kurator/editor audio visual lokal',NULL,NULL,NULL,10,NULL,NULL),
+(90,3,'Pelaksanaan penelitian kayra seni Sebagai Penata Arstistik/Penata Musik/Penata Rias/PenataBusana/Penata Tari/Penata Lampu/Penata Suara/Penata Panggung/Ilustrator Foto/Kunduktor Internasional',NULL,NULL,NULL,10,NULL,NULL),
+(91,3,'Pelaksanaan penelitian kayra seni Sebagai Penata Arstistik/Penata Musik/Penata Rias/Penata Busana/Penata Tari/Penata Lampu/Penata Suara/Penata Panggung/Ilustrator Foto/Kunduktor nasional',NULL,NULL,NULL,6,NULL,NULL),
+(92,3,'Pelaksanaan penelitian kayra seni Sebagai Penata Arstistik/Penata Musik/Penata Rias/PenataBusana/Penata Tari/Penata Lampu/Penata Suara/Penata Panggung/Ilustrator Foto/Kunduktor lokal',NULL,NULL,NULL,3,NULL,NULL),
+(93,3,'Pelaksanaan penelitian karya seni Sebagai Pemusik/Pengrawit/Penari/Dalang/Pemeran/Pengarah Acara Televisi/Pelaksana Perancangan/Pendisplay Pameran/Pembuat Foto Dokumentasi/Pewarta Foto/Pembawa Acara/Reporter/Redaktur Pelaksana Internasional',NULL,NULL,NULL,6,NULL,NULL),
+(94,3,'Pelaksanaan penelitian karya seni Sebagai Pemusik/Pengrawit/Penari/Dalang/Pemeran/Pengarah Acara Televisi/Pelaksana Perancangan/Pendisplay Pameran/Pembuat Foto Dokumentasi/Pewarta Foto/Pembawa Acara/Reporter/Redaktur Pelaksana nasional',NULL,NULL,NULL,4,NULL,NULL),
+(95,3,'Pelaksanaan penelitian karya seni Sebagai Pemusik/Pengrawit/Penari/Dalang/Pemeran/Pengarah Acara Televisi/Pelaksana Perancangan/ Pendisplay Pameran/Pembuat Foto Dokumentasi/Pewarta Foto/Pembawa Acara/Reporter/Redaktur Pelaksana lokal',NULL,NULL,NULL,2,NULL,NULL),
+(96,3,'Pelaksanaan penelitian karya seni Sebagai Penulis Naskah Drama/Novel Internasional',NULL,NULL,NULL,20,NULL,NULL),
+(97,3,'Pelaksanaan penelitian karya seni Sebagai Penulis Naskah Drama/Novel nasional',NULL,NULL,NULL,15,NULL,NULL),
+(98,3,'Pelaksanaan penelitian karya seni Sebagai Penulis Naskah Drama/Novel lokal',NULL,NULL,NULL,10,NULL,NULL),
+(99,3,'Pelaksanaan penelitian karya satra Sebagai Penulis Buku Kumpulan Cerpen Internasional',NULL,NULL,NULL,20,NULL,NULL),
+(100,3,'Pelaksanaan penelitian karya satra Sebagai Penulis Buku Kumpulan Cerpen Nasional',NULL,NULL,NULL,15,NULL,NULL),
+(101,3,'Pelaksanaan penelitian karya satra Sebagai Penulis Buku Kumpulan Cerpen Internasional',NULL,NULL,NULL,10,NULL,NULL),
+(102,3,'Pelaksanaan penelitian karya satra Sebagai Penulis Buku Kumpulan Puisi Internasional',NULL,NULL,NULL,20,NULL,NULL),
+(103,3,'Pelaksanaan penelitian karya satra Sebagai Penulis Buku Kumpulan Cerpen Nasional',NULL,NULL,NULL,15,NULL,NULL),
+(104,3,'Pelaksanaan penelitian karya satra Sebagai Penulis Buku Kumpulan Cerpen Lokal',NULL,NULL,NULL,10,NULL,NULL),
 (105,4,'Menduduki jabatan pimpinan pada lembaga pemerintahan/pejabat negara yang harus dibebaskan dari jabatan organiknya tiap semester.',NULL,NULL,NULL,6,NULL,NULL),
 (106,4,'Melaksanakan pengembangan hasil pendidikan, dan penelitian yang dapat dimanfaatkan oleh masyarakat/ industry setiap program.',NULL,NULL,NULL,3,NULL,NULL),
 (107,4,'Memberi latihan/penyuluhan/ penataran/ceramah pada masyarakat, terjadwal/terprogram : Dalam satu semester atau lebih :  Tingkat Internasional tiap program',NULL,NULL,NULL,4,NULL,NULL),

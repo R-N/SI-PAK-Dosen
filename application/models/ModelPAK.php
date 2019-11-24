@@ -318,6 +318,11 @@ class ModelPAK extends CI_Model {
 		$pak->read($result);
 		return $pak;
 	}
+	function hasActivePAK($idDosen){
+		$sql = "SELECT TRUE FROM PAK WHERE ID_PEMOHON=?";
+		$data = array($idDosen);
+		
+	}
 	function simpanPAK($pak, $itemPenilaian){
 	}
 	function simpanPenilaian($penilaian){

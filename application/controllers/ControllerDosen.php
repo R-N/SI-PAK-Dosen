@@ -44,24 +44,28 @@ class ControllerDosen extends CI_Controller {
 		$this->load->model("ModelPAK");
 		$this->load->model("ModelItemPenilaian");
 		$dosen = $this->ModelAkun->getDosen($_SESSION["idUser"]);
-		$pilihanJabatan = $this->ModelAkun->getPilihanJabatan();
+		$unsurs = $this->ModelItemPenilaian->fetchUnsurPenilaian();
+		
 		$emptyItem = new EntriItemEditPAK();
-		if($idPAK == ""){
+		if($idPAK){
+			$pak = $this->ModelPAK->getPAK($idPAK);
+			$items = $this->ModelItemPenilaian->fetchItemPenilaianEdit($_SESSION["idUser"]);
+			$jabatanTujuan = $this->ModelAkun->getJabatan($pak->idJabatanTujuan);
+			$batasKategori = $this->ModelItemPenilaian->fetchBatasKategori($pak->idJabatanAwal);
+		}else{
 			$pak = null;
 			$items = array();
 			$jabatanTujuan = $this->ModelAkun->getJabatan($dosen->idJabatan+1);
-		}else{
-			$pak = $this->ModelPAK->getPAK($idPAK);
-			$items = array();
-			$jabatanTujuan = $this->ModelAkun->getJabatan($pak->idJabatanTujuan);
+			$batasKategori = $this->ModelItemPenilaian->fetchBatasKategori($dosen->idJabatan);
 		}
 		$data = array(
 			"dosen" => $dosen,
 			"jabatanTujuan" => $jabatanTujuan,
-			"pilihanJabatan" => $pilihanJabatan,
 			"pak" => $pak,
 			"items" => $items,
-			"emptyItem" => $emptyItem
+			"emptyItem" => $emptyItem,
+			"unsurs"=>$unsurs,
+			"batasKategori" => $batasKategori
 		);
 		$this->load->view("dosen/EditPAK.html", $data);
 	}
