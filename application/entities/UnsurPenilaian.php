@@ -24,6 +24,7 @@ class UnsurPenilaian{
 		if(isset($queryResult->BUKTI)) $this->bukti = $queryResult->BUKTI;
 		if(isset($queryResult->BATAS)) $this->batas = $queryResult->BATAS;
 		if(isset($queryResult->ID_JENIS_BATAS)) $this->idJenisBatas = $queryResult->ID_JENIS_BATAS;
+		if(isset($queryResult->JENIS_BATAS)) $this->jenisBatas = $queryResult->JENIS_BATAS;
 		if(isset($queryResult->UNIT)) $this->unit = $queryResult->UNIT;
 		if(isset($queryResult->MAX_KREDIT)) $this->kreditPerItem = $queryResult->MAX_KREDIT;
 	}

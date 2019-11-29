@@ -1,13 +1,18 @@
 
-<div class="card">
-	<a class="card-header bg-warning clearfix d-block item-header" data-toggle="collapse"  href="#item-body-<?=$no;?>">
-		<div class="row">
-			<div class="col">
-				<h5 class="text-white d-inline-block item-kegiatan"><?=$no;?>. <?=$kegiatan;?></h5>
+<div class="card item-penilaian" data-id-item="<?=$idItem;?>" data-id-unsur="<?=$idUnsur;?>" data-no="<?=$no;?>">
+	<div class="btn clickable m-0 text-left card-header bg-warning p-relative item-header" data-toggle="collapse" href="#item-body-<?=$no;?>">
+		<div class="d-flex">
+			<div class="fill-width">
+				<p class="text-white d-inline-block item-kegiatan p-relative mr-5">
+					<span class="item-no"><?=$no;?></span>. <span class="item-kegiatan-kegiatan"><?=$kegiatan;?></span>
+				</p>	
 			</div>
-			<div class="col-auto"><button class="btn btn-primary btn-sm d-inline-block btn-ganti-item" type="button">Ganti</button><button class="btn btn-danger btn-sm d-inline-block btn-hapus-item">Hapus</button></div>
+			<div class="">
+				<a href="javascript:void(0);" class="btn btn-sm btn-primary text-white d-inline-block  p-relative btn-change-item">Ganti</a>
+				<a href="javascript:void(0);" class="btn btn-sm btn-danger text-white d-inline-block  p-relative btn-delete-item">Hapus</a>
+			</div>
 		</div>
-	</a>
+	</div>
 	<div class="card-body collapse item-body" id="item-body-<?=$no;?>">
 		<div>
 			<div class="row">
@@ -40,9 +45,9 @@
 									<td>
 										<p class="item-bukti <?=$bukti?"":"d-none";?>"><?=$bukti;?></p>
 										<div>
-											<button class="btn btn-primary btn-sm btn-draft-dokumen <?=$bukti?"":"d-none";?>" type="button">Draft</button>
+											<a class="btn btn-primary btn-sm btn-draft-dokumen <?=$bukti?"":"d-none";?>" href="javascript:void(0);"  target="_blank">Draft</a>
 											<button class="btn btn-primary btn-sm btn-input-dokumen" type="button">Input</button>
-											<button class="btn btn-primary btn-sm btn-lihat-dokumen" type="button">Lihat</button>
+											<a class="btn btn-primary btn-sm btn-lihat-dokumen" href="javascript:void(0);"  target="_blank">Lihat</a>
 										</div>
 									</td>
 								</tr>

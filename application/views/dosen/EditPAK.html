@@ -7,12 +7,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>Dashboard - Brand</title>
-    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/bootstrap/css/bootstrap.min.css?h=a386f1178839eba72affce22d3fe17d5">
-    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/nunito.css">
-    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/fonts/fontawesome-all.min.css?h=03ab36d1dde930b7d44a712f19075641">
-    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/fonts/font-awesome.min.css?h=03ab36d1dde930b7d44a712f19075641">
-    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/fonts/fontawesome5-overrides.min.css?h=03ab36d1dde930b7d44a712f19075641">
-    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/style.css?h=e65eeae9296fb6410c927d5a8af1e142">
+	<?php $this->view("umum/CommonCSS.html"); ?>
 </head>
 
 <body id="page-top">
@@ -233,16 +228,12 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title d-inline-block float-left">Pilih Unsur</h4>
-                    <form class="text-left d-inline-block float-right d-sm-inline-block mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-                        <div class="input-group"><input class="bg-light form-control border-0 small field-search-unsur" type="text" placeholder="Cari unsur">
-                            <div class="input-group-append"><button class="btn btn-primary py-0 btn-search-unsur" type="button"><i class="fas fa-search"></i></button></div>
-                        </div>
-                    </form><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button></div>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button></div>
                 <div class="modal-body">
                     <div class="row">
                         <div class="col">
                             <div class="table-responsive table-hover">
-                                <table class="table">
+                                <table class="table" id="tabel-unsur">
                                     <thead>
                                         <tr>
                                             <th>Kategori</th>
@@ -257,7 +248,7 @@
                                         <tr class="clickable-row row-unsur" data-id-unsur="<?=$unsur->id;?>">
                                             <td><?=$unsur->kategori;?></td>
                                             <td><?=$unsur->kegiatan;?></td>
-                                            <td><?php if($unsur->batas) echo $unsur->batas . ($unsur->unit?" " . $unsur->unit:"") . ($unsur->jenisBatas?("/" . $unsur->jenisBatas):"");?></td>
+                                            <td><?php if($unsur->batas) echo $unsur->batas . ($unsur->unit?" " . $unsur->unit:"") . ($unsur->jenisBatas?(" " . $unsur->jenisBatas):"");?></td>
                                             <td><?=$unsur->kreditPerItem;?></td>
                                             <td><?=$unsur->bukti;?></td>
                                         </tr>
@@ -268,43 +259,13 @@
                         </div>
                     </div>
                 </div>
-                <div class="modal-footer">
-                    <div class="float-right"><button class="btn btn-light border-dark btn-prev-unsur" type="button">&lt;</button>
-                        <div class="d-inline-block"><button class="btn btn-light btn-halaman-unsur" type="button">1</button></div><button class="btn btn-light border-dark" type="button">&gt;</button></div>
-                </div>
             </div>
         </div>
     </div>
-    <div class="modal fade" role="dialog" tabindex="-1" id="modal-error">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header text-white bg-danger">
-                    <h4 class="modal-title">Error</h4><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button></div>
-                <div class="modal-body">
-                    <p>Error description.</p>
-                </div>
-                <div class="modal-footer"><button class="btn btn-light" type="button" data-dismiss="modal">Tutup</button></div>
-            </div>
-        </div>
-    </div>
-    <div class="modal fade modal-confirm modal-confirm-submit" role="dialog" tabindex="-1" id="modal-confirm">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">Submit</h4><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button></div>
-                <div class="modal-body">
-                    <p>Apa Anda yakin ingin submit?<br>Proses ini tidak dapat di-undo.</p>
-                </div>
-                <div class="modal-footer"><button class="btn btn-light" type="button" data-dismiss="modal">Batal</button><button class="btn btn-primary btn-confirm-submit btn-confirm-submit-penilaian">Ya</button></div>
-            </div>
-        </div>
-    </div>
-    <script src="<?php echo base_url(); ?>assets/js/jquery.min.js?h=83e266cb1712b47c265f77a8f9e18451"></script>
-    <script src="<?php echo base_url(); ?>assets/bootstrap/js/bootstrap.min.js?h=63715b63ee49d5fe4844c2ecae071373"></script>
-    <script src="<?php echo base_url(); ?>assets/js/jquery.easing.js"></script>
-    <script src="<?php echo base_url(); ?>assets/js/pagination.js"></script>
-    <script src="<?php echo base_url(); ?>assets/js/theme.js?h=6d33b44a6dcb451ae1ea7efc7b5c5e30"></script>
-    <script src="<?php echo base_url(); ?>assets/js/functions.js?h=ed0814f72ba0162dcf661d39f55c89a1"></script>
+	<?php $this->view("modal/Error.html"); ?>
+	<?php $this->view("modal/InputUrl.html"); ?>
+	<?php $this->view("modal/Konfirmasi.html"); ?>
+	<?php $this->view("umum/CommonJS.html"); ?>
 	<script>
 		var dosen = <?=json_encode($dosen);?>;
 		var pak = <?=json_encode($pak);?>;
@@ -326,6 +287,7 @@
 		var batasKategori = <?=json_encode($batasDict);?>;
 		var templateItem = "<?php echo escape($this->view("dosen/ItemPenilaian.html", $emptyItem, true)); ?>";
 		$(document).ready(function(){
+			$("#tabel-unsur").DataTable({pageLength: 5});
 		});
 	</script>
 </body>
