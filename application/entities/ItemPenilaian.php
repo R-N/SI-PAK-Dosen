@@ -6,6 +6,7 @@ class ItemPenilaian{
 	public $id;
 	private $idPAK;
 	private $idUnsur;
+	public $idkategori;
 	public $urlDokumen;
 	private $nilai1;
 	private $nilai2;

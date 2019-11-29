@@ -22,7 +22,7 @@ class ModelItemPenilaian extends CI_Model {
 		return $ret;
 	}
 	function fetchUnsurPenilaian(){
-		$sql = "SELECT * FROM unsur_penilaian U, kategori_penilaian K, jenis_batas JB WHERE U.ID_KATEGORI=K.ID_KATEGORI AND U.ID_JENIS_BATAS=JB.ID_JENIS_BATAS ORDER BY K.ID_KATEGORI, U.ID_UNSUR";
+		$sql = "SELECT * FROM kategori_penilaian K, unsur_penilaian U LEFT JOIN jenis_batas JB ON U.ID_JENIS_BATAS=JB.ID_JENIS_BATAS  WHERE U.ID_KATEGORI=K.ID_KATEGORI  ORDER BY K.ID_KATEGORI, U.ID_UNSUR";
 		
 		$query = $this->db->query($sql);
 		$results = $query->result();
@@ -118,7 +118,24 @@ class ModelItemPenilaian extends CI_Model {
 	}
 	function getItemPenilaian($idItem){
 	}
+	function tambahItemPenilaian($item){
+		$sql = "INSERT INTO ITEM_PENILAIAN(ID_PAK, ID_UNSUR, NILAI_AWAL, URL_DOKUMEN, TAHUN, SEMESTER) VALUES(?, ?, ? ,? ,?, ?)";
+		$query = $this->db->query($sql, array($item->idPAK, $item->idUnsur, $item->nilaiAwal, $item->urlDokumen, $item->tahun, $item->semester));
+		$result = $this->db->affected_rows() > 0;
+		if(!$query || !$result){
+			return array(
+				"result"=>"FAIL",
+				"errorMessage"=>"Gagal membuat PAK: " . $this->db->error()["message"]
+			);
+		}
+		$id = $this->db->insert_id();
+		return array(
+			"result"=>"OK",
+			"idPAK"=>$id
+		);
+	}
 	function simpanItemPenilaian($item){
+		
 	}
 	function hapusItemPenilaian($idItem){
 	}

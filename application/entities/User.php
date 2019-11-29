@@ -30,6 +30,7 @@ class User{
 		if(isset($queryResult->EMAIL)) $this->email = $queryResult->EMAIL;
 		if(isset($queryResult->TELEPON)) $this->telepon = $queryResult->TELEPON;
 		if(isset($queryResult->ASAL_INSTANSI)) $this->asalInstansi = $queryResult->ASAL_INSTANSI;
+		if(isset($queryResult->ANGKA_KREDIT)) $this->kreditKumulatif = $queryResult->ANGKA_KREDIT;
 		
 		if(isset($queryResult->idUser)) $this->idUser = $queryResult->idUser;
 		if(isset($queryResult->idPegawai)) $this->idPegawai = $queryResult->idPegawai;
@@ -41,6 +42,7 @@ class User{
 		if(isset($queryResult->email)) $this->email = $queryResult->email;
 		if(isset($queryResult->telepon)) $this->telepon = $queryResult->telepon;
 		if(isset($queryResult->asalInstansi)) $this->asalInstansi = $queryResult->asalInstansi;
+		if(isset($queryResult->kreditKumulatif)) $this->kreditKumulatif = $queryResult->kreditKumulatif;
 		
 		return $this;
 	}

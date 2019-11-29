@@ -1,5 +1,5 @@
 
-<div class="card item-penilaian" data-id-item="<?=$idItem;?>" data-id-unsur="<?=$idUnsur;?>" data-no="<?=$no;?>">
+<div class="card item-penilaian" data-id-item="<?=$idItem;?>" data-id-unsur="<?=$idUnsur;?>" data-no="<?=$no;?>" data-id-kategori="<?=$idKategori;?>">
 	<div class="btn clickable m-0 text-left card-header bg-warning p-relative item-header" data-toggle="collapse" href="#item-body-<?=$no;?>">
 		<div class="d-flex">
 			<div class="fill-width">
@@ -47,7 +47,7 @@
 										<div>
 											<a class="btn btn-primary btn-sm btn-draft-dokumen <?=$bukti?"":"d-none";?>" href="javascript:void(0);"  target="_blank">Draft</a>
 											<button class="btn btn-primary btn-sm btn-input-dokumen" type="button">Input</button>
-											<a class="btn btn-primary btn-sm btn-lihat-dokumen" href="javascript:void(0);"  target="_blank">Lihat</a>
+											<a class="btn btn-primary btn-sm btn-lihat-dokumen" href="<?=(isset($urlDokumen)&&$urlDokumen)?$urlDokumen:"#";?>"  target="_blank">Lihat</a>
 										</div>
 									</td>
 								</tr>

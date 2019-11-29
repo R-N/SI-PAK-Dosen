@@ -51,12 +51,12 @@ class ControllerDosen extends CI_Controller {
 			$pak = $this->ModelPAK->getPAK($idPAK);
 			$items = $this->ModelItemPenilaian->fetchItemPenilaianEdit($_SESSION["idUser"]);
 			$jabatanTujuan = $this->ModelAkun->getJabatan($pak->idJabatanTujuan);
-			$batasKategori = $this->ModelItemPenilaian->fetchBatasKategori($pak->idJabatanAwal);
+			$batasKategori = $this->ModelItemPenilaian->fetchBatasKategori($pak->idJabatanTujuan);
 		}else{
 			$pak = null;
 			$items = array();
 			$jabatanTujuan = $this->ModelAkun->getJabatan($dosen->idJabatan+1);
-			$batasKategori = $this->ModelItemPenilaian->fetchBatasKategori($dosen->idJabatan);
+			$batasKategori = $this->ModelItemPenilaian->fetchBatasKategori($dosen->idJabatan+1);
 		}
 		$data = array(
 			"dosen" => $dosen,
@@ -79,8 +79,33 @@ class ControllerDosen extends CI_Controller {
 		redirect(base_url() . "dosen/pak");
 	}
 	
-	public function simpanPAK($pak, $item){
+	public function simpanPAK(){
+		if(!isDosen()){
+			redirect(base_url());
+			return;
+		}
+		$pakBaru = $this->input->post("pak");
+		$pakBaruItems = $this->input->post("itemPenilaian");
+		
+		$this->load->model("ModelAkun");
+		$this->load->model("ModelPAK");
+		$this->load->model("ModelItemPenilaian");
+		$dosen = $this->ModelAkun->getDosen($_SESSION["idUser"]);
+		
+		$emptyItem = new EntriItemEditPAK();
+		if($idPAK){
+			$pak = $this->ModelPAK->getPAK($idPAK);
+			$items = $this->ModelItemPenilaian->fetchItemPenilaianEdit($_SESSION["idUser"]);
+			$jabatanTujuan = $this->ModelAkun->getJabatan($pak->idJabatanTujuan);
+			$batasKategori = $this->ModelItemPenilaian->fetchBatasKategori($pak->idJabatanTujuan);
+		}else{
+			$pak = null;
+			$items = array();
+			$jabatanTujuan = $this->ModelAkun->getJabatan($dosen->idJabatan+1);
+			$batasKategori = $this->ModelItemPenilaian->fetchBatasKategori($dosen->idJabatan+1);
+		}
 	}
+	
 	public function submitPAK($idPAK){
 	}
 }

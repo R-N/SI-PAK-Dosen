@@ -97,7 +97,7 @@
                                     </div>
                                 </form><button class="btn btn-success float-right btn-submit-pak" type="submit">Submit</button><button class="btn btn-primary float-right btn-simpan-pak" type="submit">Simpan</button></div>
                             <div class="card-body d-xl-flex flex-column justify-content-around justify-content-xl-start align-items-xl-start"
-                                style="width: 919px;">
+                                >
                                 <div class="input-group" style="margin-top: 11px;"  >
                                     <div class="input-group-prepend"><span class="input-group-text" style="width: 235px;">Pemohon</span></div><div  class="form-control nama-pemohon"><?=$dosen->nama;?></div>
                                     <div class="input-group-append"></div>
@@ -119,7 +119,7 @@
                                     <div class="input-group-append"></div>
                                 </div>
                                 <div class="input-group" style="margin-top: 11px;"  >
-                                    <div class="input-group-prepend"><span class="input-group-text" style="width: 235px;">Angka kredit didapat</span></div><div  class="form-control kredit-diperlukan">
+                                    <div class="input-group-prepend"><span class="input-group-text" style="width: 235px;">Angka kredit didapat</span></div><div  class="form-control total-akhir text-light">
 									<?php
 										$nilai = $dosen->kreditKumulatif;
 										foreach($items as $item){
@@ -134,7 +134,6 @@
                 <!-- End: Form -->
             </div>
         </div>
-		<!-- kredit per kategori
         <div class="row" style="margin-top: 20px;">
             <div class="col">
                 <div class="card">
@@ -155,7 +154,7 @@
                                 </thead>
                                 <tbody>
 									<?php foreach($batasKategori as $batas){ ?>
-                                    <tr>
+                                    <tr class="batas-kategori" data-id-kategori="<?=$batas->idKategori;?>">
                                         <td class="nilai-kategori"><?=$batas->kategori;?></td>
                                         <td class="nilai-kategori-subtotal"></td>
                                         <td class="nilai-kategori-minimal"><?=$batas->minimal;?></td>
@@ -163,11 +162,18 @@
                                         <td class="nilai-kategori-total"></td>
                                     </tr>
 									<?php } ?>
-                                    <tr class="text-light bg-success">
+                                    <tr class="bg-primary text-light">
+                                        <td>Subtotal</td>
+                                        <td class="subtotal-subtotal"></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td class="subtotal-akhir"></td>
+                                    </tr>
+                                    <tr class="total-nilai text-light bg-success">
                                         <td>Total</td>
                                         <td class="total-subtotal"></td>
                                         <td class="minimal-jabatan"><?=$jabatanTujuan->kreditMinimal;?></td>
-                                        <td>-</td>
+                                        <td></td>
                                         <td class="total-akhir"></td>
                                     </tr>
                                 </tbody>
@@ -176,7 +182,7 @@
                     </div>
                 </div>
             </div>
-        </div> -->
+        </div>
         <div class="row" style="margin-top: 20px;">
             <div class="col">
                 <div class="card">
@@ -198,7 +204,7 @@
                     <div class="card-footer bg-white">
                         <div class="float-right"><button class="btn btn-light border-dark btn-prev-item btn-prev-item-edit" type="button">&lt;</button>
                             <div class="d-inline-block"><button class="btn btn-light btn-halaman-item btn-halaman-item-edit" id="btn-next-item" type="button">1</button></div><button class="btn btn-light border-dark" type="button">&gt;</button></div><button class="btn btn-primary"
-                            id="btn-tambah-item" type="submit">Tambah</button><button class="btn btn-primary btn-submit-pak" type="submit">Simpan</button><button class="btn btn-success btn-submit-pak btn-submit" type="submit">Submit</button></div>
+                            id="btn-tambah-item" type="submit">Tambah</button><button class="btn btn-primary btn-simpan-pak" type="submit">Simpan</button><button class="btn btn-success btn-submit-pak btn-submit" type="submit">Submit</button></div>
                 </div>
             </div>
         </div>
@@ -288,6 +294,7 @@
 		var templateItem = "<?php echo escape($this->view("dosen/ItemPenilaian.html", $emptyItem, true)); ?>";
 		$(document).ready(function(){
 			$("#tabel-unsur").DataTable({pageLength: 5});
+			hitungNilaiKategori();
 		});
 	</script>
 </body>

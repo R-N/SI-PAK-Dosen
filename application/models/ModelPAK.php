@@ -323,7 +323,36 @@ class ModelPAK extends CI_Model {
 		$data = array($idDosen);
 		
 	}
-	function simpanPAK($pak, $itemPenilaian){
+	
+	function tambahPAK($pak){
+		$sql = "INSERT INTO PAK(ID_PEMOHON, ID_SUBRUMPUN, ID_JABATAN_AWAL, ID_JABATAN_TUJUAN, NILAI_AWAL, ID_STATUS_PAK, TANGGAL_STATUS, NILAI_AWAL) VALUES(?, ?, ?, ?, ?, 1, NOW(), 0);";
+		$query = $this->db->query($sql, array($pak->idPemohon, $pak->idSubrumpun, $pak->idJabatanAwal, $pak->idJabatanTujuan, $pak->nilaiAwal));
+		$result = $this->db->affected_rows() > 0;
+		if(!$query || !$result){
+			return array(
+				"result"=>"FAIL",
+				"errorMessage"=>"Gagal membuat PAK: " . $this->db->error()["message"]
+			);
+		}
+		$id = $this->db->insert_id();
+		return array(
+			"result"=>"OK",
+			"idPAK"=>$id
+		);
+	}
+	function simpanPAK($pak){
+		$sql = "UPDATE PAK SET NILAI_AWAL=? WHERE ID_PEMOHON=?";
+		$query = $this->db->query($sql, array($pak->idPemohon, $pak->idSubrumpun, $pak->idJabatanAwal, $pak->idJabatanTujuan, $pak->nilaiAwal));
+		$result = $this->db->affected_rows() > 0;
+		if(!$query || !$result){
+			return array(
+				"result"=>"FAIL",
+				"errorMessage"=>"Gagal menyimpan PAK: " . $this->db->error()["message"]
+			);
+		}
+		return array(
+			"result"=>"OK"
+		);
 	}
 	function simpanPenilaian($penilaian){
 	}

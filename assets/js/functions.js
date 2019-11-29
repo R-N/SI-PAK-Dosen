@@ -66,15 +66,11 @@ function onSubmitPenilaian(){
 }
 
 function submitPAK(){
-    $(".btn-confirm-submit").off("click");
-    $(".btn-confirm-submit").click(function(){
-        onSubmitPAK();
-    });
-    $(".modal-confirm").modal("show");
+	if(!validatePAK()) return;
+	askConfirmation("Submit PAK", "Apa Anda yakin ingin menyerahkan PAK?", onSubmitPAK);
 }
 
 function onSubmitPAK(){
-    $(".modal-confirm").modal("hide");
     window.location.href=baseUrl+"dosen/pak";
 }
 
@@ -203,6 +199,11 @@ function initUnsur($item, idUnsur){
 	$item.data("id-unsur", idUnsur);
 	$item.data("idUnsur", idUnsur);
 	$item.data("idunsur", idUnsur);
+	let idKategori = unsur.idKategori;
+	$item.attr("data-id-kategori", idKategori);
+	$item.data("id-kategori", idKategori);
+	$item.data("idKategori", idKategori);
+	$item.data("idkategori", idKategori);
 	$item.attr("data-no", no);
 	$item.data("no", no);
 	$item.find(".item-header").attr("href", "#item-body-" + no);
@@ -255,7 +256,7 @@ function hitungNilai($jumlah){
 	let $nilai = $jumlah.parent().closest("tbody").find(".item-nilai");
 	let idUnsur = $jumlah.parent().closest(".item-penilaian").attr("data-id-unsur");
 	let unsur = unsurs[idUnsur];
-	if(jumlah > unsur.batas){
+	if(unsur.batas && jumlah > unsur.batas){
 		jumlah = unsur.batas;
 		$jumlah.val(jumlah);
 	}else if (jumlah < 0){
@@ -263,6 +264,74 @@ function hitungNilai($jumlah){
 		$jumlah.val(jumlah);
 	}
 	$nilai.html(jumlah * unsur.kreditPerItem);
+	hitungNilaiKategori();
+}
+
+function hitungNilaiKategori(){
+	let subtotals = {};
+	let isValid = true;
+	Object.keys(batasKategori).forEach(function(idKategori) {
+		subtotals[idKategori] = 0;
+	});
+	$(".item-penilaian").each(function(){
+		let idKategori = $(this).attr("data-id-kategori");
+		let nilai = $(this).find(".item-nilai").text();
+		subtotals[idKategori] += parseInt(nilai);
+	});
+	$(".batas-kategori").each(function(){
+		let idKategori = $(this).attr("data-id-kategori");
+		$(this).find(".nilai-kategori-subtotal").text(subtotals[idKategori]);
+	});
+	let kreditSebelumnya = parseInt($(".kredit-sebelumnya").text());
+	let totals = [];
+	let subtotalSubtotal = 0;
+	let subtotalAkhir = 0;
+	Object.keys(batasKategori).forEach(function(idKategori) {
+		let subtotal = subtotals[idKategori];
+		subtotalSubtotal += subtotal;
+		let batas = batasKategori[idKategori];
+		let $batas = $(".batas-kategori[data-id-kategori=" + idKategori + "]");
+		let state = 0;
+		if(batas.minimal && batas.minimal > 0
+			&& subtotal < batas.minimal){
+			$batas.find(".nilai-kategori-minimal").addClass("bg-danger text-light");
+			isValid = false;
+			state = 2;
+		}else{
+			$batas.find(".nilai-kategori-minimal").removeClass("bg-danger text-light");
+		}
+		if(batas.maksimal && subtotal > batas.maksimal){
+			$batas.find(".nilai-kategori-maksimal").addClass("bg-warning text-light");
+			subtotal = batas.maksimal;
+			state = 1;
+		}else{
+			$batas.find(".nilai-kategori-maksimal").removeClass("bg-warning text-light");
+		}
+		totals[idKategori] = subtotal;
+		$batas.find(".nilai-kategori-total").text(subtotal);
+		subtotalAkhir += subtotal;
+		
+	})
+	
+	$(".subtotal-subtotal").text(subtotalSubtotal);
+	$(".subtotal-akhir").text(subtotalAkhir);
+	let totalSubtotal = kreditSebelumnya+subtotalSubtotal;
+	let totalAkhir = kreditSebelumnya+subtotalAkhir;
+	$(".total-subtotal").text(totalSubtotal);
+	$(".total-akhir").text(totalAkhir);
+	let kreditMinimal = jabatanTujuan.kreditMinimal;
+	if(totalAkhir < kreditMinimal){
+		isValid = false;
+		$(".total-nilai").addClass("bg-danger").removeClass("bg-success bg-warning");
+		$(".total-akhir").addClass("bg-danger").removeClass("bg-success bg-warning");
+	}else if(isValid){
+		$(".total-nilai").addClass("bg-success").removeClass("bg-danger bg-warning");
+		$(".total-akhir").addClass("bg-success").removeClass("bg-danger bg-warning");
+	}else{
+		$(".total-nilai").addClass("bg-warning").removeClass("bg-danger bg-success");
+		$(".total-akhir").addClass("bg-warning").removeClass("bg-danger bg-success");
+	}
+	return isValid;
 }
 
 function validateItem($item){
@@ -271,8 +340,10 @@ function validateItem($item){
 	$itemHeader.removeClass("bg-success");
 	if(!_validateItem($item)){
 		$itemHeader.addClass("bg-warning");
+		return false;
 	}else{
 		$itemHeader.addClass("bg-success");
+		return true;
 	}
 }
 
@@ -304,10 +375,65 @@ function _validateItem($item){
 	}
 	return true;
 }
+function simpanPAK(){
+	console.log(JSON.stringify(readPAK()));
+}
+function validatePAK(){
+	let isValid = true;
+	$(".item-penilaian").each(function(){
+		isValid = isValid && validateItem($(this));
+	});
+	if(!isValid){
+		showError("PAK Invalid", "Tolong perbaiki item yang belum berwarna hijau");
+		return false;
+	}
+	isValid = isValid && hitungNilaiKategori();
+	if(!isValid){
+		showError("PAK Invalid", "Anda belum memenuhi batas minimal angka kredit");
+		return false;
+	}
+	return isValid;
+}
+function readPAK(){
+	var pakBaru = null;
+	if(pak){
+		JSON.parse(JSON.stringify(pak));
+	}else{
+		pakBaru = {
+			idPAK: null
+		};
+	}
+	var items = [];
+	$(".item-penilaian").each(function(){
+		let item = readItemPenilaian($(this));
+		item.idPAK = pakBaru.idPAK;
+		items.push(item);
+	});
+	pakBaru.items = items;
+	return pakBaru;
+}
 function readItemPenilaian($item){
 	let idItem = $item.attr("data-id-item");
 	let idUnsur = $item.attr("data-id-unsur");
-	let no = $item.attr("data-no");
+	let nilaiAwal = $item.find(".item-nilai").text();
+	let urlDokumen = $item.find(".btn-lihat-dokumen").attr("href");
+	if(!validURL(urlDokumen)) urlDokumen = null;
+	let tahun = $item.find(".field-tahun").val();
+	let semester = $item.find(".field-semester").val();
+	let unsur = unsurs[idUnsur];
+	var item = {
+		idItem: idItem,
+		idUnsur:idUnsur,
+		nilaiAwal:nilaiAwal,
+		urlDokumen:urlDokumen
+	};
+	if(unsur.idJenisBatas==1){
+		item.semester = semester;
+	}
+	if(unsur.idJenisBatas == 1 || unsur.idJenisBatas==2){
+		item.tahun = tahun;
+	}
+	return item;
 	
 }
 function validURL(str) {
@@ -417,6 +543,9 @@ $(document).ready(function(){
     });
     $(".btn-submit-penilaian").click(function(){
         submitPenilaian();
+    });
+    $(".btn-simpan-pak").click(function(){
+        simpanPAK();
     });
     $(".btn-submit-pak").click(function(){
         submitPAK();

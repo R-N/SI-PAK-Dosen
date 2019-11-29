@@ -26,3 +26,6 @@ td .btn {
   flex-grow: 1;
 }
 
+.btn-lihat-dokumen[href="#"]{
+	display: none!important;
+}
