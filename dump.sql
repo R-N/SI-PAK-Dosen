@@ -472,7 +472,7 @@ CREATE TABLE `user` (
 insert  into `user`(`ID_USER`,`ROLE`,`STATUS_USER`,`NAMA`,`ID_PEGAWAI`,`ANGKA_KREDIT`,`KETERANGAN`) values 
 (1,4,1,'Admin',NULL,NULL,NULL),
 (2,1,1,'Penilai Luar',NULL,NULL,NULL),
-(3,3,1,'Dosen',NULL,250,NULL),
+(3,3,1,'Dosen',NULL,150,NULL),
 (11,1,1,'asdfasdfasdf',NULL,NULL,NULL),
 (22,1,1,'yogayoga',NULL,NULL,NULL),
 (23,1,1,'Penilai Luar 1234',NULL,NULL,NULL),
