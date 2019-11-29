@@ -1,7 +1,9 @@
 .clickable-row {
   cursor: pointer;
 }
-
+.clickable {
+  cursor: pointer;
+}
 .fill-width {
   flex-grow: 1;
 }
