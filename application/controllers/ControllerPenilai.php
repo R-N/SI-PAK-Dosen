@@ -59,7 +59,7 @@ class ControllerPenilai extends CI_Controller {
 		$batasKategori = $this->ModelItemPenilaian->fetchBatasKategori($pak->idJabatanTujuan);
 		
 			
-		$kekuranganKredit = $jabatanTujuan->kreditMinimal - $dosen->kreditKumulatif;
+		$kekuranganKredit = max(0, $jabatanTujuan->kreditMinimal - $pak->kreditMinimal);
 		
 		foreach($batasKategori as $batas){
 			$batas->setKreditDibutuhkan($kekuranganKredit);
@@ -212,7 +212,7 @@ class ControllerPenilai extends CI_Controller {
 				$total += $subtotal;
 			}
 			
-			if($total + $dosen->kreditKumulatif < $jabatanTujuan->kreditMinimal){
+			if($total + $pak->kreditMinimal < $jabatanTujuan->kreditMinimal){
 				$statusAkhir = PAK::PAK_TOLAK_NILAI;
 			}
 			

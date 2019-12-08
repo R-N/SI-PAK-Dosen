@@ -207,8 +207,10 @@ class ModelAkun extends CI_Model {
 		$dosen->read($user);
 		$doseni = $this->KonektorSimpeg->getDosen($dosen->idPegawai);
 		$dosen->read($doseni);
-		$dosen->subrumpun = $this->subrumpunDict[$dosen->idSubrumpun];
-		$dosen->jabatan = $this->jabatanDict[$dosen->idJabatan];
+		if(array_key_exists($dosen->idSubrumpun, $this->subrumpunDict))
+			$dosen->subrumpun = $this->subrumpunDict[$dosen->idSubrumpun];
+		if(array_key_exists($dosen->idJabatan, $this->jabatanDict))
+			$dosen->jabatan = $this->jabatanDict[$dosen->idJabatan];
 		//TODO
 		return $dosen;
 	}

@@ -27,6 +27,15 @@ class EntriPenilaiPAK {
 		if(isset($queryResult->JABATAN)) $this->jabatan = $queryResult->JABATAN;
 		if(isset($queryResult->ASAL_INSTANSI)) $this->asalInstansi = $queryResult->ASAL_INSTANSI;
 		
+		
+		if(isset($queryResult->id_user)) $this->idUser = $queryResult->id_user;
+		if(isset($queryResult->id_pegawai)) $this->idPegawai = $queryResult->id_pegawai;
+		if(isset($queryResult->nama)) $this->nama = $queryResult->nama;
+		if(isset($queryResult->id_rumpun_sub)) $this->idSubrumpun = $queryResult->id_rumpun_sub;
+		if(isset($queryResult->nama_rumpun_sub)) $this->subrumpun = $queryResult->nama_rumpun_sub;
+		if(isset($queryResult->id_pangkat)) $this->idJabatan = $queryResult->id_pangkat-9;
+		if(isset($queryResult->nama_jabatan)) $this->jabatan = $queryResult->nama_jabatan;
+		
 		if(is_array($queryResult)){
 			if(isset($queryResult["ID_USER"])) $this->idUser = $queryResult["ID_USER"];
 			if(isset($queryResult["ID_PEGAWAI"])) $this->idPegawai = $queryResult["ID_PEGAWAI"];

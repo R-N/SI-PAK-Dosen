@@ -48,6 +48,7 @@ class PAK{
 			case PAK::PAK_SIDANG: return "Menunggu sidang";
 			case PAK::PAK_TOLAK_NILAI: return "Ditolak (nilai kurang)";
 			case PAK::PAK_TOLAK_SIDANG: return "Ditolak (dalam sidang)";
+			case PAK::PAK_SELESAI: return "Diterima";
 			default: throw new Exception("Invalid status: " . $idStatus);
 		}
 	}

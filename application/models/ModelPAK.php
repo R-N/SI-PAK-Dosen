@@ -57,7 +57,7 @@ class ModelPAK extends CI_Model {
 				AND P.`ID_SUBRUMPUN`=SR.`ID_SUBRUMPUN`
 				AND P.`ID_STATUS_PAK`=?
 				AND P.`ID_JABATAN_AWAL`=JA.`ID_JABATAN`
-			ORDER BY P.`TANGGAL_STATUS` ASC";
+			ORDER BY P.`TANGGAL_STATUS` ASC, P.`ID_PAK` ASC";
 		array_push($data, PAK::PAK_BARU);
 		$query = $this->db->query($sql, $data);
 		if($query->num_rows() == 0) return array();
@@ -88,7 +88,7 @@ class ModelPAK extends CI_Model {
 				AND P.`ID_SUBRUMPUN`=SR.`ID_SUBRUMPUN`
 				AND P.`ID_STATUS_PAK`=?
 				AND P.`ID_JABATAN_AWAL`=JA.`ID_JABATAN`
-			ORDER BY P.`TANGGAL_STATUS` ASC";
+			ORDER BY P.`TANGGAL_STATUS` ASC, P.`ID_PAK` ASC";
 		array_push($data, PAK::PAK_SIDANG);
 		$query = $this->db->query($sql, $data);
 		if($query->num_rows() == 0) return array();
@@ -121,7 +121,7 @@ class ModelPAK extends CI_Model {
 				AND P.`ID_STATUS_PAK`=SP.`ID_STATUS_PAK`
 				AND P.`ID_JABATAN_AWAL`=JA.`ID_JABATAN`
 				AND P.`ID_JABATAN_TUJUAN`=JT.`ID_JABATAN`
-			ORDER BY P.tanggal_status DESC";
+			ORDER BY P.tanggal_status DESC, P.`ID_PAK` DESC";
 		array_push($data, $idDosen);
 		$query = $this->db->query($sql, $data);
 		if($query->num_rows() == 0) return array();
@@ -154,7 +154,7 @@ class ModelPAK extends CI_Model {
 				AND P.`ID_STATUS_PAK`=?
 				AND P.`ID_JABATAN_AWAL`=JA.`ID_JABATAN`
 				AND (P.`ID_PENILAI_SUBMIT` IS NULL OR NOT(P.`ID_PENILAI_SUBMIT` = ?)) 
-			ORDER BY P.`TANGGAL_STATUS` ASC";
+			ORDER BY P.`TANGGAL_STATUS` ASC, P.`ID_PAK` ASC";
 		array_push($data, $idPenilai, $idPenilai, PAK::PAK_NILAI, $idPenilai);
 		$query = $this->db->query($sql, $data);
 		if($query->num_rows() == 0) return array();

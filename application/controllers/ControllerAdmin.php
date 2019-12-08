@@ -170,6 +170,9 @@ class ControllerAdmin extends CI_Controller {
 			return;
 		}
 		$result = $this->ModelPAK->submitPenilaiPAK($idPAK);
+		if($result["result"] == "OK"){
+			$result["redirect"] = base_url()."admin/baru";
+		}
 		echo json_encode($result);
 	}
 	public function index()
@@ -206,9 +209,6 @@ class ControllerAdmin extends CI_Controller {
 			return;
 		}
 		
-		if($setuju){
-			echo "SETUJU " . $setuju;
-		}
 		
 		$this->load->model("ModelPAK");
 		

@@ -51,13 +51,6 @@ function hitungNilaiKategori($itemsBaru, $batasKategori, $unsurDict=null){
 		$idKategori = $batas->idKategori;
 		$subtotal = $subtotals[$idKategori];
 		$totalSubtotal += $subtotal;
-		if($batas->minimalAbs > 0 && $subtotal < $batas->minimalAbs){
-			echo json_encode(array(
-				'result'=>'FAIL',
-				'errorMessage'=>'Batas minimal kategori ' . $idKategori . ' belum terpenuhi'
-			));
-			return;
-		}
 		if($batas->maksimalAbs > 0 && $subtotal > $batas->maksimalAbs){
 			$subtotal = $batas->maksimalAbs;
 		}

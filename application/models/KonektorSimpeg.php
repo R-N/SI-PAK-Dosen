@@ -2,26 +2,6 @@
 
 class KonektorSimpeg extends CI_Model {
 	public function login($nip, $password){
-		/*
-		$arr = json_decode("
-			[
-				[
-					{
-						\"id_tipe\": 2,
-						\"id_jastruk\": 947,
-						\"nama\": \"Nita Yalina, S.Kom., M.MT\",
-						\"id_pangkat\": 11,
-						\"nama_golongan\": \"IIIc\",
-						\"id_jafung\": 2,
-						\"nama_jafung\": \"Lektor\",
-						\"email\": \"nitayalina@uinsby.ac.id\",
-						\"nama_rumpun\": \"SAINS\",
-						\"nama_rumpun_sub\": \"Komputer\",
-						\"nama_bidang\": \"Teknik Informatika\"
-					}
-				]
-			]
-		");*/
 		
 		$obj = null;
 		if ($nip=="admin" && $password == "admin"){
@@ -46,21 +26,42 @@ class KonektorSimpeg extends CI_Model {
 	}
 	
 	public function getPegawai($nip){
-		$raw = file_get_contents('http://lecturer.uinsby.ac.id/home/getDataPAK/'.$nip);
-		$arr = print_r_reverse($raw)[0];
+		//$raw = file_get_contents('http://lecturer.uinsby.ac.id/home/getDataPAK/'.$nip);
+		//$arr = print_r_reverse($raw)[0];
+		
+		$arr = json_decode("
+			[
+				{
+					\"id_tipe\": 2,
+					\"id_jastruk\": 947,
+					\"nama\": \"Nita Yalina, S.Kom., M.MT\",
+					\"id_pangkat\": 11,
+					\"nama_golongan\": \"IIIc\",
+					\"id_jafung\": 2,
+					\"nama_jafung\": \"Lektor\",
+					\"email\": \"nitayalina@uinsby.ac.id\",
+					\"nama_rumpun\": \"SAINS\",
+					\"nama_rumpun_sub\": \"Komputer\",
+					\"nama_bidang\": \"Teknik Informatika\"
+				}
+			]
+		");
+		
 		if(count($arr) == 0){
-			null;
+			return null;
 		}
 		$obj = $arr[0];
 		
 		$this->initDosen($obj);
+		
+		$obj->id_pegawai = $nip;
 		return $obj;
 	}
 	
 	public function dummyAdmin(){
 		$obj = new stdClass();
 		$obj->id_jastruk = 123;
-		$obj->id_pegawai = 1;
+		$obj->id_pegawai = "1";
 		$obj->nama = "Admin";
 		$obj->asalInstansi = "UINSA";
 		return $obj;
@@ -70,7 +71,7 @@ class KonektorSimpeg extends CI_Model {
 		$obj = new stdClass();
 		$obj->id_pangkat = 10;
 		$obj->id_jastruk = 947;
-		$obj->id_pegawai = 2;
+		$obj->id_pegawai = "2";
 		$obj->id_rumpun_sub = 110;
 		$obj->nama = "Dosen";
 		$obj->asalInstansi = "UINSA";
@@ -78,9 +79,9 @@ class KonektorSimpeg extends CI_Model {
 	}
 	
 	public function initDosen($dosen){
-		$dosen->id_pegawai = 3;
-		$dosen->id_rumpun_sub = 110;
-		$dosen->role = jastrukToRole($dosen->id_jastruk);
+		if(!isset($dosen->id_pegawai) || !$dosen->id_pegawai) $dosen->id_pegawai = "198702082014032003";
+		if(!isset($dosen->id_rumpun_sub) || !$dosen->id_rumpun_sub) $dosen->id_rumpun_sub = 110;
+		if(!isset($dosen->role) || !$dosen->role) $dosen->role = jastrukToRole($dosen->id_jastruk);
 		$this->load->model("ModelAkun");
 		$dosen->nama_rumpun_sub = $this->ModelAkun->subrumpunDict[$dosen->id_rumpun_sub];
 		$dosen->nama_jabatan = $this->ModelAkun->jabatanDict[$dosen->id_pangkat-9];
@@ -89,8 +90,9 @@ class KonektorSimpeg extends CI_Model {
 	}
 	
 	public function fetchDosen(){
-		$raw = file_get_contents('http://lecturer.uinsby.ac.id/home/getDataPAK/0');
-		$dosens = print_r_reverse($raw)[0];
+		//$raw = file_get_contents('http://lecturer.uinsby.ac.id/home/getDataPAK/0');
+		//$dosens = print_r_reverse($raw)[0];
+		$dosens = array();
 		
 		array_push($dosens, $this->dummyDosen());
 		
@@ -114,7 +116,7 @@ class KonektorSimpeg extends CI_Model {
 	
 	public function getDosen($idPegawai){
 		if ($idPegawai == 2){
-			return dummyDosen;
+			return $this->initDosen($this->dummyDosen());
 		}else{
 			$dosen = $this->getPegawai($idPegawai);
 			if(!$dosen){
@@ -128,6 +130,7 @@ class KonektorSimpeg extends CI_Model {
 				$ret->errorMessage = "NIP bukan milik dosen";
 				return $ret;
 			}else{
+				$this->initDosen($dosen);
 				$dosen ->result = "OK";
 				return $dosen;
 			}

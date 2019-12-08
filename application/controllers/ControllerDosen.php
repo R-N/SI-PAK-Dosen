@@ -79,7 +79,7 @@ class ControllerDosen extends CI_Controller {
 			
 			$this->initPAK($pak, $dosen, $jabatanTujuan);
 		}
-		$kekuranganKredit = $jabatanTujuan->kreditMinimal - $pak->kreditAwal;
+		$kekuranganKredit = max(0, $jabatanTujuan->kreditMinimal - $pak->kreditAwal);
 		foreach($batasKategori as $batas){
 			$batas->setKreditDibutuhkan($kekuranganKredit);
 		}
@@ -174,10 +174,10 @@ class ControllerDosen extends CI_Controller {
 			$kreditAwal = $pak->kreditAwal;
 		}
 		if($kreditAwal != null){
-			$pak->canEditKredit = true;
+			$pak->canEditKredit = false;
 			$pak->kreditAwal = $kreditAwal;
 		}else{
-			$pak->canEditKredit = false;
+			$pak->canEditKredit = true;
 		}
 	}
 	
@@ -378,10 +378,6 @@ class ControllerDosen extends CI_Controller {
 			$jabatanTujuan = $this->ModelAkun->getJabatan($dosen->idJabatan+1);
 			$batasKategori = $this->ModelItemPenilaian->fetchBatasKategori($dosen->idJabatan+1);
 		}
-		$kekuranganKredit = $jabatanTujuan->kreditMinimal - $pak->kreditAwal;
-		foreach($batasKategori as $batas){
-			$batas->setKreditDibutuhkan($kekuranganKredit);
-		}
 		
 		$itemsBaru = array();
 		
@@ -401,6 +397,10 @@ class ControllerDosen extends CI_Controller {
 			$this->initPAK($pakBaru, $dosen, $jabatanTujuan);
 		}
 		
+		$kekuranganKredit = max(0, $jabatanTujuan->kreditMinimal - $pakBaru->kreditAwal);
+		foreach($batasKategori as $batas){
+			$batas->setKreditDibutuhkan($kekuranganKredit);
+		}
 		$result = $this->_simpanPAK($pakBaru, $itemsBaru, $unsurDict, $items, $dosen);
 		if($result && $result['result'] != "OK"){
 			echo json_encode($result);
@@ -408,6 +408,16 @@ class ControllerDosen extends CI_Controller {
 		}
 		
 		$nilaiKategori = hitungNilaiKategori($itemsBaru, $batasKategori, $unsurDict);
+		
+		foreach($batasKategori as $batas){
+			$subtotal = $nilaiKategori["subtotals"][$batas->idKategori];
+			if($batas->minimalAbs > 0 && $subtotal < $batas->minimalAbs){
+				return array(
+					'result'=>'FAIL',
+					'errorMessage'=>'Batas minimal kategori ' . $idKategori . ' belum terpenuhi'
+				);
+			}
+		}
 		
 		$total = $nilaiKategori['total'];
 		
