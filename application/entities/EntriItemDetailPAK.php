@@ -17,6 +17,7 @@ class EntriItemDetailPAK extends EntriItemPAK{
     }
 	
 	public function read($queryResult){
+		parent::read($queryResult);
 		if(isset($queryResult->ID_ITEM)) $this->idItem = $queryResult->ID_ITEM;
 		if(isset($queryResult->ID_PAK)) $this->idPAK = $queryResult->ID_PAK;
 		if(isset($queryResult->ID_UNSUR)) $this->idUnsur = $queryResult->ID_UNSUR;
@@ -26,6 +27,7 @@ class EntriItemDetailPAK extends EntriItemPAK{
 		if(isset($queryResult->URL_DOKUMEN)) $this->urlDokumen = $queryResult->URL_DOKUMEN;
 		if(isset($queryResult->NILAI)) $this->nilai = $queryResult->NILAI;
 		if(isset($queryResult->BUKTI)) $this->bukti = $queryResult->BUKTI;
+		return $this;
 	}
 }
 ?>

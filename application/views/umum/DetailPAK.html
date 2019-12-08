@@ -18,9 +18,17 @@
                 </a>
                 <hr class="sidebar-divider my-0">
                 <ul class="nav navbar-nav text-light" id="accordionSidebar">
-                    <li class="nav-item bg-white" role="presentation"><a class="nav-link stretched-link text-dark" href="<?php echo base_url(); ?>admin/baru"><i class="fas fa-file-medical"></i><span>PAK Baru</span></a></li>
+					<?php if(isAdmin()){ ?>
+                    <li class="nav-item" role="presentation"><a class="nav-link stretched-link" href="<?php echo base_url(); ?>admin/baru"><i class="fas fa-file-medical"></i><span>PAK Baru</span></a></li>
                     <li class="nav-item" role="presentation"><a class="nav-link" href="<?php echo base_url(); ?>admin/sidang"><i class="fas fa-file-invoice"></i><span>PAK Sidang</span></a></li>
                     <li class="nav-item" role="presentation"><a class="nav-link" href="<?php echo base_url(); ?>admin/penilai"><i class="fas fa-user"></i><span>Kelola Penilai</span></a></li>
+					<?php } ?>
+					<?php if(isDosen()){ ?>
+                    <li class="nav-item" role="presentation"><a class="nav-link" href="<?php echo base_url(); ?>dosen/pak"><i class="fas fa-file-medical"></i><span>Pengajuan PAK</span></a></li>
+					<?php } ?>
+					<?php if(isPenilai()){ ?>
+                    <li class="nav-item" role="presentation"><a class="nav-link  active" href="<?php echo base_url(); ?>penilai/pak"><i class="fas fa-file-invoice bg-primary border-dark shadow-sm"></i><span>Penilaian PAK</span></a></li>
+					<?php } ?>
                 </ul>
                 <div class="text-center d-none d-md-inline"><button class="btn rounded-circle border-0" id="sidebarToggle" type="button"></button></div>
             </div>
@@ -89,31 +97,60 @@
                         <div class="card">
                             <div class="card-header bg-white">
                                 <h4 class="d-inline-block">Detail PAK</h4>
-                                <div class="float-right"><button class="btn btn-primary btn-submit-penilai" type="button">Submit</button><button class="btn btn-primary btn-draft-sk" type="button">Draft SK</button><button class="btn btn-primary btn-sidang" type="button">Sidang</button>
-                                    <button
-                                        class="btn btn-primary btn-lihat-sk" type="button">Lihat SK</button><button class="btn btn-primary btn-lihat-dokumen-pak" id="btn-draft-sk" type="button">Dokumen PAK</button></div>
+                                <div class="float-right">
+									<?php if(isAdmin()){ ?>
+										<?php if($pak->idStatus == 2) { ?>
+										<button class="btn btn-primary btn-submit-penilai" type="button" data-id-pak="<?=$pak->id;?>">Submit</button>
+										<?php } else if ($pak->idStatus == 4) { ?>
+										<!--
+										<button class="btn btn-primary btn-draft-sk" type="button">Draft SK</button>
+										-->
+										<button data-id-pak="<?=$pak->id;?>" class="btn btn-primary btn-sidang" type="button">Sidang</button>
+										<?php } ?>
+									<?php } else if (isDosen() && $pak->idStatus > 5){ ?>
+                                    <a class="btn btn-primary btn-lihat-sk" type="button" href="<?=$pak->urlSK;?>" target="_blank" >Lihat SK</a>
+									<!--
+									<button class="btn btn-primary btn-lihat-dokumen-pak" id="btn-draft-sk" type="button">Dokumen PAK</button>
+									-->
+									<?php } ?>
+								</div>
                             </div>
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col">
                                         <div>
-                                            <div class="clearfix align-middle"><span>Pemohon:&nbsp;</span><span class="nama-pemohon">Andi Akbar</span></div>
-                                            <div><span>Jabatan:&nbsp;</span><span class="jabatan-awal">Asisten Ahli</span></div>
-                                            <div><span>Sub Rumpun Ilmu:&nbsp;</span><span class="sub-rumpun">Sistem Informasi</span></div>
+                                            <div class="clearfix align-middle"><span>Pemohon:&nbsp;</span><span class="nama-pemohon"><?=$pak->dosen;?></span></div>
+                                            <div><span>Jabatan:&nbsp;</span><span class="jabatan-awal"><?=$pak->jabatanAwal;?></span></div>
+                                            <div><span>Sub Rumpun Ilmu:&nbsp;</span><span class="sub-rumpun"><?=$pak->subrumpun;?></span></div>
+                                            <div><span>Angka kredit sebelumnya:&nbsp;</span><span class="kredit-sebelumnya"><?=$pak->kreditAwal;?></span></div>
                                         </div>
+										<?php if(isAdmin()){ ?>
                                         <div>
-                                            <div class="clearfix"><span>Penilai 1:&nbsp;</span><span class="nama-penilai-1">Andi Revian, M.Kom&nbsp;</span><button class="btn btn-primary btn-sm float-right btn-penilai" type="button">Pilih</button></div>
-                                            <div class="clearfix"><span>Penilai 2:&nbsp;</span><span></span><button class="btn btn-primary btn-sm float-right btn-penilai" type="button">Pilih</button></div>
+                                            <div class="clearfix">
+												<span>Penilai 1:&nbsp;</span>
+												<span class="nama-penilai-1 nama-penilai" data-no-penilai="1"><?=$pak->penilai1;?></span>
+												<?php if($pak->idStatus == 2){ ?>
+												<button class="btn <?=$pak->idPenilai1>0?"btn-primary":"btn-light";?>  btn-sm float-right btn-penilai btn-penilai-1" type="button" data-id-pak="<?=$pak->id;?>" data-no-penilai="1" data-id-user="<?=$pak->idPenilai1;?>" data-id-pemohon="<?=$pak->idDosen;?>">Pilih</button>
+												<?php } ?>
+											</div>
+                                            <div class="clearfix">
+												<span>Penilai 2:&nbsp;</span> 
+												<span class="nama-penilai-1 nama-penilai" data-no-penilai="2"><?=$pak->penilai2;?></span>
+												<?php if($pak->idStatus == 2){ ?>
+												<button class="btn <?=$pak->idPenilai2>0?"btn-primary":"btn-light";?>  btn-sm float-right btn-penilai btn-penilai-1" type="button" data-id-pak="<?=$pak->id;?>" data-no-penilai="2" data-id-user="<?=$pak->idPenilai2;?>" data-id-pemohon="<?=$pak->idDosen;?>">Pilih</button>
+												<?php } ?>
+											</div>
                                         </div>
+										<?php } ?>
                                     </div>
                                     <div class="col">
                                         <div>
-                                            <div><span>Tanggal Diajukan:&nbsp;</span><span class="tanggal-diajukan">31 Desember 2019</span></div>
-                                            <div><span>Status:&nbsp;</span><span class="status-pak">Menunggu Sidang</span></div>
-                                            <div><span>Tanggal Status:&nbsp;</span><span class="tanggal-status">31 Desember 2019</span></div>
-                                            <div><span>Jabatan Tujuan:&nbsp;</span><span class="jabatan-tujuan">Lektor III/C</span></div>
-                                            <div><span>Kredit Diperlukan:&nbsp;</span><span class="kredit-diperlukan">200</span></div>
-                                            <div><span>Kredit Dimiliki:&nbsp;</span><span class="kredit-dimiliki">320</span></div>
+                                            <div><span>Tanggal Diajukan:&nbsp;</span><span class="tanggal-diajukan"><?=$pak->tanggalDiajukan;?></span></div>
+                                            <div><span>Status:&nbsp;</span><span class="status-pak"><?=$pak->status;?></span></div>
+                                            <div><span>Tanggal Status:&nbsp;</span><span class="tanggal-status"><?=$pak->tanggalStatus;?></span></div>
+                                            <div><span>Jabatan Tujuan:&nbsp;</span><span class="jabatan-tujuan"><?=$pak->jabatanTujuan;?></span></div>
+                                            <div><span>Kredit Diperlukan:&nbsp;</span><span class="kredit-diperlukan"><?=$pak->kreditMinimal;?></span></div>
+                                            <div><span>Kredit Dimiliki:&nbsp;</span><span class="kredit-dimiliki"><?=$pak->kreditAwal+$pak->nilaiAwal;?></span></div>
                                         </div>
                                     </div>
                                 </div>
@@ -121,6 +158,7 @@
                         </div>
                     </div>
                 </div>
+				
                 <div class="row" style="margin-top: 20px;">
                     <div class="col">
                         <div class="card">
@@ -140,48 +178,29 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td class="nilai-kategori">Pendidikan</td>
-                                                <td class="nilai-kategori-subtotal">100</td>
-                                                <td class="nilai-kategori-minimal">80</td>
-                                                <td class="nilai-kategori-maksimal">80</td>
-                                                <td class="nilai-kategori-total">80</td>
-                                            </tr>
+											<?php foreach($batasKategori as $batas) { ?>
                                             <tr>
                                                 <td>Pengajaran</td>
-                                                <td>100</td>
-                                                <td>100</td>
-                                                <td>100</td>
-                                                <td>80</td>
+                                                <td><?=$subtotals[$batas->idKategori];?></td>
+                                                <td><?=$batas->minimalAbs;?></td>
+                                                <td><?=$batas->maksimalAbs;?></td>
+                                                <td><?=$totals[$batas->idKategori];?></td>
                                             </tr>
-                                            <tr>
-                                                <td>Penelitian</td>
-                                                <td>100</td>
-                                                <td>100</td>
-                                                <td>100</td>
-                                                <td>80</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Pengabdian</td>
-                                                <td>100</td>
-                                                <td>100</td>
-                                                <td>100</td>
-                                                <td>80</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Pendukung</td>
-                                                <td>100</td>
-                                                <td>-</td>
-                                                <td>100</td>
-                                                <td>80</td>
-                                            </tr>
-                                            <tr class="text-light bg-success">
-                                                <td>Total</td>
-                                                <td class="total-subtotal">400</td>
-                                                <td class="minimal-jabatan">200</td>
-                                                <td>-</td>
-                                                <td class="total-akhir">320</td>
-                                            </tr>
+											<?php } ?>
+											<tr class="bg-primary text-light">
+												<td>Subtotal</td>
+												<td><?=$subtotal;?></td>
+												<td></td>
+												<td></td>
+												<td><?=$total;?></td>
+											</tr>
+											<tr class="total-nilai text-light bg-success">
+												<td>Total</td>
+												<td><?=$pak->kreditAwal+$subtotal;?></td>
+												<td><?=$pak->kreditMinimal;?></td>
+												<td></td>
+												<td><?=$pak->kreditAwal+$total;?></td>
+											</tr>
                                         </tbody>
                                     </table>
                                 </div>
@@ -189,20 +208,16 @@
                         </div>
                     </div>
                 </div>
+				
                 <div class="row" style="margin-top: 20px;">
                     <div class="col">
                         <div class="card">
                             <div class="card-header bg-white">
                                 <h4 class="d-inline-block">Kegiatan</h4>
-                                <form class="d-none float-right d-sm-inline-block mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-                                    <div class="input-group"><input class="bg-light form-control border-0 small field-search-item field-search-item-detail" type="text" placeholder="Cari Kegiatan">
-                                        <div class="input-group-append"><button class="btn btn-primary py-0 btn-search-item btn-search-item-detail" type="button"><i class="fas fa-search"></i></button></div>
-                                    </div>
-                                </form>
                             </div>
                             <div class="card-body">
                                 <div class="table-responsive table-hover">
-                                    <table class="table">
+                                    <table class="table tabel-datatable" >
                                         <thead>
                                             <tr>
                                                 <th>No.</th>
@@ -213,133 +228,48 @@
                                             </tr>
                                         </thead>
                                         <tbody>
+											<?php $i = 0;
+											foreach($items as $item){ ?>
                                             <tr>
-                                                <td>1</td>
-                                                <td>Pengajaran</td>
-                                                <td>Mengajar kuliah</td>
-                                                <td>100</td>
-                                                <td><button class="btn btn-primary btn-lihat-dokumen">Lihat</button></td>
+                                                <td><?=++$i;?></td>
+                                                <td><?=$item->kategori;?></td>
+                                                <td><?=$item->kegiatan;?></td>
+                                                <td><?=$item->nilai;?></td>
+                                                <td>
+													<?php if ($item->urlDokumen) { ?>
+													<a class="btn btn-primary btn-lihat-dokumen" target="_blank" href="<?=$item->urlDokumen;?>">Lihat</a>
+													<?php } ?>
+												</td>
                                             </tr>
-                                            <tr>
-                                                <td>1</td>
-                                                <td>Pengajaran</td>
-                                                <td>Mengajar kuliah</td>
-                                                <td>100</td>
-                                                <td><button class="btn btn-primary btn-lihat-dokumen">Lihat</button></td>
-                                            </tr>
-                                            <tr>
-                                                <td>1</td>
-                                                <td>Pengajaran</td>
-                                                <td>Mengajar kuliah</td>
-                                                <td>100</td>
-                                                <td><button class="btn btn-primary btn-lihat-dokumen">Lihat</button></td>
-                                            </tr>
+											<?php } ?>
                                         </tbody>
                                     </table>
                                 </div>
                             </div>
-                            <div class="card-footer bg-white">
-                                <div class="float-right"><button class="btn btn-light border-dark btn-prev-item btn-prev-item-detail" type="button">&lt;</button>
-                                    <div class="d-inline-block"><button class="btn btn-light btn-halaman-item btn-halaman-item-detail" type="button">1</button></div><button class="btn btn-light border-dark btn-next-item btn-next-item-detail" type="button">&gt;</button></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <footer class="bg-white sticky-footer">
-            <div class="container my-auto">
-                <div class="text-center my-auto copyright"><span>Copyright © UINSA2019</span></div>
-            </div><a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a></footer>
+						</div>
+					</div>
+				</div>
+			</div>
+			<footer class="bg-white sticky-footer">
+				<div class="container my-auto">
+					<div class="text-center my-auto copyright"><span>Copyright © UINSA2019</span></div>
+				</div><a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a></footer>
+		</div>
     </div>
-    </div>
-    <div class="modal fade" role="dialog" tabindex="-1" id="modal-penilai">
-        <div class="modal-dialog modal-xl" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title d-inline-block float-left">Pilih Penilai</h4>
-                    <form class="text-left d-inline-block float-right d-sm-inline-block mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-                        <div class="input-group"><input class="bg-light form-control border-0 small" type="text" placeholder="Search for ...">
-                            <div class="input-group-append"><button class="btn btn-primary py-0" type="button"><i class="fas fa-search"></i></button></div>
-                        </div>
-                    </form><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button></div>
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col">
-                            <div class="table-responsive table-hover">
-                                <table class="table">
-                                    <thead>
-                                        <tr>
-                                            <th>Nama</th>
-                                            <th>Sub Rumpun</th>
-                                            <th>Jabatan</th>
-                                            <th>Asal</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr class="clickable-row row-penilai">
-                                            <td>Andi Revian, M.Kom</td>
-                                            <td>Matematika</td>
-                                            <td>Asisten</td>
-                                            <td>UINSA</td>
-                                        </tr>
-                                        <tr class="clickable-row row-penilai">
-                                            <td>Cell 3</td>
-                                            <td>Cell 4</td>
-                                            <td>Cell 4</td>
-                                            <td>Cell 4</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <div class="float-right"><button class="btn btn-light border-dark" type="button">&lt;</button>
-                        <div class="d-inline-block"><button class="btn btn-light" type="button">1</button></div><button class="btn btn-light border-dark" type="button">&gt;</button></div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="modal fade" role="dialog" tabindex="-1" id="modal-sidang">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">Hasil Sidang</h4><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button></div>
-                <div class="modal-body">
-                    <p>Upload dokumen ke Google Drive Anda, get shareable link, lalu paste ke field di bawah ini.</p>
-                    <div><input type="url" style="width: 100%;" placeholder="URL dokumen"></div>
-                </div>
-                <div class="modal-footer"><button class="btn btn-danger" id="btn-sidang-tolak" type="button" data-dismiss="modal">Tolak</button><button class="btn btn-success" id="btn-sidang-setuju" type="button">Terima</button></div>
-            </div>
-        </div>
-    </div>
-    <div class="modal fade" role="dialog" tabindex="-1" id="modal-error">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header text-white bg-danger">
-                    <h4 class="modal-title">Error</h4><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button></div>
-                <div class="modal-body">
-                    <p>Error description.</p>
-                </div>
-                <div class="modal-footer"><button class="btn btn-light" type="button" data-dismiss="modal">Tutup</button></div>
-            </div>
-        </div>
-    </div>
-    <div class="modal fade modal-confirm modal-confirm-penilai" role="dialog" tabindex="-1" id="modal-confirm">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">Submit</h4><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button></div>
-                <div class="modal-body">
-                    <p>Apa Anda yakin ingin submit?<br>Proses ini tidak dapat di-undo.</p>
-                </div>
-                <div class="modal-footer"><button class="btn btn-light" type="button" data-dismiss="modal">Batal</button><button class="btn btn-primary btn-confirm btn-confirm-penilai" id="btn-confirm">Ya</button></div>
-            </div>
-        </div>
-    </div>
+	<?php $this->view("modal/Error.html"); ?>
+	<?php $this->view("modal/InputUrl.html"); ?>
+	<?php $this->view("modal/Konfirmasi.html"); ?>
 	<?php $this->view("umum/CommonJS.html"); ?>
+	<?php if (isAdmin()) { ?>
+	<?php 	if($pak->idStatus == 2) { ?>
+	<?php		$this->view("modal/PilihPenilai.html"); ?>
+    <script src="<?php echo base_url(); ?>assets/js/functions-pemilihan-penilai.js"></script>
+	<?php 	} ?>
+	<?php 	if($pak->idStatus == 4) { ?>
+	<?php 		$this->view("modal/Sidang.html"); ?>
+    <script src="<?php echo base_url(); ?>assets/js/functions-sidang-pak.js"></script>
+	<?php 	} ?>
+	<?php } ?>
 </body>
 
 </html>

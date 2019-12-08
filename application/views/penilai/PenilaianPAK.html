@@ -90,16 +90,11 @@
                         <div class="card">
                             <div class="card-header bg-white">
                                 <h4 class="d-inline-block">Penilaian PAK</h4>
-                                <form class="d-none float-right d-sm-inline-block mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-                                    <div class="input-group"><input class="bg-light form-control border-0 small field-search-pak field-search-penilaian-pak" type="text" placeholder="Cari PAK">
-                                        <div class="input-group-append"><button class="btn btn-primary py-0 btn-search-pak btn-search-penilaian-pak" type="button"><i class="fas fa-search"></i></button></div>
-                                    </div>
-                                </form>
                             </div>
                             <div class="card-body">
 								<?php if(count($entries) > 0){ ?>
                                 <div class="table-responsive table-hover">
-                                    <table class="table">
+                                    <table class="table table-datatable">
                                         <thead>
                                             <tr>
                                                 <th>No.</th>
@@ -128,12 +123,6 @@
 								<h5>Tidak ada penilaian yang ditugaskan kepada Anda saat ini.</h5>
 								<?php } ?>
                             </div>
-							<?php if(count($entries) > 0){ ?>
-                            <div class="card-footer bg-white" id="btn-tambah-pak">
-                                <div class="float-right"><button class="btn btn-light border-dark" type="button">&lt;</button>
-                                    <div class="d-inline-block"><button class="btn btn-light btn-halaman-pak btn-halaman-penilaian-pak" type="button">1</button></div><button class="btn btn-light border-dark btn-next-pak btn-next-penilaian-pak" type="button">&gt;</button></div>
-                            </div>
-							<?php } ?>
                         </div>
                     </div>
                 </div>
@@ -144,31 +133,6 @@
                 <div class="text-center my-auto copyright"><span>Copyright © UINSA2019</span></div>
             </div><a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a></footer>
     </div>
-    </div>
-    <div class="modal fade" role="dialog" tabindex="-1" id="modal-sidang">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">Hasil Sidang</h4><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button></div>
-                <div class="modal-body">
-                    <p>Upload dokumen ke Google Drive Anda, get shareable link, lalu paste ke field di bawah ini.</p>
-                    <div><input type="url" style="width: 100%;" placeholder="URL dokumen"></div>
-                </div>
-                <div class="modal-footer"><button class="btn btn-danger" id="btn-sidang-tolak" type="button" data-dismiss="modal">Tolak</button><button class="btn btn-success" id="btn-sidang-setuju" type="button">Terima</button></div>
-            </div>
-        </div>
-    </div>
-    <div class="modal fade" role="dialog" tabindex="-1" id="modal-error">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header text-white bg-danger">
-                    <h4 class="modal-title">Error</h4><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button></div>
-                <div class="modal-body">
-                    <p>Error description.</p>
-                </div>
-                <div class="modal-footer"><button class="btn btn-light" type="button" data-dismiss="modal">Tutup</button></div>
-            </div>
-        </div>
     </div>
 	<?php $this->view("umum/CommonJS.html"); ?>
 </body>

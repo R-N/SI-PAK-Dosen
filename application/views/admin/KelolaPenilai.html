@@ -89,16 +89,11 @@
                         <div class="card">
                             <div class="card-header bg-white">
                                 <h4 class="d-inline-block">Penilai</h4>
-                                <form class="d-none float-right d-sm-inline-block mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-                                    <div class="input-group"><input class="bg-light form-control border-0 small" type="text" placeholder="Cari penilai">
-                                        <div class="input-group-append"><button class="btn btn-primary py-0" type="button"><i class="fas fa-search"></i></button></div>
-                                    </div>
-                                </form>
                             </div>
                             <div class="card-body">
 								<?php if(count($entries) > 0){ ?>
                                 <div class="table-responsive table-hover">
-                                    <table class="table">
+                                    <table class="table table-datatable">
                                         <thead>
                                             <tr>
                                                 <th>No.</th>
@@ -114,13 +109,13 @@
 											<?php foreach ($entries as $entry){ ?>
 												<tr>
 													<td class="align-middle"><?=$entry["no"];?></td>
-													<td class="align-middle"><?=$entry["nama"];?></td>
-													<td class="align-middle"><?=$entry["subrumpun"];?></td>
-													<td class="align-middle"><?=$entry["jabatan"];?></td>
-													<td class="align-middle status-user"><?=$entry["status_user"]==1?"Aktif":"Suspend";?></td>
-													<td class="align-middle"><?=$entry["asal_instansi"];?></td>
+													<td class="align-middle"><?=$entry["NAMA"];?></td>
+													<td class="align-middle"><?=$entry["SUBRUMPUN"];?></td>
+													<td class="align-middle"><?=$entry["JABATAN"];?></td>
+													<td class="align-middle status-user"><?=$entry["STATUS_USER"]==1?"Aktif":"Suspend";?></td>
+													<td class="align-middle"><?=$entry["ASAL_INSTANSI"];?></td>
 													<td>
-														<?php if($entry["status_user"]==1) { ?>
+														<?php if($entry["STATUS_USER"]==1) { ?>
 															<button class="btn btn-danger btn-sm btn-suspend-penilai" type="button">Suspend</button>
 														<?php } else { ?>
 															<button class="btn btn-success btn-sm btn-aktifkan-penilai" type="button">Aktifkan</button>
@@ -136,11 +131,8 @@
 								<h5>Belum ada penilai.</h5>
 								<?php } ?>
                             </div>
-                            <div class="card-footer bg-white"><a class="btn btn-primary" role="button" id="btn-tambah-penilai" href="<?php echo base_url(); ?>admin/penilai/baru">Tambah</a>
-								<?php if(count($entries) > 0){ ?>
-                                <div class="float-right"><button class="btn btn-light border-dark btn-prev-penilai btn-prev-penilai-admin" type="button">&lt;</button><button class="btn btn-light btn-halaman-penilai btn-halaman-penilai-admin" type="button">1</button><button class="btn btn-light border-dark btn-next-penilai btn-next-penilai-admin"
-                                        type="button">&gt;</button></div>
-								<?php } ?>
+                            <div class="card-footer bg-white">
+								<a class="btn btn-primary" role="button" id="btn-tambah-penilai" href="<?php echo base_url(); ?>admin/penilai/baru">Tambah</a>
                             </div>
                         </div>
                     </div>
@@ -166,30 +158,8 @@
             </div>
         </div>
     </div>
-    <div class="modal fade" role="dialog" tabindex="-1" id="modal-error">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header text-white bg-danger">
-                    <h4 class="modal-title">Error</h4><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button></div>
-                <div class="modal-body">
-                    <p>Error description.</p>
-                </div>
-                <div class="modal-footer"><button class="btn btn-light" type="button" data-dismiss="modal">Tutup</button></div>
-            </div>
-        </div>
-    </div>
-    <div class="modal fade modal-confirm modal-confirm-aktifkan" role="dialog" tabindex="-1" id="modal-confirm">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">Aktifkan Penilai</h4><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button></div>
-                <div class="modal-body">
-                    <p>Apa Anda yakin ingin mengaktifkan kembali akun Andi Akbar, M.Kom?<br></p>
-                </div>
-                <div class="modal-footer"><button class="btn btn-light" type="button" data-dismiss="modal">Batal</button><button class="btn btn-primary btn-confirm btn-confirm-aktifkan" id="btn-confirm">Ya</button></div>
-            </div>
-        </div>
-    </div>
+	<?php $this->view("modal/Error.html"); ?>
+	<?php $this->view("modal/Konfirmasi.html"); ?>
 	<?php $this->view("umum/CommonJS.html"); ?>
 </body>
 

@@ -99,34 +99,29 @@
                             <div class="card-body d-xl-flex flex-column justify-content-around justify-content-xl-start align-items-xl-start"
                                 >
                                 <div class="input-group" style="margin-top: 11px;"  >
-                                    <div class="input-group-prepend"><span class="input-group-text" style="width: 235px;">Pemohon</span></div><div  class="form-control nama-pemohon"><?=$dosen->nama;?></div>
+                                    <div class="input-group-prepend"><span class="input-group-text" style="width: 235px;">Pemohon</span></div><div  class="form-control nama-pemohon"><?=$pak->dosen;?></div>
                                     <div class="input-group-append"></div>
                                 </div>
                                 <div class="input-group" style="margin-top: 11px;"  >
-                                    <div class="input-group-prepend"><span class="input-group-text" style="width: 235px;">Sub Rumpun Ilmu</span></div><div  class="form-control sub-rumpun"><?=$dosen->subrumpun;?></div>
+                                    <div class="input-group-prepend"><span class="input-group-text" style="width: 235px;">Sub Rumpun Ilmu</span></div><div  class="form-control sub-rumpun"><?=$pak->subrumpun;?></div>
                                     <div class="input-group-append"></div>
                                 </div>
                                 <div class="input-group" style="margin-top: 11px;"  >
-                                    <div class="input-group-prepend"><span class="input-group-text" style="width: 235px;">Jabatan Tujuan</span></div><div  class="form-control jabatan-tujuan"><?=$jabatanTujuan->jabatan;?></div>
+                                    <div class="input-group-prepend"><span class="input-group-text" style="width: 235px;">Jabatan Tujuan</span></div><div  class="form-control jabatan-tujuan"><?=$pak->jabatanTujuan;?></div>
                                     <div class="input-group-append"></div>
                                 </div>
                                 <div class="input-group" style="margin-top: 11px;"  >
-                                    <div class="input-group-prepend"><span class="input-group-text" style="width: 235px;">Angka kredit sebelumnya</span></div><div  class="form-control kredit-sebelumnya"><?=$dosen->kreditKumulatif;?></div>
+                                    <div class="input-group-prepend"><span class="input-group-text" style="width: 235px;">Angka kredit sebelumnya</span></div>
+									<input class="form-control kredit-sebelumnya h-100 my-0" type="text"
+                                    value="<?=$pak->kreditAwal;?>" <?=$pak->canEditKredit?"":"disabled";?>>
                                     <div class="input-group-append"></div>
                                 </div>
                                 <div class="input-group" style="margin-top: 11px;"  >
-                                    <div class="input-group-prepend"><span class="input-group-text" style="width: 235px;">Angka kredit diperlukan</span></div><div  class="form-control kredit-diperlukan"><?=$jabatanTujuan->kreditMinimal;?></div>
+                                    <div class="input-group-prepend"><span class="input-group-text" style="width: 235px;">Angka kredit diperlukan</span></div><div  class="form-control kredit-diperlukan"><?=$pak->kreditMinimal;?></div>
                                     <div class="input-group-append"></div>
                                 </div>
                                 <div class="input-group" style="margin-top: 11px;"  >
-                                    <div class="input-group-prepend"><span class="input-group-text" style="width: 235px;">Angka kredit didapat</span></div><div  class="form-control total-akhir text-light">
-									<?php
-										$nilai = $dosen->kreditKumulatif;
-										foreach($items as $item){
-											$nilai += $item->nilai;
-										}
-										echo $nilai;
-									?></div>
+                                    <div class="input-group-prepend"><span class="input-group-text" style="width: 235px;">Angka kredit didapat</span></div><div  class="form-control total-akhir text-light bg-danger">0</div>
                                     <div class="input-group-append"></div>
                                 </div>
                     </div>
@@ -157,8 +152,8 @@
                                     <tr class="batas-kategori" data-id-kategori="<?=$batas->idKategori;?>">
                                         <td class="nilai-kategori"><?=$batas->kategori;?></td>
                                         <td class="nilai-kategori-subtotal"></td>
-                                        <td class="nilai-kategori-minimal"><?=$batas->minimal;?></td>
-                                        <td class="nilai-kategori-maksimal"><?=$batas->maksimal;?></td>
+                                        <td class="nilai-kategori-minimal text-light bg-success"><?=$batas->minimalAbs;?></td>
+                                        <td class="nilai-kategori-maksimal text-light bg-success"><?=$batas->maksimalAbs;?></td>
                                         <td class="nilai-kategori-total"></td>
                                     </tr>
 									<?php } ?>
@@ -172,7 +167,7 @@
                                     <tr class="total-nilai text-light bg-success">
                                         <td>Total</td>
                                         <td class="total-subtotal"></td>
-                                        <td class="minimal-jabatan"><?=$jabatanTujuan->kreditMinimal;?></td>
+                                        <td class="minimal-jabatan"><?=$pak->kreditMinimal;?></td>
                                         <td></td>
                                         <td class="total-akhir"></td>
                                     </tr>
@@ -216,19 +211,6 @@
         </div><a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a></footer>
     </div>
     </div>
-    <div class="modal fade" role="dialog" tabindex="-1" id="modal-dokumen">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">Dokumen Bukti</h4><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button></div>
-                <div class="modal-body">
-                    <p>Upload dokumen ke Google Drive Anda, get shareable link, lalu paste ke field di bawah ini.</p>
-                    <div><input type="url" id="field-url-dokumen" style="width: 100%;" placeholder="URL dokumen"></div>
-                </div>
-                <div class="modal-footer"><button class="btn btn-primary" id="btn-simpan-dokumen" type="button">Simpan</button></div>
-            </div>
-        </div>
-    </div>
     <div class="modal fade" role="dialog" tabindex="-1" id="modal-unsur">
         <div class="modal-dialog modal-xl" role="document">
             <div class="modal-content">
@@ -269,13 +251,12 @@
         </div>
     </div>
 	<?php $this->view("modal/Error.html"); ?>
+	<?php $this->view("modal/Notifikasi.html"); ?>
 	<?php $this->view("modal/InputUrl.html"); ?>
 	<?php $this->view("modal/Konfirmasi.html"); ?>
 	<?php $this->view("umum/CommonJS.html"); ?>
 	<script>
-		var dosen = <?=json_encode($dosen);?>;
 		var pak = <?=json_encode($pak);?>;
-		var jabatanTujuan = <?=json_encode($jabatanTujuan);?>;
 		var items = <?=json_encode($items);?>;
 		<?php 
 			$unsurDict = array();
@@ -292,11 +273,8 @@
 		?>
 		var batasKategori = <?=json_encode($batasDict);?>;
 		var templateItem = "<?php echo escape($this->view("dosen/ItemPenilaian.html", $emptyItem, true)); ?>";
-		$(document).ready(function(){
-			$("#tabel-unsur").DataTable({pageLength: 5});
-			hitungNilaiKategori();
-		});
 	</script>
+    <script src="<?php echo base_url(); ?>assets/js/functions-pengajuan-pak.js"></script>
 </body>
 
 </html>

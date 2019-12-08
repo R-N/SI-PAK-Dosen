@@ -95,21 +95,21 @@
                                 <div class="row">
                                     <div class="col">
                                         <div>
-                                            <div class="clearfix align-middle"><span>Pemohon:&nbsp;</span><span class="nama-pemohon">Andi Akbar</span></div>
-                                            <div><span>Jabatan:&nbsp;</span><span class="jabatan-awal">Asisten Ahli III/B</span></div>
-                                            <div><span>Sub Rumpun Ilmu:&nbsp;</span><span class="sub-rumpun">Sistem Informasi</span></div>
-                                            <div><span>Jabatan Tujuan:&nbsp;</span><span class="jabatan-tujuan">Lektor III/C</span></div>
-                                            <div></div>
+                                            <div class="clearfix align-middle"><span>Pemohon:&nbsp;</span><span class="nama-pemohon"><?=$pak->dosen;?></span></div>
+                                            <div><span>Jabatan:&nbsp;</span><span class="jabatan-awal"><?=$pak->jabatanAwal;?></span></div>
+                                            <div><span>Sub Rumpun Ilmu:&nbsp;</span><span class="sub-rumpun"><?=$pak->subrumpun;?></span></div>
+                                            <div><span>Jabatan Tujuan:&nbsp;</span><span class="jabatan-tujuan"><?=$pak->jabatanTujuan;?></span></div>
+                                            <div><span>Angka kredit sebelumnya:&nbsp;</span><span class="kredit-sebelumnya"><?=$pak->kreditAwal;?></span></div>
                                         </div>
                                     </div>
                                     <div class="col">
                                         <div>
-                                            <div><span>Tanggal Diajukan:&nbsp;</span><span class="tanggal-diajukan">31 Desember 2019</span></div>
-                                            <div><span>Status:&nbsp;</span><span class="status-pak">Menunggu Sidang</span></div>
-                                            <div><span>Tanggal Status:&nbsp;</span><span class="tanggal-status">31 Desember 2019</span></div>
+                                            <div><span>Tanggal Diajukan:&nbsp;</span><span class="tanggal-diajukan"><?=$pak->tanggalDiajukan;?></span></div>
+                                            <div><span>Status:&nbsp;</span><span class="status-pak"><?=$pak->status;?></span></div>
+                                            <div><span>Tanggal Status:&nbsp;</span><span class="tanggal-status"><?=$pak->tanggalStatus;?></span></div>
                                             <div></div>
-                                            <div><span>Kredit Diperlukan:&nbsp;</span><span class="kredit-diperlukan">200</span></div>
-                                            <div><span>Kredit Dimiliki:&nbsp;</span><span class="kredit-dimiliki">320</span></div>
+                                            <div><span>Kredit Diperlukan:&nbsp;</span><span class="kredit-diperlukan"><?=$pak->kreditMinimal;?></span></div>
+                                            <div><span>Kredit Dimiliki:&nbsp;</span><span class="kredit-dimiliki"><?=$pak->kreditAwal+$pak->nilaiAwal;?></span></div>
                                         </div>
                                     </div>
                                 </div>
@@ -117,145 +117,99 @@
                         </div>
                     </div>
                 </div>
-                <div class="row" style="margin-top: 20px;">
-                    <div class="col">
-                        <div class="card">
-                            <div class="card-header bg-white">
-                                <h4 class="d-inline-block">Kredit per Kategori</h4>
-                            </div>
-                            <div class="card-body">
-                                <div class="table-responsive table-hover">
-                                    <table class="table">
-                                        <thead>
-                                            <tr>
-                                                <th>Kategori</th>
-                                                <th>Subtotal</th>
-                                                <th>Minimal</th>
-                                                <th>Maksimal</th>
-                                                <th>Total</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td class="nilai-kategori">Pendidikan</td>
-                                                <td class="nilai-kategori-subtotal">100</td>
-                                                <td class="nilai-kategori-minimal">80</td>
-                                                <td class="nilai-kategori-maksimal">80</td>
-                                                <td class="nilai-kategori-total">80</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Pengajaran</td>
-                                                <td>100</td>
-                                                <td>100</td>
-                                                <td>100</td>
-                                                <td>80</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Penelitian</td>
-                                                <td>100</td>
-                                                <td>100</td>
-                                                <td>100</td>
-                                                <td>80</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Pengabdian</td>
-                                                <td>100</td>
-                                                <td>100</td>
-                                                <td>100</td>
-                                                <td>80</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Pendukung</td>
-                                                <td>100</td>
-                                                <td>-</td>
-                                                <td>100</td>
-                                                <td>80</td>
-                                            </tr>
-                                            <tr class="text-light bg-success">
-                                                <td>Total</td>
-                                                <td class="total-subtotal">400</td>
-                                                <td class="minimal-jabatan">200</td>
-                                                <td>-</td>
-                                                <td class="total-akhir">320</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
+        <div class="row" style="margin-top: 20px;">
+            <div class="col">
+                <div class="card">
+                    <div class="card-header bg-white">
+                        <h4 class="d-inline-block">Kredit per Kategori</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive table-hover">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Kategori</th>
+                                        <th>Subtotal</th>
+                                        <th>Minimal</th>
+                                        <th>Maksimal</th>
+                                        <th>Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+									<?php foreach($batasKategori as $batas){ ?>
+                                    <tr class="batas-kategori" data-id-kategori="<?=$batas->idKategori;?>">
+                                        <td class="nilai-kategori"><?=$batas->kategori;?></td>
+                                        <td class="nilai-kategori-subtotal"></td>
+                                        <td class="nilai-kategori-minimal text-light bg-success"><?=$batas->minimalAbs;?></td>
+                                        <td class="nilai-kategori-maksimal text-light bg-success"><?=$batas->maksimalAbs;?></td>
+                                        <td class="nilai-kategori-total"></td>
+                                    </tr>
+									<?php } ?>
+                                    <tr class="bg-primary text-light">
+                                        <td>Subtotal</td>
+                                        <td class="subtotal-subtotal"></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td class="subtotal-akhir"></td>
+                                    </tr>
+                                    <tr class="total-nilai text-light bg-success">
+                                        <td>Total</td>
+                                        <td class="total-subtotal"></td>
+                                        <td class="minimal-jabatan"><?=$pak->kreditMinimal;?></td>
+                                        <td></td>
+                                        <td class="total-akhir"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
                 <div class="row" style="margin-top: 20px;">
                     <div class="col">
                         <div class="card">
                             <div class="card-header bg-white">
                                 <h4 class="d-inline-block">Kegiatan</h4>
-                                <form class="d-none float-right d-sm-inline-block mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-                                    <div class="input-group"><input class="bg-light form-control border-0 small field-search-item field-search-item-nilai" type="text" placeholder="Cari Kegiatan">
-                                        <div class="input-group-append"><button class="btn btn-primary py-0 btn-search-item btn-search-item-nilai" type="button"><i class="fas fa-search"></i></button></div>
-                                    </div>
-                                </form>
                             </div>
                             <div class="card-body">
                                 <div class="table-responsive table-hover">
-                                    <table class="table">
+                                    <table class="table" id="tabel-penilaian">
                                         <thead>
                                             <tr>
                                                 <th>No.</th>
                                                 <th>Kategori</th>
                                                 <th>Kegiatan</th>
-                                                <th>Nilai Max</th>
                                                 <th>Nilai Awal</th>
                                                 <th>Nilai Akhir</th>
                                                 <th>Lampiran</th>
                                             </tr>
                                         </thead>
                                         <tbody>
+											<?php $i = 0;
+											foreach($items as $item){ ?>
                                             <tr>
-                                                <td>1</td>
-                                                <td>Pengajaran</td>
-                                                <td>Mengajar kuliah</td>
-                                                <td class="nilai-max">100</td>
-                                                <td class="nilai-awal">100</td>
-                                                <td><input type="text" style="width: 60px;height: 38px;" inputmode="numeric"></td>
-                                                <td><button class="btn btn-primary btn-lihat-dokumen">Lihat</button></td>
+                                                <td><?=++$i;?></td>
+                                                <td><?=$item->kategori;?></td>
+                                                <td><?=$item->kegiatan;?></td>
+                                                <td><?=$item->nilaiAwal;?></td>
+                                                <td>
+													<input class="nilai-penilai" data-nilai-awal="<?=$item->nilaiAwal;?>" data-id-item="<?=$item->idItem;?>" data-no-penilai="<?=$nomorPenilai;?>" data-id-kategori="<?=$item->idKategori;?>" type="text" style="width: 60px;height: 38px;" inputmode="numeric" value="<?=$item->nilaiPenilai;?>">
+												</td>
+                                                <td>
+													<?php if($item->urlDokumen){ ?>
+													<a target="_blank" href="<?=$item->urlDokumen;?>" class="btn btn-primary btn-lihat-dokumen">Lihat</a>
+													<?php } ?>
+												</td>
                                             </tr>
-                                            <tr>
-                                                <td>1</td>
-                                                <td>Pengajaran</td>
-                                                <td>Mengajar kuliah</td>
-                                                <td>100</td>
-                                                <td>100</td>
-                                                <td><input type="text" style="width: 60px;height: 38px;" inputmode="numeric"></td>
-                                                <td><button class="btn btn-primary" type="button">Lihat</button></td>
-                                            </tr>
-                                            <tr>
-                                                <td>1</td>
-                                                <td>Pengajaran</td>
-                                                <td>Mengajar kuliah</td>
-                                                <td>100</td>
-                                                <td>100</td>
-                                                <td><input type="text" style="width: 60px;height: 38px;" inputmode="numeric"></td>
-                                                <td><button class="btn btn-primary" type="button">Lihat</button></td>
-                                            </tr>
-                                            <tr>
-                                                <td>1</td>
-                                                <td>Pengajaran</td>
-                                                <td>Mengajar kuliah</td>
-                                                <td>100</td>
-                                                <td>100</td>
-                                                <td><input type="text" style="width: 60px;height: 38px;" inputmode="numeric"></td>
-                                                <td><button class="btn btn-primary" type="button">Lihat</button></td>
-                                            </tr>
+											<?php } ?>
                                         </tbody>
                                     </table>
                                 </div>
                             </div>
                             <div class="card-footer bg-white">
-                                <div class="float-right"><button class="btn btn-light border-dark btn-prev-item btn-prev-item-nilai" type="button">&lt;</button>
-                                    <div class="d-inline-block"><button class="btn btn-light btn-halaman-item" type="button">1</button></div><button class="btn btn-light border-dark" type="button">&gt;</button></div><button class="btn btn-primary btn-simpan-penilaian btn-simpan">Simpan</button>
-                                <button
-                                    class="btn btn-success btn-submit-penilaian btn-submit">Submit</button>
+                                <button class="btn btn-primary btn-simpan-penilaian btn-simpan">Simpan</button>
+                                <button class="btn btn-success btn-submit-penilaian btn-submit">Submit</button>
                             </div>
                         </div>
                     </div>
@@ -268,31 +222,23 @@
             </div><a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a></footer>
     </div>
     </div>
-    <div class="modal fade modal-confirm modal-confirm-submit" role="dialog" tabindex="-1" id="modal-confirm">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">Submit</h4><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button></div>
-                <div class="modal-body">
-                    <p>Apa Anda yakin ingin submit?<br>Proses ini tidak dapat di-undo.</p>
-                </div>
-                <div class="modal-footer"><button class="btn btn-light" type="button" data-dismiss="modal">Batal</button><button class="btn btn-primary btn-confirm-submit btn-confirm-submit-penilaian">Ya</button></div>
-            </div>
-        </div>
-    </div>
-    <div class="modal fade" role="dialog" tabindex="-1" id="modal-error">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header text-white bg-danger">
-                    <h4 class="modal-title">Error</h4><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button></div>
-                <div class="modal-body">
-                    <p>Error description.</p>
-                </div>
-                <div class="modal-footer"><button class="btn btn-light" type="button" data-dismiss="modal">Tutup</button></div>
-            </div>
-        </div>
-    </div>
+	<?php $this->view("modal/Konfirmasi.html"); ?>
+	<?php $this->view("modal/Error.html"); ?>
+	<?php $this->view("modal/Notifikasi.html"); ?>
 	<?php $this->view("umum/CommonJS.html"); ?>
+	<script>
+		var nomorPenilai = <?=$nomorPenilai;?>;
+		var pak = <?=json_encode($pak);?>;
+		var items = <?=json_encode($items);?>;
+		<?php 
+			$batasDict = array();
+			foreach($batasKategori as $batas){
+				$batasDict[$batas->idKategori] = $batas;
+			}
+		?>
+		var batasKategori = <?=json_encode($batasDict);?>;
+	</script>
+    <script src="<?php echo base_url(); ?>assets/js/functions-penilaian-pak.js"></script>
 </body>
 
 </html>

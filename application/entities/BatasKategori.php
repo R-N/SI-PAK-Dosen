@@ -7,6 +7,10 @@ class BatasKategori{
 	public $kategori;
 	public $maksimal;
 	public $minimal;
+	public $minType;
+	public $maxType;
+	public $maksimalAbs;
+	public $minimalAbs;
     public function __construct() {
 		
     }
@@ -16,6 +20,21 @@ class BatasKategori{
 		if(isset($queryResult->KATEGORI)) $this->kategori = $queryResult->KATEGORI;
 		if(isset($queryResult->MAKSIMAL)) $this->maksimal = $queryResult->MAKSIMAL;
 		if(isset($queryResult->MINIMAL)) $this->minimal = $queryResult->MINIMAL;
+		if(isset($queryResult->MIN_TYPE)) $this->minType = $queryResult->MIN_TYPE;
+		if(isset($queryResult->MAX_TYPE)) $this->maxType = $queryResult->MAX_TYPE;
+		if(isset($this->minType) && $this->minType == 0) $this->minimalAbs = $this->minimal;
+		if(isset($this->maxType) && $this->maxType == 0) $this->maksimalAbs = $this->maksimal;
+	}
+	
+	public function setKreditDibutuhkan($kredit){
+		if(isset($this->minType)){
+			if($this->minType == 0) $this->minimalAbs = $this->minimal;
+			else if ($this->minType == 1) $this->minimalAbs = $this->minimal * $kredit / 100.0;
+		}
+		if(isset($this->maxType)){
+			if($this->maxType == 0) $this->maksimalAbs = $this->maksimal;
+			else if ($this->maxType == 1) $this->maksimalAbs = $this->maksimal * $kredit / 100.0;
+		}
 	}
 }
 ?>
