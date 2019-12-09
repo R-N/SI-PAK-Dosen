@@ -18,9 +18,17 @@
                 </a>
                 <hr class="sidebar-divider my-0">
                 <ul class="nav navbar-nav text-light" id="accordionSidebar">
-                    <li class="nav-item" role="presentation"><a class="nav-link" href="<?php echo base_url(); ?>admin/baru"><i class="fas fa-file-medical"></i><span>PAK Baru</span></a></li>
+					<?php if(isAdmin()){ ?>
+                    <li class="nav-item" role="presentation"><a class="nav-link " href="<?php echo base_url(); ?>admin/baru"><i class="fas fa-file-medical"></i><span>PAK Baru</span></a></li>
                     <li class="nav-item" role="presentation"><a class="nav-link" href="<?php echo base_url(); ?>admin/sidang"><i class="fas fa-file-invoice"></i><span>PAK Sidang</span></a></li>
-                    <li class="nav-item bg-white" role="presentation"><a class="nav-link stretched-link text-dark" href="<?php echo base_url(); ?>admin/penilai"><i class="fas fa-user"></i><span>Kelola Penilai</span></a></li>
+                    <li class="nav-item" role="presentation"><a class="nav-link" href="<?php echo base_url(); ?>admin/penilai"><i class="fas fa-user"></i><span>Kelola Penilai</span></a></li>
+					<?php } ?>
+					<?php if(isDosen()){ ?>
+                    <li class="nav-item" role="presentation"><a class="nav-link" href="<?php echo base_url(); ?>dosen/pak"><i class="fas fa-file-medical"></i><span>Pengajuan PAK</span></a></li>
+					<?php } ?>
+					<?php if(isPenilai()){ ?>
+                    <li class="nav-item" role="presentation"><a class="nav-link" href="<?php echo base_url(); ?>penilai/pak"><i class="fas fa-file-invoice"></i><span>Penilaian PAK</span></a></li>
+					<?php } ?>
                 </ul>
                 <div class="text-center d-none d-md-inline"><button class="btn rounded-circle border-0" id="sidebarToggle" type="button"></button></div>
             </div>
@@ -51,72 +59,69 @@
             </div>
             </nav>
             <div class="container-fluid">
-                <div class="row">
+                <div class="row" style="margin-top: 20px;">
                     <div class="col">
                         <div class="card">
                             <div class="card-header bg-white">
-                                <h4 class="d-inline-block">Penilai</h4>
+                                <h4 class="d-inline-block">Profil</h4>
                             </div>
                             <div class="card-body">
-								<?php if(count($entries) > 0){ ?>
-                                <div class="table-responsive table-hover">
-                                    <table class="table table-datatable">
-                                        <thead>
-                                            <tr>
-                                                <th>No.</th>
-                                                <th>Nama</th>
-                                                <th>Sub Rumpun</th>
-                                                <th>Jabatan</th>
-                                                <th>Status</th>
-                                                <th>Asal</th>
-                                                <th>Aksi</th>
-                                            </tr>
-                                        </thead>
+                                <div class="table-responsive table-borderless">
+                                    <table class="table table-bordered">
                                         <tbody>
-											<?php foreach ($entries as $entry){ ?>
-												<tr class="row-penilai-kelola" data-id-user="<?=$entry["ID_USER"];?>">
-													<td class="align-middle"><?=$entry["no"];?></td>
-													<td class="align-middle nama-penilai"><?=$entry["NAMA"];?></td>
-													<td class="align-middle"><?=$entry["SUBRUMPUN"];?></td>
-													<td class="align-middle"><?=$entry["JABATAN"];?></td>
-													<td class="align-middle status-user"><?=$entry["STATUS_USER"]==1?"Aktif":"Suspend";?></td>
-													<td class="align-middle"><?=$entry["ASAL_INSTANSI"];?></td>
-													<td>
-														<?php if($entry["STATUS_USER"]==1) { ?>
-															<button class="btn btn-danger btn-sm btn-suspend-penilai" type="button">Suspend</button>
-														<?php } else { ?>
-															<button class="btn btn-success btn-sm btn-aktifkan-penilai" type="button">Aktifkan</button>
-														<?php } ?>
-														<a href="<?=base_url();?>profil/<?=$entry["ID_USER"];?>" class="btn btn-primary btn-sm btn-detail-penilai">Detail</a>
-													</td>
-												</tr>
+                                            <tr>
+                                                <td class="flex-shrink-1">NIP</td>
+                                                <td class="flex-grow-1"><?=$user->nip;?></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Nama</td>
+                                                <td><?=$user->nama;?></td>
+                                            </tr>
+											<?php if(isset($user->email) && $user->email){ ?>
+                                            <tr>
+                                                <td>Email</td>
+                                                <td><?=$user->email;?></td>
+                                            </tr>
+											<?php } ?>
+											<?php if(isset($user->asalInstansi) && $user->asalInstansi){ ?>
+                                            <tr>
+                                                <td>Asal Instansi</td>
+                                                <td><?=$user->asalInstansi;?></td>
+                                            </tr>
+											<?php } ?>
+											<?php if(isset($user->subrumpun) && $user->subrumpun){ ?>
+                                            <tr>
+                                                <td>Sub Rumpun</td>
+                                                <td><?=$user->subrumpun;?></td>
+                                            </tr>
+											<?php } ?>
+											<?php if(isset($user->telepon) && $user->telepon){ ?>
+                                            <tr>
+                                                <td>Telepon</td>
+                                                <td><?=$user->telepon;?></td>
+                                            </tr>
+											<?php } ?>
+											<?php if(isset($user->jabatan) && $user->jabatan){ ?>
+                                            <tr>
+                                                <td>Jabatan</td>
+                                                <td><?=$user->jabatan;?></td>
+                                            </tr>
 											<?php } ?>
                                         </tbody>
                                     </table>
                                 </div>
-								<?php } else { ?>
-								<h5>Belum ada penilai.</h5>
-								<?php } ?>
-                            </div>
-                            <div class="card-footer bg-white">
-								<a class="btn btn-primary" role="button" id="btn-tambah-penilai" href="<?php echo base_url(); ?>admin/penilai/baru">Tambah</a>
                             </div>
                         </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <footer class="bg-white sticky-footer">
-            <div class="container my-auto">
-                <div class="text-center my-auto copyright"><span>Copyright © UINSA2019</span></div>
-            </div><a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a></footer>
+					</div>
+				</div>
+			</div>
+			<footer class="bg-white sticky-footer">
+				<div class="container my-auto">
+					<div class="text-center my-auto copyright"><span>Copyright © UINSA2019</span></div>
+				</div><a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a></footer>
+		</div>
     </div>
-    </div>
-	<?php $this->view("modal/Input.html"); ?>
-	<?php $this->view("modal/Error.html"); ?>
-	<?php $this->view("modal/Konfirmasi.html"); ?>
 	<?php $this->view("umum/CommonJS.html"); ?>
-    <script src="<?php echo base_url(); ?>assets/js/functions-kelola-penilai.js"></script>
 </body>
 
 </html>

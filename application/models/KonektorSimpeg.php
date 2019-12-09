@@ -26,31 +26,45 @@ class KonektorSimpeg extends CI_Model {
 	}
 	
 	public function getPegawai($nip){
-		//$raw = file_get_contents('http://lecturer.uinsby.ac.id/home/getDataPAK/'.$nip);
-		//$arr = print_r_reverse($raw)[0];
 		
-		$arr = json_decode("
-			[
-				{
-					\"id_tipe\": 2,
-					\"id_jastruk\": 947,
-					\"nama\": \"Nita Yalina, S.Kom., M.MT\",
-					\"id_pangkat\": 11,
-					\"nama_golongan\": \"IIIc\",
-					\"id_jafung\": 2,
-					\"nama_jafung\": \"Lektor\",
-					\"email\": \"nitayalina@uinsby.ac.id\",
-					\"nama_rumpun\": \"SAINS\",
-					\"nama_rumpun_sub\": \"Komputer\",
-					\"nama_bidang\": \"Teknik Informatika\"
-				}
-			]
-		");
+		if($nip == 1){
+			$obj = $this->dummyAdmin();
+		}else if ($nip == 2){
+			$obj = $this->dummyDosen();
+		}else{
+			//$raw = file_get_contents('http://lecturer.uinsby.ac.id/home/getDataPAK/'.$nip);
+			//$arr = print_r_reverse($raw)[0];
+			
+			if ($nip == "198702082014032003"){
+				$arr = json_decode("
+					[
+						{
+							\"id_tipe\": 2,
+							\"id_jastruk\": 947,
+							\"nama\": \"Nita Yalina, S.Kom., M.MT\",
+							\"id_pangkat\": 11,
+							\"nama_golongan\": \"IIIc\",
+							\"id_jafung\": 2,
+							\"nama_jafung\": \"Lektor\",
+							\"email\": \"nitayalina@uinsby.ac.id\",
+							\"nama_rumpun\": \"SAINS\",
+							\"nama_rumpun_sub\": \"Komputer\",
+							\"nama_bidang\": \"Teknik Informatika\"
+						}
+					]
+				");
+			}else{
+				$arr = array();
+			}
 		
-		if(count($arr) == 0){
-			return null;
+			if(count($arr) == 0){
+				return null;
+			}else{
+				$obj = $arr[0];
+			}
 		}
-		$obj = $arr[0];
+		
+		$obj->nip = $nip;
 		
 		$this->initDosen($obj);
 		
@@ -64,6 +78,7 @@ class KonektorSimpeg extends CI_Model {
 		$obj->id_pegawai = "1";
 		$obj->nama = "Admin";
 		$obj->asalInstansi = "UINSA";
+		$obj->nip = 1;
 		return $obj;
 	}
 	
@@ -75,17 +90,23 @@ class KonektorSimpeg extends CI_Model {
 		$obj->id_rumpun_sub = 110;
 		$obj->nama = "Dosen";
 		$obj->asalInstansi = "UINSA";
+		$obj->nip = 2;
 		return $obj;
 	}
 	
-	public function initDosen($dosen){
+	public function initPegawai($dosen){
 		if(!isset($dosen->id_pegawai) || !$dosen->id_pegawai) $dosen->id_pegawai = "198702082014032003";
-		if(!isset($dosen->id_rumpun_sub) || !$dosen->id_rumpun_sub) $dosen->id_rumpun_sub = 110;
 		if(!isset($dosen->role) || !$dosen->role) $dosen->role = jastrukToRole($dosen->id_jastruk);
-		$this->load->model("ModelAkun");
-		$dosen->nama_rumpun_sub = $this->ModelAkun->subrumpunDict[$dosen->id_rumpun_sub];
-		$dosen->nama_jabatan = $this->ModelAkun->jabatanDict[$dosen->id_pangkat-9];
 		$dosen->asalInstansi = "UINSA";
+		return $dosen;
+	}
+	public function initDosen($dosen){
+		$dosen = $this->initPegawai($dosen);
+		if($dosen->role != 3) return $dosen;
+		if(!isset($dosen->id_rumpun_sub) || !$dosen->id_rumpun_sub) $dosen->id_rumpun_sub = 110;
+		$this->load->model("ModelAkun");
+		if(isset($dosen->id_rumpun_sub) && $dosen->id_rumpun_sub) $dosen->nama_rumpun_sub = $this->ModelAkun->subrumpunDict[$dosen->id_rumpun_sub];
+		if(isset($dosen->id_pangkat) && $dosen->id_pangkat) $dosen->nama_jabatan = $this->ModelAkun->jabatanDict[$dosen->id_pangkat-9];
 		return $dosen;
 	}
 	

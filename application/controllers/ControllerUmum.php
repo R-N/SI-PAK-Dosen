@@ -63,7 +63,22 @@ class ControllerUmum extends CI_Controller {
 	public function halamanPreviewSK($idPAK){
 	}
 	
-	public function halamanProfil($idUser){
+	public function halamanProfil($idUser=''){
+		if($idUser == null || $idUser == '' || !$idUser) $idUser = $_SESSION["idUser"];
+		if(!isAdmin() && $_SESSION["idUser"] != $idUser){
+			show_404();
+			return;
+		}
+		
+		$this->load->model("ModelAkun");
+		
+		$user = $this->ModelAkun->getPenilai($idUser);
+		
+		$data = array(
+			"user"=>$user
+		);
+		
+		$this->load->view("umum/Profil.html", $data);
 	}
 	 
 }

@@ -50,6 +50,13 @@ class ControllerLogin extends CI_Controller {
 				}
 			}
 		}
+		if($result->status_user != 1){
+			echo json_encode(array(
+				"result"=>"FAIL",
+				"errorMessage"=>"Akun Anda telah disuspend karena: " . $result->keterangan
+			));
+			return;
+		}
 		if($result->result == "OK"){
 			$_SESSION['idUser'] = $result->id_user;
 			$_SESSION['nama'] = $result->nama;

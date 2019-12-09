@@ -534,6 +534,15 @@ class ModelPAK extends CI_Model {
 		return $query->row();
 	}
 	
+	function getJabatanTerakhir($idDosen){
+		$sql = "SELECT ID_JABATAN_TUJUAN FROM PAK WHERE ID_PEMOHON=? AND ID_STATUS_PAK=? ORDER BY TANGGAL_STATUS DESC LIMIT 1";
+		$data = array($idDosen, PAK::PAK_SELESAI);
+		
+		$query = $this->db->query($sql, $data);
+		if($query->num_rows() == 0) return null;
+		return $query->row()->ID_JABATAN_TUJUAN;
+	}
+	
 	function getKreditTerakhir($idDosen){
 		$sql = "SELECT KREDIT_AKHIR FROM PAK WHERE ID_PEMOHON=? AND ID_STATUS_PAK=? ORDER BY TANGGAL_STATUS DESC LIMIT 1";
 		$data = array($idDosen, PAK::PAK_SELESAI);

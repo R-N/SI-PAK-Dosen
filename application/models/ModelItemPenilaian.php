@@ -63,7 +63,7 @@ class ModelItemPenilaian extends CI_Model {
 		WHERE I.ID_PAK=?
 			AND I.ID_UNSUR=U.ID_UNSUR
 			AND U.ID_KATEGORI=K.ID_KATEGORI
-		ORDER BY U.ID_KATEGORI ASC, I.ID_UNSUR ASC";
+		ORDER BY U.ID_KATEGORI ASC, I.ID_UNSUR ASC, I.ID_ITEM ASC";
 		$data = array($idPAK);
 		$query = $this->db->query($sql, $data);
 		$results = $query->result();
@@ -100,7 +100,7 @@ class ModelItemPenilaian extends CI_Model {
 		WHERE I.ID_PAK=?
 			AND I.ID_UNSUR=U.ID_UNSUR
 			AND U.ID_KATEGORI=K.ID_KATEGORI
-		ORDER BY U.ID_KATEGORI ASC, I.ID_UNSUR ASC";
+		ORDER BY U.ID_KATEGORI ASC, I.ID_UNSUR ASC, I.ID_ITEM ASC";
 		$data = array($idPAK);
 		$query = $this->db->query($sql, $data);
 		$results = $query->result();
@@ -131,7 +131,7 @@ class ModelItemPenilaian extends CI_Model {
 		FROM ITEM_PENILAIAN I, UNSUR_PENILAIAN U
 		WHERE I.ID_PAK=?
 			AND I.ID_UNSUR=U.ID_UNSUR
-		ORDER BY U.ID_KATEGORI ASC, I.ID_UNSUR ASC";
+		ORDER BY U.ID_KATEGORI ASC, I.ID_UNSUR ASC, I.ID_ITEM ASC";
 		$data = array($idPAK);
 		$query = $this->db->query($sql, $data);
 		$results = $query->result();
@@ -170,7 +170,7 @@ class ModelItemPenilaian extends CI_Model {
 			AND P.ID_PAK=I.ID_PAK
 			AND I.ID_UNSUR=U.ID_UNSUR
 			AND U.ID_KATEGORI=K.ID_KATEGORI
-		ORDER BY U.ID_KATEGORI ASC, I.ID_UNSUR ASC";
+		ORDER BY U.ID_KATEGORI ASC, I.ID_UNSUR ASC, I.ID_ITEM ASC";
 		$data = array($idPAK);
 		$query = $this->db->query($sql, $data);
 		$results = $query->result();

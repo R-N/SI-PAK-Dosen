@@ -18,14 +18,15 @@ class ControllerDosen extends CI_Controller {
 			return;
 		}
 		$this->load->model("ModelPAK");
-		$args = array(
-			"search" => $this->input->get("search")?: '',
-			"page" => $this->input->get("page")?: 1,
-			"limit" => $this->input->get("limit")?: 10
+		$idDosen = $_SESSION['idUser'];
+		$entries = $this->ModelPAK->fetchPAKDosen($idDosen);
+		
+		$pakAktif = $this->ModelPAK->getPAKAktif($idDosen);
+		
+		$data = array(
+			"entries"=>$entries,
+			"canCreatePAK"=>($pakAktif==null)
 		);
-		$args["idDosen"] = $_SESSION['idUser'];
-		$entries = $this->ModelPAK->fetchPAKDosen($args["idDosen"], $args["search"], $args["page"], $args["limit"]);
-		$data = array("entries"=>$entries);
 		$this->load->view('dosen/PengajuanPAK.html', $data);
 	}
 	
@@ -421,7 +422,7 @@ class ControllerDosen extends CI_Controller {
 		
 		$total = $nilaiKategori['total'];
 		
-		if($total+$pak->kreditAwal < $jabatanTujuan->kreditMinimal){
+		if($total+$pakBaru->kreditAwal < $jabatanTujuan->kreditMinimal){
 			echo json_encode(array(
 				'result' => 'FAIL',
 				'errorMessage'=>'Nilai Anda belum mencukupi: '

@@ -93,6 +93,7 @@ class ModelAkun extends CI_Model {
 			$result->errorMessage = "Gagal menambahkan user: " . $this->db->error()["message"];
 		}
 		$pegawai->id_user = $this->db->insert_id();
+		$pegawai->status_user = 1;
 		return $pegawai;
 	}
 	
@@ -182,8 +183,9 @@ class ModelAkun extends CI_Model {
 		return $user;
 	}
 	
-	public function getPenilaiLuar($idUser, $user){
-		$sql = "SELECT * FROM `penilai_luar` WHERE ID_USER=?";
+	public function getPenilaiLuar($idUser, $user=null){
+		if($user == null) $user = $this->getUser($idUser);
+		$sql = "SELECT * FROM penilai_luar pl LEFT JOIN jabatan j ON pl.ID_JABATAN=j.ID_JABATAN LEFT JOIN subrumpun sr ON pl.ID_SUBRUMPUN=sr.ID_SUBRUMPUN WHERE pl.ID_USER=? ";
 		$query = $this->db->query($sql, array($idUser));
 		$result = $query->row();
 		$penilai = new Penilai();
@@ -194,22 +196,53 @@ class ModelAkun extends CI_Model {
 	public function getPenilai($idUser){
 		$user = $this->getUser($idUser);
 		if($user->idPegawai){
-			$penilai = null; //TODO
+			$penilai = $this->getDosen($idUser, $user);
 		}else{
-			$penilai = $getPenilaiLuar($idUser, $user);
+			$penilai = $this->getPenilaiLuar($idUser, $user);
 		}
 		return $penilai;
 	}
-	public function getDosen($idUser){
-		$this->load->model("KonektorSimpeg");
+	
+	public function getUserFull($idUser){
 		$user = $this->getUser($idUser);
+		if($user->role == 1){
+			return $this->getPenilaiLuar($idUser, $user);
+		}else if ($user->role == 3){
+			return $this->getDosen($idUser, $user);
+		}else if ($user->role == 4){
+			return $this->getAdmin($idUser, $user);
+		}else{
+			return $user;
+		}
+	}
+	
+	public function getAdmin($idUser, $user=null){
+		$this->load->model("KonektorSimpeg");
+		if($user == null) $user = $this->getUser($idUser);
+		$dosen = new User();
+		$dosen->read($user);
+		$doseni = $this->KonektorSimpeg->getDosen($dosen->idPegawai);
+		$dosen->read($doseni);
+		
+		return $dosen;
+	}
+	public function getDosen($idUser, $user=null){
+		$this->load->model("KonektorSimpeg");
+		if($user == null) $user = $this->getUser($idUser);
 		$dosen = new Dosen();
 		$dosen->read($user);
 		$doseni = $this->KonektorSimpeg->getDosen($dosen->idPegawai);
 		$dosen->read($doseni);
-		if(array_key_exists($dosen->idSubrumpun, $this->subrumpunDict))
+		if($dosen->idSubrumpun && array_key_exists($dosen->idSubrumpun, $this->subrumpunDict))
 			$dosen->subrumpun = $this->subrumpunDict[$dosen->idSubrumpun];
-		if(array_key_exists($dosen->idJabatan, $this->jabatanDict))
+		
+		$this->load->model("ModelPAK");
+		$jabatanTerakhir = $this->ModelPAK->getJabatanTerakhir($idUser);
+		if($jabatanTerakhir != null && ($dosen->idJabatan == null || $jabatanTerakhir > $dosen->idJabatan)){
+			$dosen->idJabatan = $jabatanTerakhir;
+		}
+		
+		if($dosen->idJabatan && array_key_exists($dosen->idJabatan, $this->jabatanDict))
 			$dosen->jabatan = $this->jabatanDict[$dosen->idJabatan];
 		//TODO
 		return $dosen;
@@ -224,4 +257,33 @@ class ModelAkun extends CI_Model {
 		return $jabatan;
 	}
 	
+	public function suspendUser($idUser, $alasan){
+		$sql = "UPDATE `user` SET STATUS_USER=0, KETERANGAN=? WHERE ID_USER=?";
+		$query = $this->db->query($sql, array($alasan, $idUser));
+		$result = $this->db->affected_rows() > 0;
+		if(!$query || !$result){
+			return array(
+				"result"=>"FAIL",
+				"errorMessage"=>"User tidak ditemukan: " . $idUser
+			);
+		}
+		return array(
+			"result"=>"OK"
+		);
+	}
+	
+	public function aktifkanUser($idUser){
+		$sql = "UPDATE `user` SET STATUS_USER=1 WHERE ID_USER=?";
+		$query = $this->db->query($sql, array($idUser));
+		$result = $this->db->affected_rows() > 0;
+		if(!$query || !$result){
+			return array(
+				"result"=>"FAIL",
+				"errorMessage"=>"User tidak ditemukan: " . $idUser
+			);
+		}
+		return array(
+			"result"=>"OK"
+		);
+	}
 }

@@ -59,7 +59,7 @@ class ControllerPenilai extends CI_Controller {
 		$batasKategori = $this->ModelItemPenilaian->fetchBatasKategori($pak->idJabatanTujuan);
 		
 			
-		$kekuranganKredit = max(0, $jabatanTujuan->kreditMinimal - $pak->kreditMinimal);
+		$kekuranganKredit = max(0, $jabatanTujuan->kreditMinimal - $pak->kreditAwal);
 		
 		foreach($batasKategori as $batas){
 			$batas->setKreditDibutuhkan($kekuranganKredit);

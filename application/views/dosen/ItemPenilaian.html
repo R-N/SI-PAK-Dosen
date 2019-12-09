@@ -1,6 +1,6 @@
 
 <div class="card item-penilaian" data-id-item="<?=$idItem;?>" data-id-unsur="<?=$idUnsur;?>" data-no="<?=$no;?>" data-id-kategori="<?=$idKategori;?>">
-	<div class="btn clickable m-0 text-left card-header bg-warning p-relative item-header" data-toggle="collapse" href="#item-body-<?=$no;?>">
+	<div class="btn clickable m-0 text-left card-header bg-danger p-relative item-header" data-toggle="collapse" href="#item-body-<?=$no;?>">
 		<div class="d-flex">
 			<div class="fill-width">
 				<p class="text-white d-inline-block item-kegiatan p-relative mr-5">
@@ -8,8 +8,8 @@
 				</p>	
 			</div>
 			<div class="">
-				<a href="javascript:void(0);" class="float-right btn btn-sm btn-primary text-white d-inline-block  p-relative btn-change-item">Ganti</a>
-				<a href="javascript:void(0);" class="float-right btn btn-sm btn-danger text-white d-inline-block  p-relative btn-delete-item">Hapus</a>
+				<a href="javascript:void(0);" class="float-right btn btn-sm btn-primary text-white d-inline-block  border border-light p-relative btn-change-item">Ganti</a>
+				<a href="javascript:void(0);" class="float-right btn btn-sm btn-danger text-white d-inline-block border border-light  p-relative btn-delete-item">Hapus</a>
 			</div>
 		</div>
 	</div>
@@ -70,7 +70,7 @@
 								</tr>
 								<tr class="row-jumlah">
 									<td>Jumlah <span class="item-unit"><?=$unit?"(".$unit.")":"";?></span></td>
-									<td><input type="number" class="field-jumlah" value="<?=$jumlah;?>"></td>
+									<td><input type="number" class="field-jumlah"  data-last-value="<?=$jumlah;?>"  value="<?=$jumlah;?>"></td>
 								</tr>
 								<tr class="row-nilai">
 									<td>Angka Kredit</td>

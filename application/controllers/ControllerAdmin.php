@@ -59,12 +59,7 @@ class ControllerAdmin extends CI_Controller {
 			return;
 		}
 		$this->load->model("ModelPenilai");
-		$args = array(
-			"search" => $this->input->get("search")?: '',
-			"page" => $this->input->get("page")?: 1,
-			"limit" => $this->input->get("limit")?: 10
-		);
-		$entries = $this->ModelPenilai->fetchPenilai($args["search"], $args["page"], $args["limit"]);
+		$entries = $this->ModelPenilai->fetchPenilai();
 		$data = array("entries"=>$entries);
 		$this->load->view("admin/KelolaPenilai.html", $data);
 	}
@@ -136,6 +131,15 @@ class ControllerAdmin extends CI_Controller {
 			));
 			return;
 		}
+		
+		if(($nomor==1&&$pak->idPenilai1==$idUser)
+			|| $nomor==2 && $pak->idPenilai2==$idUser){
+			echo json_encode(array(
+				'result'=>"OK"
+			));
+			return;
+		}
+		
 		$result = $this->ModelPAK->tentukanPenilai($idPAK, $nomor, $idUser);
 		
 		echo json_encode($result);
@@ -179,18 +183,6 @@ class ControllerAdmin extends CI_Controller {
 	{
 		redirect(base_url() . "admin/baru");
 	}
-	public function suspendPenilai($idPenilai, $alasan){
-		if(!isAdmin()){
-			show_404();
-			return;
-		}
-	}
-	public function activatePenilai($idPenilai){
-		if(!isAdmin()){
-			show_404();
-			return;
-		}
-	}
 	public function inputHasilSidang(){
 		if(!isAdmin()){
 			show_404();
@@ -218,6 +210,48 @@ class ControllerAdmin extends CI_Controller {
 			$result["redirect"] = base_url()."admin/sidang";
 		}
 		
+		echo json_encode($result);
+	}
+	public function suspendPenilai(){
+		if(!isAdmin()){
+			show_404();
+			return;
+		}
+		
+		$idPenilai = $this->input->post("idPenilai");
+		$alasan = $this->input->post("alasan");
+		
+		if(!$alasan){
+			echo json_encode(array(
+				"result"=>"FAIL",
+				"errorMessage"=>"Alasan tidak valid"
+			));
+			return;
+		}
+		
+		$this->load->model("ModelAkun");
+		
+		$result = $this->ModelAkun->suspendUser($idPenilai, $alasan);
+		
+		if($result['result'] == "OK"){
+			$result['redirect'] = base_url()."admin/penilai";
+		}
+		echo json_encode($result);
+	}
+	public function aktifkanPenilai(){
+		if(!isAdmin()){
+			show_404();
+			return;
+		}
+		$idPenilai = $this->input->post("idPenilai");
+		
+		$this->load->model("ModelAkun");
+		
+		$result = $this->ModelAkun->aktifkanUser($idPenilai);
+		
+		if($result['result'] == "OK"){
+			$result['redirect'] = base_url()."admin/penilai";
+		}
 		echo json_encode($result);
 	}
 }
