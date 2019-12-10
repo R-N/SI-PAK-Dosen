@@ -17,12 +17,7 @@ class ControllerAdmin extends CI_Controller {
 		}
 		$this->load->model("ModelPAK");
 		$this->load->model("ModelPenilai");
-		$args = array(
-			"search" => $this->input->get("search")?: '',
-			"page" => $this->input->get("page")?: 1,
-			"limit" => $this->input->get("limit")?: 10
-		);
-		$entries = $this->ModelPAK->fetchPAKBaru($args["search"], $args["page"], $args["limit"]);
+		$entries = $this->ModelPAK->fetchPAKBaru();
 		$data = array(
 			"entries"=>$entries,
 			"penilais" => $this->ModelPenilai->fetchPenilaiPAK()
@@ -43,14 +38,25 @@ class ControllerAdmin extends CI_Controller {
 			return;
 		}
 		$this->load->model("ModelPAK");
+		$entries = $this->ModelPAK->fetchPAKSidang();
+		$data = array("entries"=>$entries);
+		$this->load->view("admin/PAKSidang.html", $data);
+	}
+	
+	public function halamanRiwayatPAK(){
+		if(!isAdmin()){
+			redirect(base_url());
+			return;
+		}
+		$this->load->model("ModelPAK");
 		$args = array(
 			"search" => $this->input->get("search")?: '',
 			"page" => $this->input->get("page")?: 1,
 			"limit" => $this->input->get("limit")?: 10
 		);
-		$entries = $this->ModelPAK->fetchPAKSidang($args["search"], $args["page"], $args["limit"]);
+		$entries = $this->ModelPAK->fetchPAKAdminRiwayat($args["search"], $args["page"], $args["limit"]);
 		$data = array("entries"=>$entries);
-		$this->load->view("admin/PAKSidang.html", $data);
+		$this->load->view("admin/Riwayat.html", $data);
 	}
 	
 	public function halamanDaftarPenilai(){
@@ -253,5 +259,9 @@ class ControllerAdmin extends CI_Controller {
 			$result['redirect'] = base_url()."admin/penilai";
 		}
 		echo json_encode($result);
+	}
+	
+	public function halamanPAK($idPAK){
+		redirect(base_url()."pak/".$idPAK);
 	}
 }

@@ -20,6 +20,7 @@
                 <ul class="nav navbar-nav text-light" id="accordionSidebar">
                     <li class="nav-item bg-light" role="presentation"><a class="nav-link text-dark active" href="<?php echo base_url(); ?>dosen/pak"><i class="fas fa-file-invoice"></i><span>Pengajuan PAK</span></a></li>
                     <li class="nav-item" role="presentation"><a class="nav-link" href="<?php echo base_url(); ?>penilai/pak"><i class="fas fa-user"></i><span>Penilaian PAK</span></a></li>
+                    <li class="nav-item" role="presentation"><a class="nav-link" href="<?php echo base_url(); ?>penilai/riwayat"><i class="fas fa-file-medical"></i><span>Riwayat Penilaian</span></a></li>
                 </ul>
                 <div class="text-center d-none d-md-inline"><button class="btn rounded-circle border-0" id="sidebarToggle" type="button"></button></div>
             </div>
@@ -80,9 +81,9 @@
 													<td class="align-middle"><?=$entry->status;?></td>
 													<td>
 														<?php if($entry->idStatus == PAK::PAK_EDIT) { ?>
-														<a class="btn btn-primary btn-sm btn-edit-pak" role="button" href="<?=base_url();?>dosen/pak/<?=$entry->idPAK;?>/edit">Edit</a>
+														<a class="btn btn-primary btn-sm btn-edit-pak" role="button" href="<?=base_url();?>pak/<?=$entry->idPAK;?>/edit">Edit</a>
 														<?php } else { ?>
-														<a class="btn btn-primary btn-sm btn-detail-pak" role="button" href="<?=base_url();?>dosen/pak/<?=$entry->idPAK;?>">View</a>
+														<a class="btn btn-primary btn-sm btn-detail-pak" role="button" href="<?=base_url();?>pak/<?=$entry->idPAK;?>">View</a>
 														<?php } ?>
 													</td>
 												</tr>
@@ -96,7 +97,7 @@
                             </div>
 							<?php if($canCreatePAK) { ?>
                             <div class="card-footer bg-white">
-								<a class="btn btn-primary" role="button" href="<?=base_url();?>dosen/pak/baru"  id="btn-tambah-pak">Tambah</a>
+								<a class="btn btn-primary" role="button" href="<?=base_url();?>pak/baru"  id="btn-tambah-pak">Tambah</a>
                             </div>
 							<?php } ?>
                         </div>

@@ -30,6 +30,9 @@ class ControllerDosen extends CI_Controller {
 		$this->load->view('dosen/PengajuanPAK.html', $data);
 	}
 	
+	public function halamanPAK($idPAK){
+		redirect(base_url()."pak/".$idPAK);
+	}
 	public function halamanPreviewDraftDokumen($idItem){
 		if(!isDosen()){
 			redirect(base_url());
@@ -67,9 +70,9 @@ class ControllerDosen extends CI_Controller {
 			if($pakAktif){
 				
 				if($pakAktif->ID_STATUS_PAK==1){
-					redirect(base_url()."dosen/pak/{$pakAktif->ID_PAK}/edit");
+					redirect(base_url()."pak/{$pakAktif->ID_PAK}/edit");
 				}else{
-					redirect(base_url()."dosen/pak/{$pakAktif->ID_PAK}");
+					redirect(base_url()."pak/{$pakAktif->ID_PAK}");
 				}
 				return;
 			}
@@ -249,7 +252,7 @@ class ControllerDosen extends CI_Controller {
 		return array(
 			"result"=>"OK",
 			"idPAK" =>$pakBaru->id,
-			"redirect"=>base_url()."dosen/pak/{$pakBaru->id}/edit"
+			"redirect"=>base_url()."pak/{$pakBaru->id}/edit"
 		);
 	}
 	
@@ -438,7 +441,7 @@ class ControllerDosen extends CI_Controller {
 		}
 		
 		$result['nilai'] = $total;
-		$result['redirect'] = base_url() . 'dosen/pak/' . $pakBaru->id;
+		$result['redirect'] = base_url() . 'pak/' . $pakBaru->id;
 		echo json_encode($result);
 		return;
 	}

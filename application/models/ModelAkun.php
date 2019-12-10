@@ -98,7 +98,7 @@ class ModelAkun extends CI_Model {
 	}
 	
 	function getPilihanSubrumpun(){
-		$sql = "SELECT id_subrumpun, subrumpun FROM subrumpun;";
+		$sql = "SELECT id_subrumpun, subrumpun FROM subrumpun ORDER BY subrumpun;";
 		$query = $this->db->query($sql);
 		$result = $query->result();
 		return $result;

@@ -113,7 +113,23 @@ class KonektorSimpeg extends CI_Model {
 	public function fetchDosen(){
 		//$raw = file_get_contents('http://lecturer.uinsby.ac.id/home/getDataPAK/0');
 		//$dosens = print_r_reverse($raw)[0];
-		$dosens = array();
+		$dosens = json_decode("
+			[
+				{
+					\"id_tipe\": 2,
+					\"id_jastruk\": 947,
+					\"nama\": \"Nita Yalina, S.Kom., M.MT\",
+					\"id_pangkat\": 11,
+					\"nama_golongan\": \"IIIc\",
+					\"id_jafung\": 2,
+					\"nama_jafung\": \"Lektor\",
+					\"email\": \"nitayalina@uinsby.ac.id\",
+					\"nama_rumpun\": \"SAINS\",
+					\"nama_rumpun_sub\": \"Komputer\",
+					\"nama_bidang\": \"Teknik Informatika\"
+				}
+			]
+		");
 		
 		array_push($dosens, $this->dummyDosen());
 		

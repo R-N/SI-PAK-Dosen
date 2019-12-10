@@ -103,6 +103,43 @@ class ModelPAK extends CI_Model {
 		}
 		return $ret;
 	}
+	
+	function fetchPAKAdminRiwayat(){
+		$data = array();
+		$sql = "
+			SELECT 
+				P.`ID_PAK`,
+				D.`NAMA` AS `PEMOHON`,
+				P.`TANGGAL_STATUS`,
+				SR.`SUBRUMPUN`,
+				P.`ID_STATUS_PAK`,
+				SP.STATUS_PAK,
+				P.`ID_JABATAN_AWAL`,
+				JA.`JABATAN` AS `JABATAN_AWAL`,
+				P.`ID_JABATAN_TUJUAN`,
+				JT.`JABATAN` AS `JABATAN_TUJUAN`
+			FROM JABATAN JA, `USER` D, SUBRUMPUN SR, PAK P , STATUS_PAK SP, JABATAN JT
+			WHERE D.`ID_USER`=P.`ID_PEMOHON`
+				AND P.`ID_SUBRUMPUN`=SR.`ID_SUBRUMPUN`
+				AND P.`ID_STATUS_PAK`>?
+				AND P.`ID_JABATAN_AWAL`=JA.`ID_JABATAN`
+				AND P.`ID_JABATAN_TUJUAN`=JT.`ID_JABATAN`
+				AND P.ID_STATUS_PAK=SP.ID_STATUS_PAK
+			ORDER BY P.`TANGGAL_STATUS` DESC, P.`ID_PAK` DESC";
+		array_push($data, PAK::PAK_BARU);
+		$query = $this->db->query($sql, $data);
+		if($query->num_rows() == 0) return array();
+		$results = $query->result();
+		$len = count($results);
+		$ret = array();
+		for($i = 0; $i < $len; ++$i){
+			$entry = new EntriPAKAdmin();
+			$entry->read($results[$i]);
+			$entry->no = $i+1;
+			array_push($ret, $entry);
+		}
+		return $ret;
+	}
 	function fetchPAKDosen($idDosen){
 		$data = array();
 		$sql = "
@@ -155,6 +192,44 @@ class ModelPAK extends CI_Model {
 				AND P.`ID_JABATAN_AWAL`=JA.`ID_JABATAN`
 				AND (P.`ID_PENILAI_SUBMIT` IS NULL OR NOT(P.`ID_PENILAI_SUBMIT` = ?)) 
 			ORDER BY P.`TANGGAL_STATUS` ASC, P.`ID_PAK` ASC";
+		array_push($data, $idPenilai, $idPenilai, PAK::PAK_NILAI, $idPenilai);
+		$query = $this->db->query($sql, $data);
+		if($query->num_rows() == 0) return array();
+		$results = $query->result();
+		$len = count($results);
+		$ret = array();
+		for($i = 0; $i < $len; ++$i){
+			$entry = new EntriPAKPenilai();
+			$entry->read($results[$i]);
+			$entry->no = $i+1;
+			array_push($ret, $entry);
+		}
+		return $ret;
+	}
+	
+	function fetchPAKPenilaiRiwayat($idPenilai){
+		$data = array();
+		$sql = "
+			SELECT 
+				P.`ID_PAK`,
+				D.`NAMA` AS `PEMOHON`,
+				P.`TANGGAL_STATUS`,
+				SR.`SUBRUMPUN`,
+				P.`ID_STATUS_PAK`,
+				SP.STATUS_PAK,
+				P.`ID_JABATAN_AWAL`,
+				JA.`JABATAN` AS `JABATAN_AWAL`,
+				P.`ID_JABATAN_TUJUAN`,
+				JT.`JABATAN` AS `JABATAN_TUJUAN`
+			FROM JABATAN JA, `USER` D, SUBRUMPUN SR, PAK P , STATUS_PAK SP, JABATAN JT
+			WHERE (P.`ID_PENILAI_1`=? OR P.`ID_PENILAI_2`=?)
+				AND D.`ID_USER`=P.`ID_PEMOHON`
+				AND P.`ID_SUBRUMPUN`=SR.`ID_SUBRUMPUN`
+				AND (P.`ID_STATUS_PAK`>? || P.`ID_PENILAI_SUBMIT` = ?)
+				AND P.`ID_JABATAN_AWAL`=JA.`ID_JABATAN`
+				AND P.ID_STATUS_PAK=SP.ID_STATUS_PAK
+				AND P.ID_JABATAN_TUJUAN=JT.ID_JABATAN
+			ORDER BY P.`TANGGAL_STATUS` DESC, P.`ID_PAK` DESC";
 		array_push($data, $idPenilai, $idPenilai, PAK::PAK_NILAI, $idPenilai);
 		$query = $this->db->query($sql, $data);
 		if($query->num_rows() == 0) return array();

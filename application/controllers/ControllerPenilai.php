@@ -14,15 +14,25 @@ class ControllerPenilai extends CI_Controller {
 			return;
 		}
 		$this->load->model("ModelPAK");
-		$args = array(
-			"search" => $this->input->get("search")?: '',
-			"page" => $this->input->get("page")?: 1,
-			"limit" => $this->input->get("limit")?: 10
-		);
-		$args["idPenilai"] = $_SESSION['idUser'];
-		$entries = $this->ModelPAK->fetchPAKPenilai($args["idPenilai"], $args["search"], $args["page"], $args["limit"]);
+		$idPenilai = $_SESSION['idUser'];
+		$entries = $this->ModelPAK->fetchPAKPenilai($idPenilai);
 		$data = array("entries"=>$entries);
 		$this->load->view('penilai/PenilaianPAK.html', $data);
+	}
+	public function halamanPAK($idPAK){
+		redirect(base_url()."pak/".$idPAK);
+	}
+	
+	public function halamanRiwayatPenilaian(){
+		if(!isPenilai()){
+			redirect(base_url());
+			return;
+		}
+		$this->load->model("ModelPAK");
+		$idPenilai = $_SESSION['idUser'];
+		$entries = $this->ModelPAK->fetchPAKPenilaiRiwayat($idPenilai);
+		$data = array("entries"=>$entries);
+		$this->load->view('penilai/Riwayat.html', $data);
 	}
 	
 	public function halamanPenilaianPAK($idPAK){
@@ -231,9 +241,6 @@ class ControllerPenilai extends CI_Controller {
 		echo json_encode($result);
 	}
 	
-	public function fetchItemPenilaian($idPAK){
-	}
-	 
 	public function index()
 	{
 		redirect(base_url() . "penilai/pak");

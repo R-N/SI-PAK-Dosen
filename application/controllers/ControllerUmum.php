@@ -25,13 +25,20 @@ class ControllerUmum extends CI_Controller {
 			show_404();
 			return;
 		}
-		if(!(isAdmin() && ($pak->idStatus==2 || $pak->idStatus==4))
+		if(!(isAdmin() && $pak->idStatus>=2)
 			&& $idUser != $pak->idDosen
-			&& !($pak->idStatus == 3 && ($idUser == $pak->idPenilai1 || $idUser == $pak->idPenilai2) && $idUser != $pak->idPenilaiSubmit)){
+			&& !($pak->idStatus >= 3 && ($idUser == $pak->idPenilai1 || $idUser == $pak->idPenilai2))){
 			show_404();
 			return;
 		}
-		$items = $this->ModelItemPenilaian->fetchItemPenilaian($pak->id);
+		$nomorPenilai = null;
+		if(($idUser == $pak->idPenilai1 || $idUser == $pak->idPenilai2) && ($pak->idStatus > 3 || $idUser == $pak->idPenilaiSubmit)){
+			if($pak->idPenilai1 == $idUser) $nomorPenilai = 1;
+			else $nomorPenilai = 2;
+			$items = $this->ModelItemPenilaian->fetchItemPenilaian($pak->id, $nomorPenilai);
+		}else{
+			$items = $this->ModelItemPenilaian->fetchItemPenilaian($pak->id);
+		}
 		$dosen = $this->ModelAkun->getDosen($pak->idDosen);
 		$jabatanTujuan = $this->ModelAkun->getJabatan($pak->idJabatanTujuan);
 		$batasKategori = $this->ModelItemPenilaian->fetchBatasKategori($pak->idJabatanTujuan);

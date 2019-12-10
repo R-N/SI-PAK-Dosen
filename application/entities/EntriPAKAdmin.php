@@ -10,6 +10,8 @@ class EntriPAKAdmin{
 	public $subrumpun;
 	public $idJabatanAwal;
 	public $jabatanAwal;
+	public $status;
+	public $idStatus;
 	public $no;
 	
     public function __construct() {

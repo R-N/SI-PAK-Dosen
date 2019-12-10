@@ -21,6 +21,7 @@
 					<?php if(isAdmin()){ ?>
                     <li class="nav-item" role="presentation"><a class="nav-link " href="<?php echo base_url(); ?>admin/baru"><i class="fas fa-file-medical"></i><span>PAK Baru</span></a></li>
                     <li class="nav-item" role="presentation"><a class="nav-link" href="<?php echo base_url(); ?>admin/sidang"><i class="fas fa-file-invoice"></i><span>PAK Sidang</span></a></li>
+                    <li class="nav-item" role="presentation"><a class="nav-link" href="<?php echo base_url(); ?>admin/riwayat"><i class="fas fa-user"></i><span>Riwayat PAK</span></a></li>
                     <li class="nav-item" role="presentation"><a class="nav-link" href="<?php echo base_url(); ?>admin/penilai"><i class="fas fa-user"></i><span>Kelola Penilai</span></a></li>
 					<?php } ?>
 					<?php if(isDosen()){ ?>
@@ -28,6 +29,7 @@
 					<?php } ?>
 					<?php if(isPenilai()){ ?>
                     <li class="nav-item" role="presentation"><a class="nav-link" href="<?php echo base_url(); ?>penilai/pak"><i class="fas fa-file-invoice"></i><span>Penilaian PAK</span></a></li>
+                    <li class="nav-item" role="presentation"><a class="nav-link" href="<?php echo base_url(); ?>penilai/riwayat"><i class="fas fa-file-medical"></i><span>Riwayat Penilaian</span></a></li>
 					<?php } ?>
                 </ul>
                 <div class="text-center d-none d-md-inline"><button class="btn rounded-circle border-0" id="sidebarToggle" type="button"></button></div>
@@ -74,7 +76,8 @@
 										-->
 										<button data-id-pak="<?=$pak->id;?>" class="btn btn-primary btn-sidang" type="button">Sidang</button>
 										<?php } ?>
-									<?php } else if (isDosen() && $pak->idStatus > 5){ ?>
+									<?php } ?>
+									<?php if ((isAdmin() || $pak->idDosen == $_SESSION["idUser"]) && $pak->idStatus > 5){ ?>
                                     <a class="btn btn-primary btn-lihat-sk" href="<?=$pak->urlSK;?>" target="_blank" >Lihat SK</a>
 									<!--
 									<button class="btn btn-primary btn-lihat-dokumen-pak" id="btn-draft-sk" type="button">Dokumen PAK</button>

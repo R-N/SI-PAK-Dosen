@@ -18,10 +18,11 @@
                 </a>
                 <hr class="sidebar-divider my-0">
                 <ul class="nav navbar-nav text-light" id="accordionSidebar">
-                    <li class="nav-item bg-white" role="presentation"><a class="nav-link stretched-link text-dark" href="<?php echo base_url(); ?>admin/baru"><i class="fas fa-file-medical"></i><span>PAK Baru</span></a></li>
-                    <li class="nav-item" role="presentation"><a class="nav-link" href="<?php echo base_url(); ?>admin/sidang"><i class="fas fa-file-invoice"></i><span>PAK Sidang</span></a></li>
-                    <li class="nav-item" role="presentation"><a class="nav-link" href="<?php echo base_url(); ?>admin/riwayat"><i class="fas fa-user"></i><span>Riwayat PAK</span></a></li>
-                    <li class="nav-item" role="presentation"><a class="nav-link" href="<?php echo base_url(); ?>admin/penilai"><i class="fas fa-user"></i><span>Kelola Penilai</span></a></li>
+					<?php if($_SESSION['role']==3){ ?>
+                    <li class="nav-item" role="presentation"><a class="nav-link" href="<?php echo base_url(); ?>dosen/pak"><i class="fas fa-file-medical"></i><span>Pengajuan PAK</span></a></li>
+					<?php } ?>
+                    <li class="nav-item" role="presentation"><a class="nav-link" href="<?php echo base_url(); ?>penilai/pak"><i class="fas fa-file-medical"></i><span>Penilaian PAK</span></a></li>
+                    <li class="nav-item bg-light" role="presentation"><a class="nav-link text-dark active" href="<?php echo base_url(); ?>penilai/riwayat"><i class="fas fa-file-invoice bg-primary border-dark shadow-sm"></i><span>Riwayat Penilaian</span></a></li>
                 </ul>
                 <div class="text-center d-none d-md-inline"><button class="btn rounded-circle border-0" id="sidebarToggle" type="button"></button></div>
             </div>
@@ -42,7 +43,7 @@
                             </li>
                             <div class="d-none d-sm-block topbar-divider"></div>
                             <li class="nav-item dropdown no-arrow" role="presentation">
-                                <li class="nav-item dropdown no-arrow"><a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false" href="#"><span class="d-none d-lg-inline mr-2 text-gray-600 small nama-user"><?=$_SESSION['nama'];?></span><img class="border rounded-circle img-profile" src="<?php echo base_url(); ?>assets/img/avatars/avatar1.jpeg?h=0ecc82101fb9a10ca459432faa8c0656"></a>
+                                <li class="nav-item dropdown no-arrow"><a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false" href="#"><span class="d-none d-lg-inline mr-2 text-gray-600 small"><?=$_SESSION['nama'];?></span><img class="border rounded-circle img-profile" src="<?php echo base_url(); ?>assets/img/avatars/avatar1.jpeg?h=0ecc82101fb9a10ca459432faa8c0656"></a>
                                     <div
                                         class="dropdown-menu shadow dropdown-menu-right animated--grow-in" role="menu"><a class="dropdown-item" role="presentation" href="<?=base_url();?>profil"><i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>&nbsp;Profile</a>
                                             <div class="dropdown-divider"></div><a class="dropdown-item" role="presentation" href="<?php echo base_url(); ?>logout"><i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>&nbsp;Logout</a></div>
@@ -56,7 +57,7 @@
                     <div class="col">
                         <div class="card">
                             <div class="card-header bg-white">
-                                <h4 class="d-inline-block">PAK Baru</h4>
+                                <h4 class="d-inline-block">Riwayat Penilaian PAK</h4>
                             </div>
                             <div class="card-body">
 								<?php if(count($entries) > 0){ ?>
@@ -65,34 +66,31 @@
                                         <thead>
                                             <tr>
                                                 <th>No.</th>
-                                                <th>Pemohon</th>
+                                                <th>Dosen</th>
                                                 <th>Sub Rumpun</th>
-                                                <th>Jabatan</th>
-                                                <th>Tanggal</th>
-                                                <th>Penilai</th>
+                                                <th>Jabatan Awal</th>
+                                                <th>Status</th>
+                                                <th>Tanggal Status</th>
                                                 <th>Aksi</th>
                                             </tr>
                                         </thead>
                                         <tbody>
 											<?php foreach($entries as $entry){ ?>
-                                            <tr class="align entri-pak-baru" data-id-pak="<?=$entry->idPAK;?>">
+                                            <tr>
                                                 <td class="align-middle"><?=$entry->no;?></td>
                                                 <td class="align-middle"><?=$entry->namaPemohon;?></td>
                                                 <td class="align-middle"><?=$entry->subrumpun;?></td>
                                                 <td class="align-middle"><?=$entry->jabatanAwal;?></td>
+                                                <td class="align-middle"><?=$entry->status;?></td>
                                                 <td class="align-middle"><?=$entry->tanggalStatus;?></td>
-                                                <td>
-													<button class="btn <?=$entry->idPenilai1>0?"btn-primary":"btn-light";?> btn-sm border-dark btn-penilai btn-penilai-1" type="button" data-id-pak="<?=$entry->idPAK;?>" data-no-penilai="1" data-id-user="<?=$entry->idPenilai1;?>" data-id-pemohon="<?=$entry->idPemohon;?>">Penilai 1</button>
-													<button class="btn <?=$entry->idPenilai2>0?"btn-primary":"btn-light";?> btn-sm border-dark btn-penilai btn-penilai-2" type="button" data-id-pak="<?=$entry->idPAK;?>" data-no-penilai="2" data-id-user="<?=$entry->idPenilai2;?>" data-id-pemohon="<?=$entry->idPemohon;?>">Penilai 2</button>
-												</td>
-                                                <td><a class="btn btn-primary btn-sm btn-detail-pak" role="button" href="<?php echo base_url(); ?>pak/<?=$entry->idPAK;?>">Detail</a><button class="btn btn-primary btn-sm btn-submit-penilai" type="button" data-id-pak="<?=$entry->idPAK;?>">Submit</button></td>
+                                                <td><a class="btn btn-primary btn-sm btn-nilai-pak" role="button" href="<?=base_url();?>pak/<?=$entry->idPAK;?>">Detail</a></td>
                                             </tr>
 											<?php } ?>
                                         </tbody>
                                     </table>
                                 </div>
 								<?php } else { ?>
-								<h5>Tidak ada pengajuan PAK baru saat ini.</h5>
+								<h5>Belum ada PAK yang Anda nilai.</h5>
 								<?php } ?>
                             </div>
                         </div>
@@ -106,11 +104,7 @@
             </div><a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a></footer>
     </div>
     </div>
-	<?php $this->view("modal/PilihPenilai.html"); ?>
-	<?php $this->view("modal/Error.html"); ?>
-	<?php $this->view("modal/Konfirmasi.html"); ?>
 	<?php $this->view("umum/CommonJS.html"); ?>
-    <script src="<?php echo base_url(); ?>assets/js/functions-pemilihan-penilai.js"></script>
 </body>
 
 </html>

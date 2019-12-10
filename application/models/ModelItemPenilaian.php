@@ -144,7 +144,7 @@ class ModelItemPenilaian extends CI_Model {
 		}
 		return $ret;
 	}
-	function fetchItemPenilaian($idPAK){
+	function fetchItemPenilaian($idPAK, $nomorPenilai = null){
 		$sql = "
 		SELECT 
 			I.ID_ITEM, 
@@ -159,11 +159,17 @@ class ModelItemPenilaian extends CI_Model {
 			END) AS KEGIATAN,
 			U.ID_KATEGORI,
 			K.KATEGORI,
-			I.URL_DOKUMEN,
+			I.URL_DOKUMEN,";
+		if($nomorPenilai){
+			$sql = $sql . "NILAI_{$nomorPenilai} AS NILAI,";
+		}else{
+			$sql = $sql . "
 			(CASE WHEN P.ID_STATUS_PAK>3
 				THEN (I.NILAI_1+I.NILAI_2)*0.5
 				ELSE I.NILAI_AWAL
-			END ) AS NILAI,
+			END ) AS NILAI,";
+		}
+		$sql = $sql . "
 			U.BUKTI
 		FROM PAK P, ITEM_PENILAIAN I, UNSUR_PENILAIAN U, KATEGORI_PENILAIAN K
 		WHERE I.ID_PAK=?
