@@ -4,15 +4,12 @@ var __PSPrev = '&lt;';
 var __PSNext = '&gt;';
 var __PSLimit = 10;
 
-function __PSRefresh(ps){
+function __PSFilter(ps){
 	
 	let $childs = ps.getChilds();
 	let page = ps.page;
 	let limit = ps.limit;
 	
-	let start = limit * (page-1) + 1;
-	let end = start + limit - 1;
-	let remain = limit;
 	
 	let $searchField = ps.getSearchField();
 	if(!$searchField || $searchField.length == 0){
@@ -29,65 +26,78 @@ function __PSRefresh(ps){
 	let searchQueries = ps.searchQueries;
 	
 	let wordCount = search.length;
-	let start1 = start-1;
 	
-	let no = 0;
+	let resultCount = 0;
 	
 	$childs.each(function(){
 		let $child = $(this);
-		if(remain == 0){
-			$child.removeClass("d-none").addClass("d-none");
-			return;
-		}
 		
 		let found = 0;
 		if(search && search.length > 0 && search[0] && search[0] != ''){
 			let $searchElements = __PSGetChildSearch($child, searchQueries);
 			
 			
+			let s = "";
 			$searchElements.each(function(){
 				let $it = $(this);
-				
-				for(let j = 0; j < wordCount; ++j){
-					let s = "";
-					if($it.is("input")){
-						s = $it.val();
-					}else{
-						s = $it.html();
-					}
-					let $inputs = $it.find("input");
-					if($inputs.length > 0){
-						$inputs.each(function(){
-							s = s + " " + $(this).val();
-						});
-					}
-					s = s.toLowerCase();
-					if(s.includes(search[j])){
-						++found;
-						break;
-					}
+				if($it.is("input")){
+					s = s + $it.val();
+				}else{
+					s = s + $it.html();
+				}
+				let $inputs = $it.find("input");
+				if($inputs.length > 0){
+					$inputs.each(function(){
+						s = s + " " + $(this).val();
+					});
 				}
 			});
+			
+			s = s.toLowerCase();
+			
+			for(let j = 0; j < wordCount; ++j){
+				if(s.includes(search[j])){
+					console.log("this string includes: " + s);
+					++found;
+				}else if(search[j] == "d"){
+					console.log("This string doesn't include 'd': " + s);
+				}
+			}
 		}else{
-			found = 1;
-		}
-		
-		if(found){
-			++no;
+			found = wordCount;
 		}
 		
 		
-		if(!found || no<start){
-			$child.removeClass("d-none").addClass("d-none");
-			return;
+		if(found >= wordCount){
+			resultCount++;
+			$child.removeClass("filtered-out");
+		}else{
+			$child.removeClass("filtered-out").addClass("filtered-out");
 		}
 		
-		++no;
-		$child.removeClass("d-none");
-		
-		--remain;
 	});
 	
+	$childs.filter(".filtered-out").addClass("d-none");
+	ps.buildPagination();
+}
+
+function __PSRefresh(ps){
+	$childs = ps.getChilds().not(".filtered-out");
+	
+	let no = 0;
+	let page = ps.page;
+	let limit = ps.limit;
+	let start = (ps.page-1)*ps.limit+1;
+	let max = start+limit-1;
+	
+	$childs.each(function(){
+		++no;
+		if(start <= no && no <= max){
+			$(this).removeClass("d-none");
+		}else{
+			$(this).addClass("d-none");
+		}
+	});
 }
 
 
@@ -134,18 +144,16 @@ function __PSGetChildSearch($child, queries){
 function __PSBuildPagination(ps){
 	
 	let $paginationDiv = ps.getPaginationDiv();
-	let childCount = ps.getChilds().length;
+	let childCount = ps.getChilds().not(".filtered-out").length;
 	let limit = ps.limit;
 	let pageCount = parseInt(Math.ceil(childCount / limit));
 	ps.pageCount = pageCount;
 	
 	if(pageCount == 0){
-		alert("Page count zero");
 		$paginationDiv.empty();
 		return;
 	}
 	if(pageCount == 1){
-		alert("Page count one");
 		$paginationDiv.empty();
 		ps.refresh();
 		return;
@@ -220,15 +228,22 @@ class PaginationSearch {
 		let ps = this;
 		if(this.searchField){
 			$(this.searchField).bind("change keyup paste", function(){
-				ps.refresh();
+				ps.filter();
 			});
 		}
 		
 		this.init();
     }
 	
-	
 	init(){
+		this.filter();
+	}
+	
+	filter(){
+		__PSFilter(this);
+	}
+	
+	buildPagination(){
 		__PSBuildPagination(this);
 	}
 	next(){
