@@ -41,6 +41,7 @@ function addItemPenilaian(idUnsur){
 	initUnsur($item, idUnsur);
 	initItem($item);
 	$("#item-penilaian-holder").append($item);
+	__PSBuildPagination($("#item-penilaian-holder"));
 }
 
 function initUnsur($item, idUnsur){
@@ -155,7 +156,9 @@ function hitungNilaiKategori(){
 	$(".item-penilaian").each(function(){
 		let idKategori = $(this).attr("data-id-kategori");
 		let nilai = $(this).find(".item-nilai").text();
-		subtotals[idKategori] += parseFloat(nilai);
+		nilai = parseFloat(nilai);
+		if(isNaN(nilai)) nilai = 0;
+		subtotals[idKategori] += nilai;
 	});
 	$(".batas-kategori").each(function(){
 		let idKategori = $(this).attr("data-id-kategori");
@@ -484,6 +487,7 @@ function initItem($item){
 						$header.attr("href", "#item-body-" + no);
 					});
 					hitungNilaiKategori();
+					__PSBuildPagination($("#item-penilaian-holder"));
 				}
 			);
 		});
@@ -494,6 +498,8 @@ function initItem($item){
 	});
 }
 
+var searchQueries = [".item-kegiatan-kegiatan", ".item-kategori", ".row-tahun", ".item-bukti", ".row-batas", ".item-nilai", ".item-keterangan"];
+var childQueries = [".item-penilaian"];
 
 $(document).ready(function(){
     $("#btn-tambah-item").click(function(){
@@ -592,4 +598,13 @@ $(document).ready(function(){
 		hitungBatas();
 		hitungNilaiKategori();
 	});
+	CreatePaginationSearch({
+		element: "#item-penilaian-holder",
+		searchQueries: searchQueries,
+		childQueries: childQueries,
+		searchField: "#item-penilaian-search",
+		paginationDiv: "#item-penilaian-pagination",
+		limit: 5
+	});
+		
 })
