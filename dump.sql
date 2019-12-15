@@ -81,9 +81,9 @@ CREATE TABLE `item_penilaian` (
   `ID_ITEM` int(11) NOT NULL AUTO_INCREMENT,
   `ID_PAK` int(11) NOT NULL,
   `ID_UNSUR` int(11) NOT NULL,
-  `NILAI_AWAL` int(11) DEFAULT NULL,
-  `NILAI_1` int(11) DEFAULT NULL,
-  `NILAI_2` int(11) DEFAULT NULL,
+  `NILAI_AWAL` double DEFAULT NULL,
+  `NILAI_1` double DEFAULT NULL,
+  `NILAI_2` double DEFAULT NULL,
   `URL_DOKUMEN` varchar(100) DEFAULT NULL,
   `TAHUN` int(11) DEFAULT NULL,
   `SEMESTER` tinyint(4) DEFAULT NULL,
@@ -92,14 +92,9 @@ CREATE TABLE `item_penilaian` (
   KEY `FK_ITEMPENI_MEMILIKI__UNSURPEN` (`ID_UNSUR`),
   CONSTRAINT `FK_ITEMPENI_MEMILIKI1_PAK` FOREIGN KEY (`ID_PAK`) REFERENCES `pak` (`ID_PAK`),
   CONSTRAINT `FK_ITEMPENI_MEMILIKI__UNSURPEN` FOREIGN KEY (`ID_UNSUR`) REFERENCES `unsur_penilaian` (`ID_UNSUR`)
-) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 /*Data for the table `item_penilaian` */
-
-insert  into `item_penilaian`(`ID_ITEM`,`ID_PAK`,`ID_UNSUR`,`NILAI_AWAL`,`NILAI_1`,`NILAI_2`,`URL_DOKUMEN`,`TAHUN`,`SEMESTER`) values 
-(38,11,8,44,44,40,'https://drive.google.com/open?id=1G0_gVYg_mCsgHtsuSlM7onNy_5NLzIUNA05lL-wtdyQ',2019,1),
-(39,11,49,40,40,35,'https://drive.google.com/open?id=1G0_gVYg_mCsgHtsuSlM7onNy_5NLzIUNA05lL-wtdyQ',2019,NULL),
-(40,11,104,6,6,1,'',NULL,NULL);
 
 /*Table structure for table `jabatan` */
 
@@ -170,9 +165,6 @@ CREATE TABLE `login_info` (
 
 /*Data for the table `login_info` */
 
-insert  into `login_info`(`ID_USER`,`USERNAME`,`PASSWORD`) values 
-(57,'penilailuar','penilailuar');
-
 /*Table structure for table `pak` */
 
 CREATE TABLE `pak` (
@@ -188,10 +180,10 @@ CREATE TABLE `pak` (
   `URL_SK` varchar(100) DEFAULT NULL,
   `ID_SUBRUMPUN` int(11) NOT NULL,
   `ID_PENILAI_SUBMIT` int(11) DEFAULT NULL,
-  `NILAI_AWAL` int(4) DEFAULT NULL,
-  `NILAI_AKHIR` int(4) DEFAULT NULL,
-  `KREDIT_AWAL` int(4) NOT NULL,
-  `KREDIT_AKHIR` int(4) DEFAULT NULL,
+  `NILAI_AWAL` double DEFAULT NULL,
+  `NILAI_AKHIR` double DEFAULT NULL,
+  `KREDIT_AWAL` double NOT NULL,
+  `KREDIT_AKHIR` double DEFAULT NULL,
   PRIMARY KEY (`ID_PAK`),
   KEY `FK_PAK_MENILAI_1_USER` (`ID_PENILAI_1`),
   KEY `FK_PAK_MENILAI_2_USER` (`ID_PENILAI_2`),
@@ -209,12 +201,9 @@ CREATE TABLE `pak` (
   CONSTRAINT `FK_PAK_SUBRUMPUN` FOREIGN KEY (`ID_SUBRUMPUN`) REFERENCES `subrumpun` (`ID_SUBRUMPUN`),
   CONSTRAINT `FK_PENILAI_SUBMIT` FOREIGN KEY (`ID_PENILAI_SUBMIT`) REFERENCES `user` (`ID_USER`),
   CONSTRAINT `FK_STATUS_PAK` FOREIGN KEY (`ID_STATUS_PAK`) REFERENCES `status_pak` (`id_status_pak`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 /*Data for the table `pak` */
-
-insert  into `pak`(`ID_PAK`,`ID_PENILAI_1`,`ID_PENILAI_2`,`ID_JABATAN_TUJUAN`,`ID_PEMOHON`,`ID_JABATAN_AWAL`,`ID_STATUS_PAK`,`TANGGAL_STATUS`,`TANGGAL_DIAJUKAN`,`URL_SK`,`ID_SUBRUMPUN`,`ID_PENILAI_SUBMIT`,`NILAI_AWAL`,`NILAI_AKHIR`,`KREDIT_AWAL`,`KREDIT_AKHIR`) values 
-(11,55,57,3,58,2,7,'2019-12-10','2019-12-10','https://drive.google.com/drive/u/0/shared-with-me',110,57,89,83,250,333);
 
 /*Table structure for table `penilai_luar` */
 
@@ -235,9 +224,6 @@ CREATE TABLE `penilai_luar` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 /*Data for the table `penilai_luar` */
-
-insert  into `penilai_luar`(`ID_USER`,`ID_JABATAN`,`ID_SUBRUMPUN`,`NIP`,`EMAIL`,`TELEPON`,`ASAL_INSTANSI`) values 
-(57,4,130,'penilailuar','penilai1234@gmail.com','123456','Bukan UINSA');
 
 /*Table structure for table `status_pak` */
 
@@ -485,12 +471,6 @@ CREATE TABLE `user` (
 ) ENGINE=InnoDB AUTO_INCREMENT=59 DEFAULT CHARSET=latin1;
 
 /*Data for the table `user` */
-
-insert  into `user`(`ID_USER`,`ROLE`,`STATUS_USER`,`NAMA`,`ID_PEGAWAI`,`KETERANGAN`) values 
-(55,3,1,'Dosen','2',NULL),
-(56,4,1,'Admin','1',NULL),
-(57,1,1,'Penilai Luar',NULL,NULL),
-(58,3,1,'Nita Yalina, S.Kom., M.MT','198702082014032003',NULL);
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

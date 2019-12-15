@@ -150,11 +150,11 @@
                 <div class="card" id="card-kegiatan">
                     <div class="card-header bg-white">
                         <h4 class="d-inline-block">Kegiatan</h4>
-                        <form class="d-none float-right d-sm-inline-block mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-                            <div class="input-group"><input class="bg-light form-control border-0 small field-search-item field-search-item-edit" type="text" placeholder="Cari Kegiatan">
+                        <div class="d-none float-right d-sm-inline-block mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+                            <div class="input-group"><input class="bg-light form-control border-0 small field-search-item field-search-item-edit" type="text" placeholder="Cari Kegiatan" id="item-penilaian-search">
                                 <div class="input-group-append"><button class="btn btn-primary py-0 btn-search-item btn-search-item-edit" type="button"><i class="fas fa-search"></i></button></div>
                             </div>
-                        </form>
+                        </div>
                     </div>
                     <div class="card-body accordion" id="item-penilaian-holder">
 						<?php 
@@ -164,9 +164,12 @@
 						?>
                     </div>
                     <div class="card-footer bg-white">
-                        <div class="float-right"><button class="btn btn-light border-dark btn-prev-item btn-prev-item-edit" type="button">&lt;</button>
-                            <div class="d-inline-block"><button class="btn btn-light btn-halaman-item btn-halaman-item-edit" id="btn-next-item" type="button">1</button></div><button class="btn btn-light border-dark" type="button">&gt;</button></div><button class="btn btn-primary"
-                            id="btn-tambah-item" type="submit">Tambah</button><button class="btn btn-primary btn-simpan-pak" type="submit">Simpan</button><button class="btn btn-success btn-submit-pak btn-submit" type="submit">Submit</button></div>
+                        <div class="float-right" id="item-penilaian-pagination">
+						</div>
+						<button class="btn btn-primary" id="btn-tambah-item" type="submit">Tambah</button>
+						<button class="btn btn-primary btn-simpan-pak" type="submit">Simpan</button>
+						<button class="btn btn-success btn-submit-pak btn-submit" type="submit">Submit</button>
+					</div>
                 </div>
             </div>
         </div>
@@ -244,6 +247,7 @@
 	<?php $this->view("modal/InputUrl.html"); ?>
 	<?php $this->view("modal/Konfirmasi.html"); ?>
 	<?php $this->view("umum/CommonJS.html"); ?>
+    <script src="<?php echo base_url(); ?>assets/js/any-pagination-search.js"></script>
 	<script>
 		var pak = <?=json_encode($pak);?>;
 		var items = <?=json_encode($items);?>;
