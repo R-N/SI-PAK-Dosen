@@ -50,6 +50,10 @@ class ControllerLogin extends CI_Controller {
 				}
 			}
 		}
+		if($result->result != "OK"){
+			echo json_encode($result);
+			return;
+		}
 		if($result->status_user != 1){
 			echo json_encode(array(
 				"result"=>"FAIL",
