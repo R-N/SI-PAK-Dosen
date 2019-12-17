@@ -196,9 +196,12 @@ class ControllerPenilai extends CI_Controller {
 			
 			$statusAkhir = PAK::PAK_SIDANG;
 			
+			$kreditDibutuhkan = max(0, $pak->kreditMinimal - $pak->kreditAwal);
+			
 			$subtotals = array();
 			foreach($batasKategori as $batas){
 				$subtotals[$batas->idKategori] = 0;
+				$batas->setKreditDibutuhkan($kreditDibutuhkan);
 			}
 			foreach($items as $item){
 				$idKategori = $item->idKategori;
