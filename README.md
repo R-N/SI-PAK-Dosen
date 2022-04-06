@@ -9,4 +9,3 @@ Database creds in application/config/database.php:
 - 'password' => '',
 - 'database' => 'sipak',
 - 'dbdriver' => 'mysqli',
-- 
