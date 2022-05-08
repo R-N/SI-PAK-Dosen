@@ -9,3 +9,13 @@ Database creds in application/config/database.php:
 - 'password' => '',
 - 'database' => 'si-pak-dosen',
 - 'dbdriver' => 'mysqli',
+
+Users:
+1. Dosen
+- Username: dosen
+- Password: dosen
+2. Admin
+- Username: admin
+- Password: admin
+
+Dosen juga termasuk penilai. Admin dapat membuat akun penilai baru.
