@@ -235,7 +235,7 @@ class ModelPAK extends CI_Model {
             WHERE (P.id_penilai_1=? OR P.id_penilai_2=?)
                 AND D.id_user=P.id_pemohon
                 AND P.id_subrumpun=SR.id_subrumpun
-                AND (P.id_status_pak>? || P.id_penilai_submit = ?)
+                AND (P.id_status_pak>? OR P.id_penilai_submit = ?)
                 AND P.id_jabatan_awal=JA.id_jabatan
                 AND P.id_status_pak=SP.id_status_pak
                 AND P.id_jabatan_tujuan=JT.id_jabatan

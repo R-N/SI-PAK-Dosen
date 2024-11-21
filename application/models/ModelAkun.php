@@ -65,7 +65,7 @@ class ModelAkun extends CI_Model {
             FROM user 
             WHERE 
                 id_pegawai IS NOT NULL 
-                AND id_pegawai > 0
+                AND CAST(id_pegawai AS INTEGER) > 0
         ";
         $query = $this->db->query($sql);
         $results = $query->result_array();
