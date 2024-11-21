@@ -128,7 +128,7 @@ class ControllerPenilai extends HungNG_CI_Base_Controllers {
             if(!$itemLama){
                 return array(
                     "result"=>"FAIL",
-                    "errorMessage"=>"Item tidak ditemukan: " . $itemLama->KEGIATAN
+                    "errorMessage"=>"Item tidak ditemukan: " . $itemLama->kegiatan
                 );
             }
             if(!$item->nilai && $item->nilai != 0){
@@ -137,13 +137,13 @@ class ControllerPenilai extends HungNG_CI_Base_Controllers {
             if(!($item->nilai >= 0)){
                 return array(
                     "result"=>"FAIL",
-                    "errorMessage"=>"Nilai invalid untuk item: " . $itemLama->KEGIATAN
+                    "errorMessage"=>"Nilai invalid untuk item: " . $itemLama->kegiatan
                 );
             }
             if($item->nilai > $itemLama->NILAI_AWAL){
                 return array(
                     "result"=>"FAIL",
-                    "errorMessage"=>"Nilai invalid untuk item: " . $itemLama->KEGIATAN
+                    "errorMessage"=>"Nilai invalid untuk item: " . $itemLama->kegiatan
                 );
             }
         }

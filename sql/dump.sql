@@ -1,39 +1,38 @@
 /*
-SQLyog Ultimate v13.1.1 (64 bit)
-MySQL - 10.1.34-MariaDB : Database - sipak
+sqlyog ultimate v13.1.1 (64 bit)
+mysql - 10.1.34-mariadb : database - sipak
 *********************************************************************
 */
 
-/*!40101 SET NAMES utf8 */;
+/*!40101 set names utf8 */;
 
-/*!40101 SET SQL_MODE=''*/;
+/*!40101 set sql_mode=''*/;
 
-/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
-/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
-/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
-/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
-CREATE DATABASE /*!32312 IF NOT EXISTS*/`si_pak_dosen` /*!40100 DEFAULT CHARACTER SET latin1 */;
+/*!40014 set @old_unique_checks=@@unique_checks, unique_checks=0 */;
+/*!40014 set @old_foreign_key_checks=@@foreign_key_checks, foreign_key_checks=0 */;
+/*!40101 set @old_sql_mode=@@sql_mode, sql_mode='no_auto_value_on_zero' */;
+/*!40111 set @old_sql_notes=@@sql_notes, sql_notes=0 */;
+create database /*!32312 if not exists*/`si_pak_dosen` /*!40100 default character set latin1 */;
 
-USE `si_pak_dosen`;
+use `si_pak_dosen`;
 
-/*Table structure for table `batas_kategori` */
+/*table structure for table `batas_kategori` */
 
-CREATE TABLE `batas_kategori` (
-  `ID_JABATAN` int(11) NOT NULL,
-  `ID_KATEGORI` int(11) NOT NULL,
-  `MINIMAL` int(11) DEFAULT NULL,
-  `MIN_TYPE` int(1) DEFAULT NULL,
-  `MAKSIMAL` int(11) DEFAULT NULL,
-  `MAX_TYPE` int(1) DEFAULT NULL,
-  PRIMARY KEY (`ID_JABATAN`,`ID_KATEGORI`),
-  KEY `FK_BATASKAT_MEMILIKI_KATEGORI` (`ID_KATEGORI`),
-  CONSTRAINT `FK_BATASKAT_BATAS_UNT_JABATAN` FOREIGN KEY (`ID_JABATAN`) REFERENCES `jabatan` (`ID_JABATAN`),
-  CONSTRAINT `FK_BATASKAT_MEMILIKI_KATEGORI` FOREIGN KEY (`ID_KATEGORI`) REFERENCES `kategori_penilaian` (`ID_KATEGORI`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+create table `batas_kategori` (
+  `id_jabatan` int(11) not null,
+  `id_kategori` int(11) not null,
+  `minimal` int(11) default null,
+  `min_type` int(1) default null,
+  `maksimal` int(11) default null,
+  `max_type` int(1) default null,
+  primary key (`id_jabatan`,`id_kategori`),
+  key `fk_bataskat_memiliki_kategori` (`id_kategori`),
+  constraint `fk_bataskat_batas_unt_jabatan` foreign key (`id_jabatan`) references `jabatan` (`id_jabatan`),
+  constraint `fk_bataskat_memiliki_kategori` foreign key (`id_kategori`) references `kategori_penilaian` (`id_kategori`)
+) engine=innodb default charset=latin1;
 
-/*Data for the table `batas_kategori` */
-
-insert  into `batas_kategori`(`ID_JABATAN`,`ID_KATEGORI`,`MINIMAL`,`MIN_TYPE`,`MAKSIMAL`,`MAX_TYPE`) values 
+/*data for the table `batas_kategori` */
+insert  into `batas_kategori`(`id_jabatan`,`id_kategori`,`minimal`,`min_type`,`maksimal`,`max_type`) values 
 (1,1,NULL,NULL,NULL,NULL),
 (1,2,55,1,NULL,NULL),
 (1,3,25,1,NULL,NULL),
@@ -74,40 +73,39 @@ insert  into `batas_kategori`(`ID_JABATAN`,`ID_KATEGORI`,`MINIMAL`,`MIN_TYPE`,`M
 (8,3,45,1,NULL,NULL),
 (8,4,1,0,10,1),
 (8,5,NULL,NULL,10,1);
+/*table structure for table `item_penilaian` */
 
-/*Table structure for table `item_penilaian` */
+create table `item_penilaian` (
+  `id_item` int(11) not null auto_increment,
+  `id_pak` int(11) not null,
+  `id_unsur` int(11) not null,
+  `nilai_awal` double default null,
+  `nilai_1` double default null,
+  `nilai_2` double default null,
+  `url_dokumen` varchar(100) default null,
+  `tahun` int(11) default null,
+  `semester` tinyint(4) default null,
+  primary key (`id_item`),
+  key `fk_itempeni_memiliki1_pak` (`id_pak`),
+  key `fk_itempeni_memiliki__unsurpen` (`id_unsur`),
+  constraint `fk_itempeni_memiliki1_pak` foreign key (`id_pak`) references `pak` (`id_pak`),
+  constraint `fk_itempeni_memiliki__unsurpen` foreign key (`id_unsur`) references `unsur_penilaian` (`id_unsur`)
+) engine=innodb default charset=latin1;
 
-CREATE TABLE `item_penilaian` (
-  `ID_ITEM` int(11) NOT NULL AUTO_INCREMENT,
-  `ID_PAK` int(11) NOT NULL,
-  `ID_UNSUR` int(11) NOT NULL,
-  `NILAI_AWAL` double DEFAULT NULL,
-  `NILAI_1` double DEFAULT NULL,
-  `NILAI_2` double DEFAULT NULL,
-  `URL_DOKUMEN` varchar(100) DEFAULT NULL,
-  `TAHUN` int(11) DEFAULT NULL,
-  `SEMESTER` tinyint(4) DEFAULT NULL,
-  PRIMARY KEY (`ID_ITEM`),
-  KEY `FK_ITEMPENI_MEMILIKI1_PAK` (`ID_PAK`),
-  KEY `FK_ITEMPENI_MEMILIKI__UNSURPEN` (`ID_UNSUR`),
-  CONSTRAINT `FK_ITEMPENI_MEMILIKI1_PAK` FOREIGN KEY (`ID_PAK`) REFERENCES `pak` (`ID_PAK`),
-  CONSTRAINT `FK_ITEMPENI_MEMILIKI__UNSURPEN` FOREIGN KEY (`ID_UNSUR`) REFERENCES `unsur_penilaian` (`ID_UNSUR`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*data for the table `item_penilaian` */
 
-/*Data for the table `item_penilaian` */
+/*table structure for table `jabatan` */
 
-/*Table structure for table `jabatan` */
+create table `jabatan` (
+  `id_jabatan` int(11) not null auto_increment,
+  `kredit` int(11) not null,
+  `jabatan` varchar(18) not null,
+  primary key (`id_jabatan`)
+) engine=innodb auto_increment=9 default charset=latin1;
 
-CREATE TABLE `jabatan` (
-  `ID_JABATAN` int(11) NOT NULL AUTO_INCREMENT,
-  `KREDIT` int(11) NOT NULL,
-  `JABATAN` varchar(18) NOT NULL,
-  PRIMARY KEY (`ID_JABATAN`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+/*data for the table `jabatan` */
 
-/*Data for the table `jabatan` */
-
-insert  into `jabatan`(`ID_JABATAN`,`KREDIT`,`JABATAN`) values 
+insert  into `jabatan`(`id_jabatan`,`kredit`,`jabatan`) values 
 (1,150,'Asisten Ahli III/b'),
 (2,200,'Lektor III/c'),
 (3,300,'Lektor III/d'),
@@ -116,126 +114,122 @@ insert  into `jabatan`(`ID_JABATAN`,`KREDIT`,`JABATAN`) values
 (6,700,'Lektor Kepala IV/c'),
 (7,850,'Profesor IV/d'),
 (8,1050,'Profesor IV/e');
+/*table structure for table `jenis_batas` */
 
-/*Table structure for table `jenis_batas` */
+create table `jenis_batas` (
+  `id_jenis_batas` int(11) not null auto_increment,
+  `jenis_batas` varchar(192) not null,
+  primary key (`id_jenis_batas`)
+) engine=innodb auto_increment=7 default charset=latin1;
 
-CREATE TABLE `jenis_batas` (
-  `ID_JENIS_BATAS` int(11) NOT NULL AUTO_INCREMENT,
-  `JENIS_BATAS` varchar(192) NOT NULL,
-  PRIMARY KEY (`ID_JENIS_BATAS`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+/*data for the table `jenis_batas` */
 
-/*Data for the table `jenis_batas` */
-
-insert  into `jenis_batas`(`ID_JENIS_BATAS`,`JENIS_BATAS`) values 
+insert  into `jenis_batas`(`id_jenis_batas`,`jenis_batas`) values 
 (1,'per semester'),
 (2,'per tahun'),
 (3,'per periode penilaian'),
 (4,'total angka kredit unsur penelitian yang diperlukan untuk pengusulan ke Lektor Kepala dan Profesor '),
 (5,'total angka kredit unsur penelitian yang diperlukan untuk pengusulan ke Lektor Kepala dan Profesor  (untuk karya ilmiah butir; 2.a.4; 2.b.2; 2.c.2; dan 2.d.2)'),
-(6,'total angka kredit unsur penelitian untuk pengajuan ke semua jenjang (untuk karya ilmiah butir 2.e dan 3)');
+(6,'total angka kredit unsur penelitian untuk pengajuan ke semua jenjang (untuk karya ilmiah butir 2.e dan 3)');/*table structure for table `kategori_penilaian` */
 
-/*Table structure for table `kategori_penilaian` */
+create table `kategori_penilaian` (
+  `id_kategori` int(11) not null auto_increment,
+  `kategori` varchar(10) not null,
+  primary key (`id_kategori`)
+) engine=innodb auto_increment=6 default charset=latin1;
 
-CREATE TABLE `kategori_penilaian` (
-  `ID_KATEGORI` int(11) NOT NULL AUTO_INCREMENT,
-  `KATEGORI` varchar(10) NOT NULL,
-  PRIMARY KEY (`ID_KATEGORI`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+/*data for the table `kategori_penilaian` */
 
-/*Data for the table `kategori_penilaian` */
-
-insert  into `kategori_penilaian`(`ID_KATEGORI`,`KATEGORI`) values 
+insert  into `kategori_penilaian`(`id_kategori`,`kategori`) values 
 (1,'Pendidikan'),
 (2,'Pengajaran'),
 (3,'Penelitian'),
 (4,'Pengabdian'),
 (5,'Penunjang');
+/*table structure for table `login_info` */
 
-/*Table structure for table `login_info` */
+create table `login_info` (
+  `id_user` int(11) not null,
+  `username` varchar(25) not null,
+  `password` varchar(25) not null,
+  primary key (`id_user`),
+  unique key `unique_username` (`username`),
+  constraint `fk_logininf_relations_user` foreign key (`id_user`) references `user` (`id_user`)
+) engine=innodb default charset=latin1;
 
-CREATE TABLE `login_info` (
-  `ID_USER` int(11) NOT NULL,
-  `USERNAME` varchar(25) NOT NULL,
-  `PASSWORD` varchar(25) NOT NULL,
-  PRIMARY KEY (`ID_USER`),
-  UNIQUE KEY `UNIQUE_USERNAME` (`USERNAME`),
-  CONSTRAINT `FK_LOGININF_RELATIONS_USER` FOREIGN KEY (`ID_USER`) REFERENCES `user` (`ID_USER`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*data for the table `login_info` */
 
-/*Data for the table `login_info` */
+/*table structure for table `pak` */
 
-/*Table structure for table `pak` */
+create table `pak` (
+  `id_pak` int(11) not null auto_increment,
+  `id_penilai_1` int(11) default null,
+  `id_penilai_2` int(11) default null,
+  `id_jabatan_tujuan` int(11) not null,
+  `id_pemohon` int(11) not null,
+  `id_jabatan_awal` int(11) not null,
+  `id_status_pak` int(11) not null,
+  `tanggal_status` date not null,
+  `tanggal_diajukan` date default null,
+  `url_sk` varchar(100) default null,
+  `id_subrumpun` int(11) not null,
+  `id_penilai_submit` int(11) default null,
+  `nilai_awal` double default null,
+  `nilai_akhir` double default null,
+  `kredit_awal` double not null,
+  `kredit_akhir` double default null,
+  primary key (`id_pak`),
+  key `fk_pak_menilai_1_user` (`id_penilai_1`),
+  key `fk_pak_menilai_2_user` (`id_penilai_2`),
+  key `fk_pak_pak_untuk_jabatan` (`id_jabatan_tujuan`),
+  key `fk_pak_relations_user` (`id_pemohon`),
+  key `fk_pak_relations_jabatan` (`id_jabatan_awal`),
+  key `fk_pak_subrumpun` (`id_subrumpun`),
+  key `fk_status_pak` (`id_status_pak`),
+  key `fk_penilai_submit` (`id_penilai_submit`),
+  constraint `fk_pak_menilai_1_user` foreign key (`id_penilai_1`) references `user` (`id_user`),
+  constraint `fk_pak_menilai_2_user` foreign key (`id_penilai_2`) references `user` (`id_user`),
+  constraint `fk_pak_pak_untuk_jabatan` foreign key (`id_jabatan_tujuan`) references `jabatan` (`id_jabatan`),
+  constraint `fk_pak_relations_jabatan` foreign key (`id_jabatan_awal`) references `jabatan` (`id_jabatan`),
+  constraint `fk_pak_relations_user` foreign key (`id_pemohon`) references `user` (`id_user`),
+  constraint `fk_pak_subrumpun` foreign key (`id_subrumpun`) references `subrumpun` (`id_subrumpun`),
+  constraint `fk_penilai_submit` foreign key (`id_penilai_submit`) references `user` (`id_user`),
+  constraint `fk_status_pak` foreign key (`id_status_pak`) references `status_pak` (`id_status_pak`)
+) engine=innodb default charset=latin1;
 
-CREATE TABLE `pak` (
-  `ID_PAK` int(11) NOT NULL AUTO_INCREMENT,
-  `ID_PENILAI_1` int(11) DEFAULT NULL,
-  `ID_PENILAI_2` int(11) DEFAULT NULL,
-  `ID_JABATAN_TUJUAN` int(11) NOT NULL,
-  `ID_PEMOHON` int(11) NOT NULL,
-  `ID_JABATAN_AWAL` int(11) NOT NULL,
-  `ID_STATUS_PAK` int(11) NOT NULL,
-  `TANGGAL_STATUS` date NOT NULL,
-  `TANGGAL_DIAJUKAN` date DEFAULT NULL,
-  `URL_SK` varchar(100) DEFAULT NULL,
-  `ID_SUBRUMPUN` int(11) NOT NULL,
-  `ID_PENILAI_SUBMIT` int(11) DEFAULT NULL,
-  `NILAI_AWAL` double DEFAULT NULL,
-  `NILAI_AKHIR` double DEFAULT NULL,
-  `KREDIT_AWAL` double NOT NULL,
-  `KREDIT_AKHIR` double DEFAULT NULL,
-  PRIMARY KEY (`ID_PAK`),
-  KEY `FK_PAK_MENILAI_1_USER` (`ID_PENILAI_1`),
-  KEY `FK_PAK_MENILAI_2_USER` (`ID_PENILAI_2`),
-  KEY `FK_PAK_PAK_UNTUK_JABATAN` (`ID_JABATAN_TUJUAN`),
-  KEY `FK_PAK_RELATIONS_USER` (`ID_PEMOHON`),
-  KEY `FK_PAK_RELATIONS_JABATAN` (`ID_JABATAN_AWAL`),
-  KEY `FK_PAK_SUBRUMPUN` (`ID_SUBRUMPUN`),
-  KEY `FK_STATUS_PAK` (`ID_STATUS_PAK`),
-  KEY `FK_PENILAI_SUBMIT` (`ID_PENILAI_SUBMIT`),
-  CONSTRAINT `FK_PAK_MENILAI_1_USER` FOREIGN KEY (`ID_PENILAI_1`) REFERENCES `user` (`ID_USER`),
-  CONSTRAINT `FK_PAK_MENILAI_2_USER` FOREIGN KEY (`ID_PENILAI_2`) REFERENCES `user` (`ID_USER`),
-  CONSTRAINT `FK_PAK_PAK_UNTUK_JABATAN` FOREIGN KEY (`ID_JABATAN_TUJUAN`) REFERENCES `jabatan` (`ID_JABATAN`),
-  CONSTRAINT `FK_PAK_RELATIONS_JABATAN` FOREIGN KEY (`ID_JABATAN_AWAL`) REFERENCES `jabatan` (`ID_JABATAN`),
-  CONSTRAINT `FK_PAK_RELATIONS_USER` FOREIGN KEY (`ID_PEMOHON`) REFERENCES `user` (`ID_USER`),
-  CONSTRAINT `FK_PAK_SUBRUMPUN` FOREIGN KEY (`ID_SUBRUMPUN`) REFERENCES `subrumpun` (`ID_SUBRUMPUN`),
-  CONSTRAINT `FK_PENILAI_SUBMIT` FOREIGN KEY (`ID_PENILAI_SUBMIT`) REFERENCES `user` (`ID_USER`),
-  CONSTRAINT `FK_STATUS_PAK` FOREIGN KEY (`ID_STATUS_PAK`) REFERENCES `status_pak` (`id_status_pak`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*data for the table `pak` */
 
-/*Data for the table `pak` */
+/*table structure for table `penilai_luar` */
 
-/*Table structure for table `penilai_luar` */
+create table `penilai_luar` (
+  `id_user` int(11) not null,
+  `id_jabatan` int(11) not null,
+  `id_subrumpun` int(11) not null,
+  `nip` varchar(50) not null,
+  `email` varchar(50) not null,
+  `telepon` varchar(15) not null,
+  `asal_instansi` varchar(100) not null,
+  primary key (`id_user`),
+  key `fk_penilail_memiliki__jabatan` (`id_jabatan`),
+  key `fk_penilail_memiliki__subrumpu` (`id_subrumpun`),
+  constraint `fk_penilail_adalah_user` foreign key (`id_user`) references `user` (`id_user`),
+  constraint `fk_penilail_memiliki__jabatan` foreign key (`id_jabatan`) references `jabatan` (`id_jabatan`),
+  constraint `fk_penilail_memiliki__subrumpu` foreign key (`id_subrumpun`) references `subrumpun` (`id_subrumpun`)
+) engine=innodb default charset=latin1;
 
-CREATE TABLE `penilai_luar` (
-  `ID_USER` int(11) NOT NULL,
-  `ID_JABATAN` int(11) NOT NULL,
-  `ID_SUBRUMPUN` int(11) NOT NULL,
-  `NIP` varchar(50) NOT NULL,
-  `EMAIL` varchar(50) NOT NULL,
-  `TELEPON` varchar(15) NOT NULL,
-  `ASAL_INSTANSI` varchar(100) NOT NULL,
-  PRIMARY KEY (`ID_USER`),
-  KEY `FK_PENILAIL_MEMILIKI__JABATAN` (`ID_JABATAN`),
-  KEY `FK_PENILAIL_MEMILIKI__SUBRUMPU` (`ID_SUBRUMPUN`),
-  CONSTRAINT `FK_PENILAIL_ADALAH_USER` FOREIGN KEY (`ID_USER`) REFERENCES `user` (`ID_USER`),
-  CONSTRAINT `FK_PENILAIL_MEMILIKI__JABATAN` FOREIGN KEY (`ID_JABATAN`) REFERENCES `jabatan` (`ID_JABATAN`),
-  CONSTRAINT `FK_PENILAIL_MEMILIKI__SUBRUMPU` FOREIGN KEY (`ID_SUBRUMPUN`) REFERENCES `subrumpun` (`ID_SUBRUMPUN`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*data for the table `penilai_luar` */
 
-/*Data for the table `penilai_luar` */
+/*table structure for table `status_pak` */
 
-/*Table structure for table `status_pak` */
+create table `status_pak` (
+  `id_status_pak` int(11) not null,
+  `status_pak` varchar(25) not null,
+  primary key (`id_status_pak`)
+) engine=innodb default charset=latin1;
 
-CREATE TABLE `status_pak` (
-  `ID_STATUS_PAK` int(11) NOT NULL,
-  `STATUS_PAK` varchar(25) NOT NULL,
-  PRIMARY KEY (`ID_STATUS_PAK`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*data for the table `status_pak` */
 
-/*Data for the table `status_pak` */
-
-insert  into `status_pak`(`ID_STATUS_PAK`,`STATUS_PAK`) values 
+insert  into `status_pak`(`id_status_pak`,`status_pak`) values 
 (1,'Belum disubmit'),
 (2,'Baru'),
 (3,'Menunggu penilai'),
@@ -243,19 +237,18 @@ insert  into `status_pak`(`ID_STATUS_PAK`,`STATUS_PAK`) values
 (5,'Ditolak (nilai kurang)'),
 (6,'Ditolak (dalam sidang)'),
 (7,'Diterima');
+/*table structure for table `subrumpun` */
 
-/*Table structure for table `subrumpun` */
+create table `subrumpun` (
+  `id_subrumpun` int(3) not null auto_increment,
+  `id_rumpun` int(3) not null,
+  `subrumpun` varchar(32) not null,
+  primary key (`id_subrumpun`)
+) engine=innodb auto_increment=841 default charset=latin1;
 
-CREATE TABLE `subrumpun` (
-  `ID_SUBRUMPUN` int(3) NOT NULL AUTO_INCREMENT,
-  `ID_RUMPUN` int(3) NOT NULL,
-  `SUBRUMPUN` varchar(32) NOT NULL,
-  PRIMARY KEY (`ID_SUBRUMPUN`)
-) ENGINE=InnoDB AUTO_INCREMENT=841 DEFAULT CHARSET=latin1;
+/*data for the table `subrumpun` */
 
-/*Data for the table `subrumpun` */
-
-insert  into `subrumpun`(`ID_SUBRUMPUN`,`ID_RUMPUN`,`SUBRUMPUN`) values 
+insert  into `subrumpun`(`id_subrumpun`,`id_rumpun`,`subrumpun`) values 
 (110,100,'Ushuluddin'),
 (120,100,'Syariah'),
 (130,100,'Adab'),
@@ -282,29 +275,28 @@ insert  into `subrumpun`(`ID_SUBRUMPUN`,`ID_RUMPUN`,`SUBRUMPUN`) values
 (810,800,'Teknik'),
 (830,800,'Arsitektur'),
 (840,800,'Teknik Perencanaan Tata Kota');
+/*table structure for table `unsur_penilaian` */
 
-/*Table structure for table `unsur_penilaian` */
+create table `unsur_penilaian` (
+  `id_unsur` int(11) not null auto_increment,
+  `id_kategori` int(11) not null,
+  `kegiatan` varchar(512) not null,
+  `batas` int(11) default null,
+  `unit` varchar(16) default null,
+  `id_jenis_batas` int(11) default null,
+  `max_kredit` int(11) not null,
+  `bukti` varchar(128) default null,
+  `keterangan` varchar(255) default null,
+  primary key (`id_unsur`),
+  key `fk_unsurpen_memiliki__kategori` (`id_kategori`),
+  key `fk_batas` (`id_jenis_batas`),
+  constraint `fk_batas` foreign key (`id_jenis_batas`) references `jenis_batas` (`id_jenis_batas`),
+  constraint `fk_unsurpen_memiliki__kategori` foreign key (`id_kategori`) references `kategori_penilaian` (`id_kategori`)
+) engine=innodb auto_increment=152 default charset=latin1;
 
-CREATE TABLE `unsur_penilaian` (
-  `ID_UNSUR` int(11) NOT NULL AUTO_INCREMENT,
-  `ID_KATEGORI` int(11) NOT NULL,
-  `KEGIATAN` varchar(512) NOT NULL,
-  `BATAS` int(11) DEFAULT NULL,
-  `UNIT` varchar(16) DEFAULT NULL,
-  `ID_JENIS_BATAS` int(11) DEFAULT NULL,
-  `MAX_KREDIT` int(11) NOT NULL,
-  `BUKTI` varchar(128) DEFAULT NULL,
-  `KETERANGAN` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`ID_UNSUR`),
-  KEY `FK_UNSURPEN_MEMILIKI__KATEGORI` (`ID_KATEGORI`),
-  KEY `FK_BATAS` (`ID_JENIS_BATAS`),
-  CONSTRAINT `FK_BATAS` FOREIGN KEY (`ID_JENIS_BATAS`) REFERENCES `jenis_batas` (`ID_JENIS_BATAS`),
-  CONSTRAINT `FK_UNSURPEN_MEMILIKI__KATEGORI` FOREIGN KEY (`ID_KATEGORI`) REFERENCES `kategori_penilaian` (`ID_KATEGORI`)
-) ENGINE=InnoDB AUTO_INCREMENT=152 DEFAULT CHARSET=latin1;
+/*data for the table `unsur_penilaian` */
 
-/*Data for the table `unsur_penilaian` */
-
-insert  into `unsur_penilaian`(`ID_UNSUR`,`ID_KATEGORI`,`KEGIATAN`,`BATAS`,`UNIT`,`ID_JENIS_BATAS`,`MAX_KREDIT`,`BUKTI`,`KETERANGAN`) values 
+insert  into `unsur_penilaian`(`id_unsur`,`id_kategori`,`kegiatan`,`batas`,`unit`,`id_jenis_batas`,`max_kredit`,`bukti`,`keterangan`) values 
 (1,1,'Mengikuti pendidikan formal dan memperoleh gelar/sebutan/ijazah : Doktor / sederajat',1,NULL,3,200,'Bukti tugas/izin belajar dan pindai ijazah asli',NULL),
 (2,1,'Mengikuti pendidikan formal dan memperoleh gelar/sebutan/ijazah : Magister/sederajat',1,NULL,3,150,'Bukti tugas/izin belajar dan pindai ijazah asli',NULL),
 (3,1,'Mengikuti diklat prajabatan golongan III',1,NULL,3,3,'Bukti tugas/izin belajar dan pindai ijazah asli',NULL),
@@ -456,23 +448,22 @@ insert  into `unsur_penilaian`(`ID_UNSUR`,`ID_KATEGORI`,`KEGIATAN`,`BATAS`,`UNIT
 (149,5,'Mempunyai prestasi di bidang olahraga/ Humaniora : Tingkat Nasional, tiap piagam/medali',NULL,NULL,NULL,3,NULL,NULL),
 (150,5,'Mempunyai prestasi di bidang olahraga/ Humaniora : Tingkat Daerah/Lokal, tiap piagam/medali',NULL,NULL,NULL,1,NULL,NULL),
 (151,5,'Keanggotaan dalam tim penilai jabatan akademik dosen',NULL,NULL,NULL,1,NULL,NULL);
+/*table structure for table `user` */
 
-/*Table structure for table `user` */
+create table `user` (
+  `id_user` int(11) not null auto_increment,
+  `role` int(11) not null,
+  `status_user` int(11) not null,
+  `nama` varchar(50) default null,
+  `id_pegawai` varchar(18) default null,
+  `keterangan` varchar(100) default null,
+  primary key (`id_user`),
+  unique key `ak_identifier_2` (`id_pegawai`)
+) engine=innodb auto_increment=59 default charset=latin1;
 
-CREATE TABLE `user` (
-  `ID_USER` int(11) NOT NULL AUTO_INCREMENT,
-  `ROLE` int(11) NOT NULL,
-  `STATUS_USER` int(11) NOT NULL,
-  `NAMA` varchar(50) DEFAULT NULL,
-  `ID_PEGAWAI` varchar(18) DEFAULT NULL,
-  `KETERANGAN` varchar(100) DEFAULT NULL,
-  PRIMARY KEY (`ID_USER`),
-  UNIQUE KEY `AK_IDENTIFIER_2` (`ID_PEGAWAI`)
-) ENGINE=InnoDB AUTO_INCREMENT=59 DEFAULT CHARSET=latin1;
+/*data for the table `user` */
 
-/*Data for the table `user` */
-
-/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
-/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
-/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
-/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+/*!40101 set sql_mode=@old_sql_mode */;
+/*!40014 set foreign_key_checks=@old_foreign_key_checks */;
+/*!40014 set unique_checks=@old_unique_checks */;
+/*!40111 set sql_notes=@old_sql_notes */;

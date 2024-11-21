@@ -70,9 +70,9 @@ class ControllerDosen extends HungNG_CI_Base_Controllers {
             if($pakAktif){
                 
                 if($pakAktif->ID_STATUS_PAK==1){
-                    redirect(base_url()."pak/{$pakAktif->ID_PAK}/edit");
+                    redirect(base_url()."pak/{$pakAktif->id_pak}/edit");
                 }else{
-                    redirect(base_url()."pak/{$pakAktif->ID_PAK}");
+                    redirect(base_url()."pak/{$pakAktif->id_pak}");
                 }
                 return;
             }

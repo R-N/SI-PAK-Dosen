@@ -8,296 +8,335 @@ require_once(ENTITIES_DIR  . "UnsurPenilaian.php");
 require_once(ENTITIES_DIR  . "BatasKategori.php");
 
 class ModelItemPenilaian extends CI_Model {
-	function fetchBatasKategori($idJabatan){
-		$sql = "SELECT * FROM batas_kategori B, kategori_penilaian K WHERE B.ID_KATEGORI=K.ID_KATEGORI AND B.ID_JABATAN=? ORDER BY B.ID_KATEGORI";
-		$data = array($idJabatan);
-		
-		$query = $this->db->query($sql, $data);
-		$results = $query->result();
-		$len = count($results);
-		$ret = array();
-		for($i = 0; $i < $len; ++$i){
-			$entry = new BatasKategori();
-			$entry->read($results[$i]);
-			$entry->no = $i+1;
-			array_push($ret, $entry);
-		}
-		return $ret;
-	}
-	function fetchUnsurPenilaian(){
-		$sql = "SELECT * FROM kategori_penilaian K, unsur_penilaian U LEFT JOIN jenis_batas JB ON U.ID_JENIS_BATAS=JB.ID_JENIS_BATAS  WHERE U.ID_KATEGORI=K.ID_KATEGORI  ORDER BY U.ID_KATEGORI ASC, U.ID_UNSUR ASC";
-		
-		$query = $this->db->query($sql);
-		$results = $query->result();
-		$len = count($results);
-		$ret = array();
-		for($i = 0; $i < $len; ++$i){
-			$entry = new UnsurPenilaian();
-			$entry->read($results[$i]);
-			$entry->no = $i+1;
-			array_push($ret, $entry);
-		}
-		return $ret;
-	}
-	function fetchItemPenilaianEdit($idPAK){
-		$sql = "
-		SELECT 
-			I.ID_ITEM, 
-			I.ID_PAK, 
-			I.ID_UNSUR, 
-			U.KEGIATAN, 
-			U.ID_KATEGORI,
-			K.KATEGORI,
-			I.URL_DOKUMEN,
-			I.NILAI_AWAL AS NILAI,
-			I.TAHUN,
-			I.SEMESTER,
-			U.BATAS,
-			U.UNIT,
-			U.ID_JENIS_BATAS,
-			JB.JENIS_BATAS,
-			U.MAX_KREDIT,
-			U.KETERANGAN,
-			U.BUKTI
-		FROM KATEGORI_PENILAIAN K, ITEM_PENILAIAN I, UNSUR_PENILAIAN U LEFT JOIN JENIS_BATAS JB ON U.ID_JENIS_BATAS=JB.ID_JENIS_BATAS
-		WHERE I.ID_PAK=?
-			AND I.ID_UNSUR=U.ID_UNSUR
-			AND U.ID_KATEGORI=K.ID_KATEGORI
-		ORDER BY U.ID_KATEGORI ASC, I.ID_UNSUR ASC, I.ID_ITEM ASC";
-		$data = array($idPAK);
-		$query = $this->db->query($sql, $data);
-		$results = $query->result();
-		$len = count($results);
-		$ret = array();
-		for($i = 0; $i < $len; ++$i){
-			$entry = new EntriItemEditPAK();
-			$entry->read($results[$i]);
-			$entry->no = $i+1;
-			array_push($ret, $entry);
-		}
-		return $ret;
-	}
-	function fetchItemPenilaianNilai($idPAK, $nomorPenilai){
-		$sql = "
-		SELECT 
-			I.ID_ITEM, 
-			I.ID_PAK, 
-			I.ID_UNSUR, 
-			(CASE 
-				WHEN TAHUN IS NULL OR TAHUN=0 THEN U.KEGIATAN
-				WHEN SEMESTER IS NULL OR SEMESTER=0 THEN CONCAT(U.KEGIATAN, ' (', I.TAHUN, ')')
-				ELSE CONCAT(U.KEGIATAN, ' (', I.TAHUN, ', ',
-					CASE WHEN I.SEMESTER=1 THEN 'semester ganjil' ELSE 'semester genap' END,
-				')')
-			END) AS KEGIATAN,
-			U.ID_KATEGORI,
-			K.KATEGORI,
-			I.URL_DOKUMEN,
-			I.NILAI_AWAL,
-			I.NILAI_{$nomorPenilai} AS NILAI_PENILAI,
-			U.BUKTI
-		FROM ITEM_PENILAIAN I, UNSUR_PENILAIAN U, KATEGORI_PENILAIAN K
-		WHERE I.ID_PAK=?
-			AND I.ID_UNSUR=U.ID_UNSUR
-			AND U.ID_KATEGORI=K.ID_KATEGORI
-		ORDER BY U.ID_KATEGORI ASC, I.ID_UNSUR ASC, I.ID_ITEM ASC";
-		$data = array($idPAK);
-		$query = $this->db->query($sql, $data);
-		$results = $query->result();
-		$len = count($results);
-		$ret = array();
-		for($i = 0; $i < $len; ++$i){
-			$entry = new EntriItemNilaiPAK();
-			$entry->read($results[$i]);
-			$entry->no = $i+1;
-			array_push($ret, $entry);
-		}
-		return $ret;
-	}
-	
-	function fetchItemPenilaianNilaiDict($idPAK, $nomorPenilai){
-		$sql = "
-		SELECT 
-			I.ID_ITEM, 
-			I.ID_UNSUR, 
-			(CASE 
-				WHEN TAHUN IS NULL OR TAHUN=0 THEN U.KEGIATAN
-				WHEN SEMESTER IS NULL OR SEMESTER=0 THEN CONCAT(U.KEGIATAN, ' (', I.TAHUN, ')')
-				ELSE CONCAT(U.KEGIATAN, ' (', I.TAHUN, ', ',
-					CASE WHEN I.SEMESTER=1 THEN 'semester ganjil' ELSE 'semester genap' END,
-				')')
-			END) AS KEGIATAN, 
-			I.NILAI_AWAL
-		FROM ITEM_PENILAIAN I, UNSUR_PENILAIAN U
-		WHERE I.ID_PAK=?
-			AND I.ID_UNSUR=U.ID_UNSUR
-		ORDER BY U.ID_KATEGORI ASC, I.ID_UNSUR ASC, I.ID_ITEM ASC";
-		$data = array($idPAK);
-		$query = $this->db->query($sql, $data);
-		$results = $query->result();
-		$len = count($results);
-		$ret = array();
-		for($i = 0; $i < $len; ++$i){
-			$item = $results[$i];
-			$item->no = $i+1;
-			$ret[$item->ID_ITEM] = $item;
-		}
-		return $ret;
-	}
-	function fetchItemPenilaian($idPAK, $nomorPenilai = null){
-		$sql = "
-		SELECT 
-			I.ID_ITEM, 
-			I.ID_PAK, 
-			I.ID_UNSUR, 
-			(CASE 
-				WHEN TAHUN IS NULL OR TAHUN=0 THEN U.KEGIATAN
-				WHEN SEMESTER IS NULL OR SEMESTER=0 THEN CONCAT(U.KEGIATAN, ' (', I.TAHUN, ')')
-				ELSE CONCAT(U.KEGIATAN, ' (', I.TAHUN, ', ',
-					CASE WHEN I.SEMESTER=1 THEN 'semester ganjil' ELSE 'semester genap' END,
-				')')
-			END) AS KEGIATAN,
-			U.ID_KATEGORI,
-			K.KATEGORI,
-			I.URL_DOKUMEN,";
-		if($nomorPenilai){
-			$sql = $sql . "NILAI_{$nomorPenilai} AS NILAI,";
-		}else{
-			$sql = $sql . "
-			(CASE WHEN P.ID_STATUS_PAK>3
-				THEN (I.NILAI_1+I.NILAI_2)*0.5
-				ELSE I.NILAI_AWAL
-			END ) AS NILAI,";
-		}
-		$sql = $sql . "
-			U.BUKTI
-		FROM PAK P, ITEM_PENILAIAN I, UNSUR_PENILAIAN U, KATEGORI_PENILAIAN K
-		WHERE I.ID_PAK=?
-			AND P.ID_PAK=I.ID_PAK
-			AND I.ID_UNSUR=U.ID_UNSUR
-			AND U.ID_KATEGORI=K.ID_KATEGORI
-		ORDER BY U.ID_KATEGORI ASC, I.ID_UNSUR ASC, I.ID_ITEM ASC";
-		$data = array($idPAK);
-		$query = $this->db->query($sql, $data);
-		$results = $query->result();
-		$len = count($results);
-		$ret = array();
-		for($i = 0; $i < $len; ++$i){
-			$entry = new EntriItemDetailPAK();
-			$entry->read($results[$i]);
-			$entry->no = $i+1;
-			array_push($ret, $entry);
-		}
-		return $ret;
-	}
-	function getItemPenilaian($idItem){
-	}
-	function tambahItemPenilaian($item){
-		if($item->tahun == null){
-			$sql = "INSERT INTO ITEM_PENILAIAN(ID_PAK, ID_UNSUR, NILAI_AWAL, URL_DOKUMEN) VALUES(?, ?, ? ,?)";
-			$query = $this->db->query($sql, array($item->idPAK, $item->idUnsur, $item->nilai, $item->urlDokumen));
-		}else if ($item->semester == null){
-			$sql = "INSERT INTO ITEM_PENILAIAN(ID_PAK, ID_UNSUR, NILAI_AWAL, URL_DOKUMEN, TAHUN) VALUES(?, ?, ? ,? ,?)";
-			$query = $this->db->query($sql, array($item->idPAK, $item->idUnsur, $item->nilai, $item->urlDokumen, $item->tahun));
-		}else{
-			$sql = "INSERT INTO ITEM_PENILAIAN(ID_PAK, ID_UNSUR, NILAI_AWAL, URL_DOKUMEN, TAHUN, SEMESTER) VALUES(?, ?, ? ,? ,?, ?)";
-			$query = $this->db->query($sql, array($item->idPAK, $item->idUnsur, $item->nilai, $item->urlDokumen, $item->tahun, $item->semester));
-		}
-		$result = $this->db->affected_rows() > 0;
-		if(!$query && !$result){
-			return array(
-				"result"=>"FAIL",
-				"errorMessage"=>"Gagal menambahkan item: " . $this->db->error()["message"]
-			);
-		}
-		$item->idItem = $this->db->insert_id();
-		return array(
-			"result"=>"OK"
-		);
-	}
-	function simpanItemPenilaian($item){
-		if($item->tahun == null){
-			$sql = "UPDATE ITEM_PENILAIAN SET ID_UNSUR=?, NILAI_AWAL=?, URL_DOKUMEN=? WHERE ID_ITEM=?";
-			$query = $this->db->query($sql, array($item->idUnsur, $item->nilai, $item->urlDokumen, $item->idItem));
-		}else if ($item->semester == null){
-			$sql = "UPDATE ITEM_PENILAIAN SET ID_UNSUR=?, NILAI_AWAL=?, URL_DOKUMEN=?, TAHUN=? WHERE ID_ITEM=?";
-			$query = $this->db->query($sql, array($item->idUnsur, $item->nilai, $item->urlDokumen, $item->tahun, $item->idItem));
-		}else{
-			$sql = "UPDATE ITEM_PENILAIAN SET ID_UNSUR=?, NILAI_AWAL=?, URL_DOKUMEN=?, TAHUN=?, SEMESTER=? WHERE ID_ITEM=?";
-			$query = $this->db->query($sql, array($item->idUnsur, $item->nilai, $item->urlDokumen, $item->tahun, $item->semester, $item->idItem));
-		}
-		$result = $this->db->affected_rows() > 0;
-		if(!$query && !$result){
-			return array(
-				"result"=>"FAIL",
-				"errorMessage"=>"Gagal menyimpan item: " . $this->db->error()["message"]
-			);
-		}
-		return array(
-			"result"=>"OK"
-		);
-	}
-	function hapusItemPenilaian($idItem){
-		$sql = "DELETE FROM ITEM_PENILAIAN WHERE ID_ITEM=?";
-		$query = $this->db->query($sql, array($idItem));
-		$result = $this->db->affected_rows() > 0;
-		if(!$query && !$result){
-			return array(
-				"result"=>"FAIL",
-				"errorMessage"=>"Gagal menghapus item: " . $this->db->error()["message"]
-			);
-		}
-		return array(
-			"result"=>"OK"
-		);
-	}
-	
-	function simpanPenilaian($idItem, $nilai, $nomorPenilai){
-		if($nilai == NULL) {
-			$sql = "UPDATE ITEM_PENILAIAN SET NILAI_{$nomorPenilai}=NULL WHERE ID_ITEM=?";
-			$query = $this->db->query($sql, array($idItem));
-		}else{
-			$sql = "UPDATE ITEM_PENILAIAN SET NILAI_{$nomorPenilai}=? WHERE ID_ITEM=?";
-			$query = $this->db->query($sql, array($nilai, $idItem));
-		}
-		$result = $this->db->affected_rows() > 0;
-		if(!$query && !$result){
-			return array(
-				"result"=>"FAIL",
-				"errorMessage"=>"Gagal menyimpan nilai: " . $this->db->error()["message"]
-			);
-		}
-		return array(
-			"result"=>"OK"
-		);
-	}
-	
-	function fetchItemPenilaianAkhir($idPAK){
-		$sql = "
-		SELECT 
-			I.ID_ITEM, 
-			U.ID_KATEGORI,
-			I.URL_DOKUMEN,
-			I.NILAI_AWAL,
-			I.NILAI_1,
-			I.NILAI_2
-		FROM ITEM_PENILAIAN I, UNSUR_PENILAIAN U
-		WHERE I.ID_PAK=?
-			AND I.ID_UNSUR=U.ID_UNSUR
-		ORDER BY I.ID_UNSUR ASC";
-		$data = array($idPAK);
-		$query = $this->db->query($sql, $data);
-		$results = $query->result();
-		$len = count($results);
-		$ret = array();
-		for($i = 0; $i < $len; ++$i){
-			$entry = new EntriItemNilaiAkhirPAK();
-			$entry->read($results[$i]);
-			$entry->no = $i+1;
-			array_push($ret, $entry);
-		}
-		return $ret;
-	}
-	
+    function fetchBatasKategori($idJabatan){
+        $sql = "
+            SELECT * 
+            FROM batas_kategori B, kategori_penilaian K 
+            WHERE 
+                B.ID_KATEGORI=K.ID_KATEGORI 
+                AND B.ID_JABATAN=? ORDER BY B.ID_KATEGORI
+        ";
+        $data = array($idJabatan);
+        
+        $query = $this->db->query($sql, $data);
+        $results = $query->result();
+        $len = count($results);
+        $ret = array();
+        for($i = 0; $i < $len; ++$i){
+            $entry = new BatasKategori();
+            $entry->read($results[$i]);
+            $entry->no = $i+1;
+            array_push($ret, $entry);
+        }
+        return $ret;
+    }
+    function fetchUnsurPenilaian(){
+        $sql = "
+            SELECT * 
+            FROM 
+                kategori_penilaian K, 
+                unsur_penilaian U 
+                LEFT JOIN jenis_batas JB 
+                    ON U.id_jenis_batas=JB.id_jenis_batas  
+            WHERE U.id_kategori=K.id_kategori  
+            ORDER BY U.id_kategori ASC, U.id_unsur ASC
+        ";
+        
+        $query = $this->db->query($sql);
+        $results = $query->result();
+        $len = count($results);
+        $ret = array();
+        for($i = 0; $i < $len; ++$i){
+            $entry = new UnsurPenilaian();
+            $entry->read($results[$i]);
+            $entry->no = $i+1;
+            array_push($ret, $entry);
+        }
+        return $ret;
+    }
+    function fetchItemPenilaianEdit($idPAK){
+        $sql = "
+        SELECT 
+            I.id_item, 
+            I.id_pak, 
+            I.id_unsur, 
+            U.kegiatan, 
+            U.id_kategori,
+            K.kategori,
+            I.url_dokumen,
+            I.nilai_awal AS nilai,
+            I.tahun,
+            I.semester,
+            U.batas,
+            U.unit,
+            U.id_jenis_batas,
+            JB.jenis_batas,
+            U.max_kredit,
+            U.keterangan,
+            U.bukti
+        FROM kategori_penilaian K, item_penilaian I, unsur_penilaian U LEFT JOIN jenis_batas JB ON U.id_jenis_batas=JB.id_jenis_batas
+        WHERE I.id_pak=?
+            AND I.id_unsur=U.id_unsur
+            AND U.id_kategori=K.id_kategori
+        ORDER BY U.id_kategori ASC, I.id_unsur ASC, I.id_item ASC";
+        $data = array($idPAK);
+        $query = $this->db->query($sql, $data);
+        $results = $query->result();
+        $len = count($results);
+        $ret = array();
+        for($i = 0; $i < $len; ++$i){
+            $entry = new EntriItemEditPAK();
+            $entry->read($results[$i]);
+            $entry->no = $i+1;
+            array_push($ret, $entry);
+        }
+        return $ret;
+    }
+    function fetchItemPenilaianNilai($idPAK, $nomorPenilai){
+        $sql = "
+        SELECT 
+            I.id_item, 
+            I.id_pak, 
+            I.id_unsur, 
+            (CASE 
+                WHEN tahun IS NULL OR tahun=0 THEN U.kegiatan
+                WHEN semester IS NULL OR semester=0 THEN CONCAT(U.kegiatan, ' (', I.tahun, ')')
+                ELSE CONCAT(U.kegiatan, ' (', I.tahun, ', ',
+                    CASE WHEN I.semester=1 THEN 'semester ganjil' ELSE 'semester genap' END,
+                ')')
+            END) AS kegiatan,
+            U.id_kategori,
+            K.kategori,
+            I.url_dokumen,
+            I.nilai_awal,
+            I.nilai_{$nomorPenilai} AS nilai_penilai,
+            U.bukti
+        FROM item_penilaian I, unsur_penilaian U, kategori_penilaian K
+        WHERE I.id_pak=?
+            AND I.id_unsur=U.id_unsur
+            AND U.id_kategori=K.id_kategori
+        ORDER BY U.id_kategori ASC, I.id_unsur ASC, I.id_item ASC";
+        $data = array($idPAK);
+        $query = $this->db->query($sql, $data);
+        $results = $query->result();
+        $len = count($results);
+        $ret = array();
+        for($i = 0; $i < $len; ++$i){
+            $entry = new EntriItemNilaiPAK();
+            $entry->read($results[$i]);
+            $entry->no = $i+1;
+            array_push($ret, $entry);
+        }
+        return $ret;
+    }
+    
+    function fetchItemPenilaianNilaiDict($idPAK, $nomorPenilai){
+        $sql = "
+        SELECT 
+            I.id_item, 
+            I.id_unsur, 
+            (CASE 
+                WHEN tahun IS NULL OR tahun=0 THEN U.kegiatan
+                WHEN semester IS NULL OR semester=0 THEN CONCAT(U.kegiatan, ' (', I.tahun, ')')
+                ELSE CONCAT(U.kegiatan, ' (', I.tahun, ', ',
+                    CASE WHEN I.semester=1 THEN 'semester ganjil' ELSE 'semester genap' END,
+                ')')
+            END) AS kegiatan, 
+            I.nilai_awal
+        FROM item_penilaian I, unsur_penilaian U
+        WHERE I.id_pak=?
+            AND I.id_unsur=U.id_unsur
+        ORDER BY U.id_kategori ASC, I.id_unsur ASC, I.id_item ASC";
+        $data = array($idPAK);
+        $query = $this->db->query($sql, $data);
+        $results = $query->result();
+        $len = count($results);
+        $ret = array();
+        for($i = 0; $i < $len; ++$i){
+            $item = $results[$i];
+            $item->no = $i+1;
+            $ret[$item->id_item] = $item;
+        }
+        return $ret;
+    }
+    function fetchItemPenilaian($idPAK, $nomorPenilai = null){
+        $sql = "
+        SELECT 
+            I.id_item, 
+            I.id_pak, 
+            I.id_unsur, 
+            (CASE 
+                WHEN tahun IS NULL OR tahun=0 THEN U.kegiatan
+                WHEN semester IS NULL OR semester=0 THEN CONCAT(U.kegiatan, ' (', I.tahun, ')')
+                ELSE CONCAT(U.kegiatan, ' (', I.tahun, ', ',
+                    CASE WHEN I.semester=1 THEN 'semester ganjil' ELSE 'semester genap' END,
+                ')')
+            END) AS kegiatan,
+            U.id_kategori,
+            K.kategori,
+            I.url_dokumen,";
+        if($nomorPenilai){
+            $sql = $sql . "nilai_{$nomorPenilai} AS nilai,";
+        }else{
+            $sql = $sql . "
+            (CASE WHEN P.id_status_pak>3
+                THEN (I.nilai_1+I.nilai_2)*0.5
+                ELSE I.nilai_awal
+            END ) AS nilai,";
+        }
+        $sql = $sql . "
+            U.bukti
+        FROM pak P, item_penilaian I, unsur_penilaian U, kategori_penilaian K
+        WHERE I.id_pak=?
+            AND P.id_pak=I.id_pak
+            AND I.id_unsur=U.id_unsur
+            AND U.id_kategori=K.id_kategori
+        ORDER BY U.id_kategori ASC, I.id_unsur ASC, I.id_item ASC";
+        $data = array($idPAK);
+        $query = $this->db->query($sql, $data);
+        $results = $query->result();
+        $len = count($results);
+        $ret = array();
+        for($i = 0; $i < $len; ++$i){
+            $entry = new EntriItemDetailPAK();
+            $entry->read($results[$i]);
+            $entry->no = $i+1;
+            array_push($ret, $entry);
+        }
+        return $ret;
+    }
+    function getItemPenilaian($idItem){
+    }
+    function tambahItemPenilaian($item){
+        if($item->tahun == null){
+            $sql = "
+                INSERT INTO item_penilaian(
+                    id_pak, id_unsur, nilai_awal, url_dokumen
+                ) VALUES(?, ?, ? ,?)
+            ";
+            $query = $this->db->query($sql, array($item->idPAK, $item->idUnsur, $item->nilai, $item->urlDokumen));
+        }else if ($item->semester == null){
+            $sql = "
+                INSERT INTO item_penilaian(
+                    id_pak, id_unsur, nilai_awal, url_dokumen, tahun
+                ) VALUES(?, ?, ? ,? ,?)
+            ";
+            $query = $this->db->query($sql, array($item->idPAK, $item->idUnsur, $item->nilai, $item->urlDokumen, $item->tahun));
+        }else{
+            $sql = "
+                INSERT INTO item_penilaian(
+                    id_pak, id_unsur, nilai_awal, url_dokumen, tahun, semester
+                ) VALUES(?, ?, ? ,? ,?, ?)
+            ";
+            $query = $this->db->query($sql, array($item->idPAK, $item->idUnsur, $item->nilai, $item->urlDokumen, $item->tahun, $item->semester));
+        }
+        $result = $this->db->affected_rows() > 0;
+        if(!$query && !$result){
+            return array(
+                "result"=>"FAIL",
+                "errorMessage"=>"Gagal menambahkan item: " . $this->db->error()["message"]
+            );
+        }
+        $item->idItem = $this->db->insert_id();
+        return array(
+            "result"=>"OK"
+        );
+    }
+    function simpanItemPenilaian($item){
+        if($item->tahun == null){
+            $sql = "
+                UPDATE item_penilaian 
+                SET id_unsur=?, nilai_awal=?, url_dokumen=? 
+                WHERE id_item=?
+            ";
+            $query = $this->db->query($sql, array($item->idUnsur, $item->nilai, $item->urlDokumen, $item->idItem));
+        }else if ($item->semester == null){
+            $sql = "
+                UPDATE item_penilaian 
+                SET id_unsur=?, nilai_awal=?, url_dokumen=?, tahun=? 
+                WHERE id_item=?
+            ";
+            $query = $this->db->query($sql, array($item->idUnsur, $item->nilai, $item->urlDokumen, $item->tahun, $item->idItem));
+        }else{
+            $sql = "
+                UPDATE item_penilaian 
+                SET id_unsur=?, nilai_awal=?, url_dokumen=?, tahun=?, semester=? 
+                WHERE id_item=?
+            ";
+            $query = $this->db->query($sql, array($item->idUnsur, $item->nilai, $item->urlDokumen, $item->tahun, $item->semester, $item->idItem));
+        }
+        $result = $this->db->affected_rows() > 0;
+        if(!$query && !$result){
+            return array(
+                "result"=>"FAIL",
+                "errorMessage"=>"Gagal menyimpan item: " . $this->db->error()["message"]
+            );
+        }
+        return array(
+            "result"=>"OK"
+        );
+    }
+    function hapusItemPenilaian($idItem){
+        $sql = "DELETE FROM item_penilaian WHERE id_item=?";
+        $query = $this->db->query($sql, array($idItem));
+        $result = $this->db->affected_rows() > 0;
+        if(!$query && !$result){
+            return array(
+                "result"=>"FAIL",
+                "errorMessage"=>"Gagal menghapus item: " . $this->db->error()["message"]
+            );
+        }
+        return array(
+            "result"=>"OK"
+        );
+    }
+    
+    function simpanPenilaian($idItem, $nilai, $nomorPenilai){
+        if($nilai == NULL) {
+            $sql = "UPDATE item_penilaian SET nilai_{$nomorPenilai}=NULL WHERE id_item=?";
+            $query = $this->db->query($sql, array($idItem));
+        }else{
+            $sql = "UPDATE item_penilaian SET nilai_{$nomorPenilai}=? WHERE id_item=?";
+            $query = $this->db->query($sql, array($nilai, $idItem));
+        }
+        $result = $this->db->affected_rows() > 0;
+        if(!$query && !$result){
+            return array(
+                "result"=>"FAIL",
+                "errorMessage"=>"Gagal menyimpan nilai: " . $this->db->error()["message"]
+            );
+        }
+        return array(
+            "result"=>"OK"
+        );
+    }
+    
+    function fetchItemPenilaianAkhir($idPAK){
+        $sql = "
+        SELECT 
+            I.id_item, 
+            U.id_kategori,
+            I.url_dokumen,
+            I.nilai_awal,
+            I.nilai_1,
+            I.nilai_2
+        FROM item_penilaian I, unsur_penilaian U
+        WHERE I.id_pak=?
+            AND I.id_unsur=U.id_unsur
+        ORDER BY I.id_unsur ASC";
+        $data = array($idPAK);
+        $query = $this->db->query($sql, $data);
+        $results = $query->result();
+        $len = count($results);
+        $ret = array();
+        for($i = 0; $i < $len; ++$i){
+            $entry = new EntriItemNilaiAkhirPAK();
+            $entry->read($results[$i]);
+            $entry->no = $i+1;
+            array_push($ret, $entry);
+        }
+        return $ret;
+    }
+    
 }
 ?>
